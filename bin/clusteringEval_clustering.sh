@@ -56,7 +56,7 @@ function check_dependencies(){
 }	
 
 function args_gestion(){
-	echo "\n -- CHECK ARGUMENTS --" 
+	echo -e "\n -- CHECK ARGUMENTS --" 
 	verif_file $input "[INPUT] $input not found." "[INPUT] $input found"
 	mkdir -p $outdir 
 }	
@@ -80,11 +80,52 @@ source $BIN/common_functions.sh
 check_dependencies
 args_gestion
 
-echo "-- CD-HIT CLUSTERING --" 
+prefix=$(echo $input | rev | cut -f 1 -d "/" | cut -f 2- -d "." | rev) 
+
+echo -e "\n-- CD-HIT CLUSTERING --" 
 dir=$outdir/cdhit 
 mkdir -p $dir 
+for id in 97 99; do 
+	perc_id=$(echo $id | awk '{print $1/100}') 
+	echo "* Cluster $input with cd-hit at id $id..."
+	if [[ ! -f $dir/$prefix.cdhit.id$id.clstr ]]; then 
+		cd-hit-est -i $input -o $dir/$prefix.cdhit.id$id -c $perc_id -M 0 -T $THREADS
+	else 
+		echo "Results already exists" 
+	fi 		
+done 	
 
-cd-hit-est  
+echo -e "\n-- MESHCLUST CLUSTERING --" 
+dir=$outdir/meshclust 
+mkdir -p $dir 
+for id in 97 99; do 
+	perc_id=$(echo $id | awk '{print $1/100}') 
+	echo "* Cluster $input with meshclust at id $id..."
+	if [[ ! -f $dir/$prefix.meshclust.id$id.clstr ]]; then 
+		meshclust $input --id $perc_id --threads $THREADS --output $dir/$prefix.meshclust.id$id.clstr  
+	else 
+		echo "Results already exists" 
+	fi 			
+done  
+
+echo -e "\n-- SCLUST CLUSTERING --" 
+dir=$outdir/sclust 
+mkdir -p $dir 
+for id in 97 99; do 
+	wid=$(($id - 2)) 
+	perc_id=$(echo $id | awk '{print $1/100}') 
+	perc_wid=$(echo $wid | awk '{print $1/100}') 
+	for qual in 0 0.5 1; do 
+		echo "* Cluster $input with sclust at id $id, weak id $wid and quality $qual..."
+		if [[ ! -f $dir/$prefix.sclust.id$id.wid$wid.qual$qual.fuzzyout ]]; then 
+			sclust --cluster_fuzzy $input --id $perc_id --weak_id $perc_wid --quality $qual --threads $THREADS --fuzzyout $dir/$prefix.sclust.id$id.wid$wid.qual$qual.fuzzyout 
+		else 
+			echo "Results already exists" 
+		fi 
+	done 	
+done 
+ 
+
 
 
 
