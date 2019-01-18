@@ -142,3 +142,15 @@ for id in 97 99; do
 	fi 	
 done 
 rm $input.sumaclust 
+
+echo -e "\n-- SWARM CLUSTERING --" 
+dir=$outdir/swarm 
+mkdir -p $dir 
+for d in 3 1; do 
+	echo "* Cluster $input with swarm with d=$d..." 
+	if [[ ! -f $dir/$prefix.swarm.d$d.uc ]]; then 
+		swarm $input -t $THREADS -d $d -u $dir/$prefix.swarm.d$d.uc -z > $dir/$prefix.swarm.d$d.otumap 
+	else 
+		echo "Results already exists." 
+	fi 	
+done 
