@@ -119,6 +119,7 @@ for id in 97 99; do
 		echo "* Cluster $input with sclust at id $id, weak id $wid and quality $qual..."
 		if [[ ! -f $dir/$prefix.sclust.id$id.wid$wid.qual$qual.fuzzyout ]]; then 
 			sclust --cluster_fuzzy $input --id $perc_id --weak_id $perc_wid --quality $qual --threads $THREADS --fuzzyout $dir/$prefix.sclust.id$id.wid$wid.qual$qual.fuzzyout 
+			mv RepartitionClust.txt $prefix.sclust.id$id.wid$wid.qual$qual.repartitionClust.txt 
 		else 
 			echo "Results already exists" 
 		fi 
