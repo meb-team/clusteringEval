@@ -154,3 +154,16 @@ for d in 3 1; do
 		echo "Results already exists." 
 	fi 	
 done 
+
+echo -e "\n-- VSEARCH CLUSTERING --" 
+dir=$outdir/vsearch 
+mkdir -p $dir 
+for id in 97 99; do 
+	perc_id=$(echo $id | awk '{print $1/100}') 
+	echo "* Cluster $input with vsearch at id $id..."
+	if [[ ! -f $dir/$prefix.vsearch.id$id.uc ]]; then 
+		vsearch --cluster_fast $input --id $perc_id --threads $THREADS --uc $dir/$prefix.vsearch.id$id.uc 
+	else 
+		echo "Results already exists." 
+	fi 
+done 
