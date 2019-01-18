@@ -60,6 +60,7 @@ function args_gestion(){
 	verif_file $input "[INPUT] $input not found." "[INPUT] $input found"
 	mkdir -p $outdir 
 }	
+	
 
 
 if [[ $# -ne 2 ]]; then 
@@ -125,9 +126,19 @@ for id in 97 99; do
 		fi 
 	done 	
 done 
- 
 
-
-
-
-
+echo -e "\n-- SUMACLUST CLUSTERING --"
+dir=$outdir/sumaclust 
+mkdir -p $dir  
+echo "* Sumaclust formatting..." 
+sed "s/;size=/ count=/g" $input > $input.sumaclust 
+for id in 97 99; do 
+	perc_id=$(echo $id | awk '{print $1/100}') 
+	echo "* Cluster $input with sumaclust at id $id..."
+	if [[ ! -f $dir/$prefix.sumaclust.id$id.otumap ]]; then 
+		sumaclust -t $perc_id -p $THREADS -O $dir/$prefix.sumaclust.id$id.otumap -F $dir/$prefix.sumaclust.id$id.fasta $input.sumaclust
+	else 
+		echo "Results already exists." 
+	fi 	
+done 
+rm $input.sumaclust 
