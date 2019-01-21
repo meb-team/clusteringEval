@@ -72,7 +72,6 @@ input=$1
 outdir=$2
 BIN=$(echo $0 | rev | cut -f 2- -d "/" | rev)
 THREADS=6
-echo $BIN 	
 if [[ $BIN == $0 ]]; then 
 	BIN=. 
 fi 
