@@ -1,3 +1,3 @@
 tools/
-data/
-clusteringEval_*
+clusteringEval_DATA/
+clusteringEval_RESULTS/
