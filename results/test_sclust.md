@@ -11,13 +11,11 @@ To test Sclust, data for FROGS's evaluation are used (http://frogs.toulouse.inra
 All launch commands are given in clusteringEval_EVAL/test_SCLUST/commands.sh 
 
 ### Data preparation 
-
 Sequencing simulation from FROGS contains chimeras reads, identified by the presence of two reference in fastq header. This chimera reads are removed with homemade script `exclude_chimeras.py`. 
 Then, reads are deduplicated with `vsearch`.  
 Taxonomy is treated with homemade script `frogs_taxo.py` which allows to better presentation of taxonomy present in fastq header. 
 
 ### Clustering 
-
 Sclust is launch for each sample (1 to 10), with id from 95 to 99 (steps of 1), weak id 2 below id (for example 97 for id 99 and 95 for id 97), and quality from 0 to 1 with steps of 0.25. 
 2 modes are tested : default mode, and accurate mode (much slower) with --maxrejects 0 and --maxaccepts 0 leading to comparisons with all database instead of just selected centroids. 
 
@@ -37,8 +35,8 @@ Script `clusteringEval_testSclust.sh` allows to launch all clustering and evalua
 All graphics and raw results are in clusteringEval_EVAL/test_SCLUST. Graphics are obtained with R script `testSclust_graphs.R` (.pdf for graphics and .tsv for raw results). 
 Evaluation is focused on ARI because it reflects recall and precision at same time. 
 
-IMAGE ARI 
-IMAGE SINGLETONS 
+![ARI][clusteringEval_EVAL/ari_boxplot.pdf] 
+![singletons][clusteringEval_EVAL/singletons.pdf]
 
 * Sclust performs better with 97% threshold, in accurate or default mode. It's the threshold with less variability and with best ARI values, for each quality parameters.
 * Sclust is sensible to inputs. Results shows variability, mostly in default mode with quality over 0. 
