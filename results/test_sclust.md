@@ -35,8 +35,8 @@ Script `clusteringEval_testSclust.sh` allows to launch all clustering and evalua
 All graphics and raw results are in clusteringEval_EVAL/test_SCLUST. Graphics are obtained with R script `testSclust_graphs.R` (.pdf for graphics and .tsv for raw results). 
 Evaluation is focused on ARI because it reflects recall and precision at same time. 
 
-![ARI][clusteringEval_EVAL/test_SCLUST/ari_boxplot.png] 
-![singletons][clusteringEval_EVAL/test_SCLUST/singletons.pdf]
+![ARI][../clusteringEval_EVAL/test_SCLUST/ari_boxplot.png] 
+![singletons][../clusteringEval_EVAL/test_SCLUST/singletons.pdf]
 
 * Sclust performs better with 97% threshold, in accurate or default mode. It's the threshold with less variability and with best ARI values, for each quality parameters.
 * Sclust is sensible to inputs. Results shows variability, mostly in default mode with quality over 0. 
