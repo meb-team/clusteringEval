@@ -85,116 +85,78 @@ prefix=$(echo $input | rev | cut -f 1 -d "/" | cut -f 2- -d "." | rev)
 echo -e "\n-- CD-HIT CLUSTERING --" 
 dir=$outdir/cdhit 
 mkdir -p $dir 
-for id in 97 98 99; do 
-	perc_id=$(echo $id | awk '{print $1/100}') 
-	echo "* Cluster $input with cd-hit at id $id..."
-	if [[ ! -f $dir/$prefix.cdhit.id$id.clstr ]]; then 
-		cd-hit-est -i $input -o $dir/$prefix.cdhit.id$id -c $perc_id -M 0 -T $THREADS
-	else 
-		echo "Results already exists" 
-	fi 	
-	echo "* Cluster $input with accurate cd-hit at id $id..."	
-	if [[ ! -f $dir/$prefix.cdhit.accurate.id$id.clstr ]]; then 
-		cd-hit-est -i $input -o $dir/$prefix.cdhit.accurate.id$id -c $perc_id -M 0 -T $THREADS
-	else 
-		echo "Results already exists" 
-	fi	
-done 	
+id=97
+perc_id=$(echo $id | awk '{print $1/100}') 
+echo "* Cluster $input with cd-hit at id $id..."
+if [[ ! -f $dir/$prefix.cdhit.id$id.clstr ]]; then 
+	cd-hit-est -i $input -o $dir/$prefix.cdhit.id$id -c $perc_id -M 0 -T $THREADS
+else 
+	echo "Results already exists" 
+fi 	
 
 echo -e "\n-- MESHCLUST CLUSTERING --" 
 dir=$outdir/meshclust 
 mkdir -p $dir 
-for id in 97 98 99; do 
-	perc_id=$(echo $id | awk '{print $1/100}') 
-	echo "* Cluster $input with meshclust at id $id..."
-	if [[ ! -f $dir/$prefix.meshclust.id$id.clstr ]]; then 
-		meshclust $input --id $perc_id --threads $THREADS --output $dir/$prefix.meshclust.id$id.clstr  
-	else 
-		echo "Results already exists" 
-	fi 		
-	echo "* Cluster $input with accurate meshclust at id $id..."
-	if [[ ! -f $dir/$prefix.meshclust.accurate.id$id.clstr ]]; then 
-		meshclust $input --id $perc_id --threads $THREADS --align --output $dir/$prefix.meshclust.accurate.id$id.clstr
-	else 
-		echo "Results already exists" 
-	fi 			
-done  
+id=97
+perc_id=$(echo $id | awk '{print $1/100}') 
+echo "* Cluster $input with meshclust at id $id..."
+if [[ ! -f $dir/$prefix.meshclust.id$id.clstr ]]; then 
+	meshclust $input --id $perc_id --threads $THREADS --output $dir/$prefix.meshclust.id$id.clstr  
+else 
+	echo "Results already exists" 
+fi 		
 
 echo -e "\n-- SCLUST CLUSTERING --" 
 dir=$outdir/sclust 
 mkdir -p $dir 
-for id in 97 98 99; do 
-	wid=$(($id - 2))
-	perc_id=$(echo $id | awk '{print $1/100}') 
-	perc_wid=$(echo $wid | awk '{print $1/100}') 
-	for qual in 0; do
-		echo "* Cluster $input with sclust at id $id, weak id $wid and quality $qual..."
-		if [[ ! -f $dir/$prefix.sclust.id$id.wid$wid.qual$qual.fuzzyout ]]; then 
-			sclust --cluster_fuzzy $input --id $perc_id --weak_id $perc_wid --quality $qual --threads $THREADS --fuzzyout $dir/$prefix.sclust.id$id.wid$wid.qual$qual.fuzzyout 
-			mv RepartitionClust.txt $dir/$prefix.sclust.id$id.wid$wid.qual$qual.repartitionClust.txt 
-		else 
-			echo "Results already exists" 
-		fi 
-		echo "* Cluster $input with accurate sclust at id $id, weak id $wid and quality $qual..."
-		if [[ ! -f $dir/$prefix.sclust.accurate.id$id.wid$wid.qual$qual.fuzzyout ]]; then 
-			sclust --cluster_fuzzy $input --id $perc_id --weak_id $perc_wid --quality $qual --threads $THREADS --fuzzyout $dir/$prefix.sclust.accurate.id$id.wid$wid.qual$qual.fuzzyout --maxaccepts 0 --maxrejects 0
-			mv RepartitionClust.txt $dir/$prefix.sclust.accurate.id$id.wid$wid.qual$qual.repartitionClust.txt 
-		else 
-			echo "Results already exists" 
-		fi	
-		
-	done 	
-done 	 
+
+id=97
+wid=95
+qual=0
+perc_id=$(echo $id | awk '{print $1/100}') 
+perc_wid=$(echo $wid | awk '{print $1/100}') 
+echo "* Cluster $input with sclust at id $id, weak id $wid and quality $qual..."
+if [[ ! -f $dir/$prefix.sclust.id$id.wid$wid.qual$qual.fuzzyout ]]; then 
+	sclust --cluster_fuzzy $input --id $perc_id --weak_id $perc_wid --quality $qual --threads $THREADS --fuzzyout $dir/$prefix.sclust.id$id.wid$wid.qual$qual.fuzzyout 
+	mv RepartitionClust.txt $dir/$prefix.sclust.id$id.wid$wid.qual$qual.repartitionClust.txt 
+else 
+	echo "Results already exists" 
+fi 
 
 echo -e "\n-- SUMACLUST CLUSTERING --"
 dir=$outdir/sumaclust 
 mkdir -p $dir  
 echo "* Sumaclust formatting..." 
 sed "s/;size=/ count=/g" $input > $input.sumaclust 
-for id in 97 98 99; do 
-	perc_id=$(echo $id | awk '{print $1/100}') 
-	echo "* Cluster $input with sumaclust at id $id..."
-	if [[ ! -f $dir/$prefix.sumaclust.id$id.otumap ]]; then 
-		sumaclust -t $perc_id -p $THREADS -O $dir/$prefix.sumaclust.id$id.otumap -F $dir/$prefix.sumaclust.id$id.fasta $input
-	else 
-		echo "Results already exists." 
-	fi 	
-	echo "* Cluster $input with accurate sumaclust at id $id..."
-	if [[ ! -f $dir/$prefix.sumaclust.accurate.id$id.otumap ]]; then 
-		sumaclust -e -t $perc_id -p $THREADS -O $dir/$prefix.sumaclust.accurate.id$id.otumap -F $dir/$prefix.sumaclust.accurate.id$id.fasta $input
-	else 
-		echo "Results already exists." 
-	fi 
-done 
+
+id=97
+perc_id=$(echo $id | awk '{print $1/100}') 
+echo "* Cluster $input with sumaclust at id $id..."
+if [[ ! -f $dir/$prefix.sumaclust.id$id.otumap ]]; then 
+	sumaclust -t $perc_id -p $THREADS -O $dir/$prefix.sumaclust.id$id.otumap -F $dir/$prefix.sumaclust.id$id.fasta $input
+else 
+	echo "Results already exists." 
+fi 	
 rm $input.sumaclust 
 
 echo -e "\n-- SWARM CLUSTERING --" 
 dir=$outdir/swarm 
 mkdir -p $dir 
-for d in 3 2 1; do 
-	echo "* Cluster $input with swarm with d=$d..." 
-	if [[ ! -f $dir/$prefix.swarm.d$d.uc ]]; then 
-		swarm $input -t $THREADS -d $d -u $dir/$prefix.swarm.d$d.uc -z > $dir/$prefix.swarm.d$d.otumap 
-	else 
-		echo "Results already exists." 
-	fi 	
-done 
+echo "* Cluster $input with swarm with d=$d..." 
+if [[ ! -f $dir/$prefix.swarm.uc ]]; then 
+	swarm $input -t $THREADS -u $dir/$prefix.swarm.uc -z > $dir/$prefix.swarm.otumap 
+else 
+	echo "Results already exists." 
+fi
 
 echo -e "\n-- VSEARCH CLUSTERING --" 
 dir=$outdir/vsearch 
 mkdir -p $dir 
-for id in 97 98 99; do 
-	perc_id=$(echo $id | awk '{print $1/100}') 
-	echo "* Cluster $input with vsearch at id $id..."
-	if [[ ! -f $dir/$prefix.vsearch.id$id.uc ]]; then 
-		vsearch --cluster_fast $input --id $perc_id --threads $THREADS --uc $dir/$prefix.vsearch.id$id.uc 
-	else 
-		echo "Results already exists." 
-	fi 
-	echo "* Cluster $input with accurate vsearch at id $id..."
-	if [[ ! -f $dir/$prefix.vsearch.accurate.id$id.uc ]]; then 
-		vsearch --cluster_fast $input --id $perc_id --threads $THREADS --uc $dir/$prefix.vsearch.accurate.id$id.uc --maxaccepts 0 --maxrejects 0 
-	else 
-		echo "Results already exists." 
-	fi 
-done 
+id=97
+perc_id=$(echo $id | awk '{print $1/100}') 
+echo "* Cluster $input with vsearch at id $id..."
+if [[ ! -f $dir/$prefix.vsearch.id$id.uc ]]; then 
+	vsearch --cluster_fast $input --id $perc_id --threads $THREADS --uc $dir/$prefix.vsearch.id$id.uc 
+else 
+	echo "Results already exists." 
+fi 

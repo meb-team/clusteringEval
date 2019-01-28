@@ -31,158 +31,94 @@ function compute_evaluation(){
 function cluster_eval(){
 	echo -e "\n-- COMPUTE EVALUATION --" 
 	cd $indir/swarm 
-	for d in 1 2 3; do 
-		id=$((100 - $d)) 
-		echo -e "\n** swarm clustering d=$d..." 
-		uc_file=$prefix.swarm.d$d.uc
-		if [[ -f $uc_file ]]; then 
-			echo "* Number of clusters..."
-			total_clusters=$(awk '{if ($1 == "C") print}' $uc_file | wc -l) 
-			singletons=$(awk '{if ($1 == "C") print}' $uc_file | awk '{if ($3 == 1) print}' | wc -l)
-			pairs=$(awk '{if ($1 == "C") print}' $uc_file | awk '{if ($3 == 2) print}' | wc -l)
-			echo "* Compute matrix..." 
-			python3 $BIN/cluster2matrix.py $uc_file $taxo 
-			compute_evaluation $prefix.swarm.d$d
-			echo -e "swarm\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$recall\t$precision\t$ari" >> $output_file 
-		else 
-			echo "[WARNING] $uc_file doesn't exists."
-		fi 		
-	done 
+	echo -e "\n** swarm clustering..." 
+	uc_file=$prefix.swarm.uc
+	if [[ -f $uc_file ]]; then 
+		echo "* Number of clusters..."
+		total_clusters=$(awk '{if ($1 == "C") print}' $uc_file | wc -l) 
+		singletons=$(awk '{if ($1 == "C") print}' $uc_file | awk '{if ($3 == 1) print}' | wc -l)
+		pairs=$(awk '{if ($1 == "C") print}' $uc_file | awk '{if ($3 == 2) print}' | wc -l)
+		echo "* Compute matrix..." 
+		python3 $BIN/cluster2matrix.py $uc_file $taxo 
+		compute_evaluation $prefix.swarm
+		echo -e "swarm\t$prefix\tdefault\t1\t$total_clusters\t$singletons\t$pairs\t$recall\t$precision\t$ari" >> $output_file 
+	else 
+		echo "[WARNING] $uc_file doesn't exists."
+	fi 		
 	 
 	cd $indir/vsearch 
-	for id in 97 98 99; do 
-		echo -e "\n** vsearch clustering id=$id..."
-		uc_file=$prefix.vsearch.id$id.uc 
-		uc_acc_file=$prefix.vsearch.accurate.id$id.uc
-		if [[ -f $uc_file ]]; then 
-			echo "* Number of clusters..." 
-			total_clusters=$(awk '{if ($1 == "C") print}' $uc_file | wc -l) 
-			singletons=$(awk '{if ($1 == "C") print}' $uc_file | awk '{if ($3 == 1) print}' | wc -l)
-			pairs=$(awk '{if ($1 == "C") print}' $uc_file | awk '{if ($3 == 2) print}' | wc -l)
-			echo "* Compute matrix..." 
-			python3 $BIN/cluster2matrix.py $uc_file $taxo 
-			compute_evaluation $prefix.vsearch.id$id 
-			echo -e "vsearch\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$recall\t$precision\t$ari" >> $output_file 
-		else 
-			echo "[WARNING] $uc_file doesn't exists."
-		fi 
-		if [[ -f $uc_acc_file ]]; then 
-			echo "* Number of clusters (accurate)..." 
-			total_clusters=$(awk '{if ($1 == "C") print}' $uc_acc_file | wc -l) 
-			singletons=$(awk '{if ($1 == "C") print}' $uc_acc_file | awk '{if ($3 == 1) print}' | wc -l)
-			pairs=$(awk '{if ($1 == "C") print}' $uc_acc_file | awk '{if ($3 == 2) print}' | wc -l)
-			echo "* Compute matrix (accurate)..." 
-			python3 $BIN/cluster2matrix.py $uc_acc_file $taxo 
-			compute_evaluation $prefix.vsearch.accurate.id$id 
-			echo -e "vsearch\t$prefix\taccurate\t$id\t$total_clusters\t$singletons\t$pairs\t$recall\t$precision\t$ari" >> $output_file 
-		else 
-			echo "[WARNING] $uc_acc_file doesn't exists."
-		fi 
-		
-	done 
-	
+	id=97
+	echo -e "\n** vsearch clustering id=$id..."
+	uc_file=$prefix.vsearch.id$id.uc 
+	if [[ -f $uc_file ]]; then 
+		echo "* Number of clusters..." 
+		total_clusters=$(awk '{if ($1 == "C") print}' $uc_file | wc -l) 
+		singletons=$(awk '{if ($1 == "C") print}' $uc_file | awk '{if ($3 == 1) print}' | wc -l)
+		pairs=$(awk '{if ($1 == "C") print}' $uc_file | awk '{if ($3 == 2) print}' | wc -l)
+		echo "* Compute matrix..." 
+		python3 $BIN/cluster2matrix.py $uc_file $taxo 
+		compute_evaluation $prefix.vsearch.id$id 
+		echo -e "vsearch\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$recall\t$precision\t$ari" >> $output_file 
+	else 
+		echo "[WARNING] $uc_file doesn't exists."
+	fi 
 	
 	cd $indir/sclust 
-	for id in 97 98 99; do 
-		for qual in 0; do
-			wid=$(($id - 2)) 
-			echo -e "\n** sclust clustering id=$id, weak id=$wid, qual=$qual ..." 
-			fuzzyout_file=$prefix.sclust.id$id.wid$wid.qual$qual.fuzzyout 
-			fuzzyout_acc_file=$prefix.sclust.accurate.id$id.wid$wid.qual$qual.fuzzyout 
-			if [[ -f $fuzzyout_file ]]; then 
-				echo "* Number of clusters..."
-				total_clusters=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort -u | wc -l)
-				singletons=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort | uniq -c | awk '{if ($1==1) print}' | wc -l)
-				pairs=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort | uniq -c | awk '{if ($1==2) print}' | wc -l)
-				echo "* Compute matrix..." 
-				python3 $BIN/cluster2matrix.py $fuzzyout_file $taxo 
-				compute_evaluation $prefix.sclust.id$id.wid$wid.qual$qual
-				echo -e "sclust\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$recall\t$precision\t$ari" >> $output_file
-			else 
-				echo "[WARNING] $fuzzyout_file doesn't exists/"
-			fi 	 
-			if [[ -f $fuzzyout_acc_file ]]; then 
-				echo "* Number of clusters (accurate)..."
-				total_clusters=$(cut -f 2 $fuzzyout_acc_file | cut -f 1 -d " " | sort -u | wc -l)
-				singletons=$(cut -f 2 $fuzzyout_acc_file | cut -f 1 -d " " | sort | uniq -c | awk '{if ($1==1) print}' | wc -l)
-				pairs=$(cut -f 2 $fuzzyout_acc_file | cut -f 1 -d " " | sort | uniq -c | awk '{if ($1==2) print}' | wc -l)
-				echo "* Compute matrix (accurate)..." 
-				python3 $BIN/cluster2matrix.py $fuzzyout_acc_file $taxo 
-				compute_evaluation $prefix.sclust.accurate.id$id.wid$wid.qual$qual
-				echo -e "sclust\t$prefix\taccurate\t$id\t$total_clusters\t$singletons\t$pairs\t$recall\t$precision\t$ari" >> $output_file
-			else 
-				echo "[WARNING] $fuzzyout_acc_file doesn't exists/"
-			fi 	 
-		done	
-	done  
-	
+	id=97
+	wid=95
+	qual=0
+	echo -e "\n** sclust clustering id=$id, weak id=$wid, qual=$qual ..." 
+	fuzzyout_file=$prefix.sclust.id$id.wid$wid.qual$qual.fuzzyout 
+	if [[ -f $fuzzyout_file ]]; then 
+		echo "* Number of clusters..."
+		total_clusters=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort -u | wc -l)
+		singletons=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort | uniq -c | awk '{if ($1==1) print}' | wc -l)
+		pairs=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort | uniq -c | awk '{if ($1==2) print}' | wc -l)
+		echo "* Compute matrix..." 
+		python3 $BIN/cluster2matrix.py $fuzzyout_file $taxo 
+		compute_evaluation $prefix.sclust.id$id.wid$wid.qual$qual
+		echo -e "sclust\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$recall\t$precision\t$ari" >> $output_file
+	else 
+		echo "[WARNING] $fuzzyout_file doesn't exists/"
+	fi 	 
+
 	cd $indir/sumaclust 
-	for id in 97 98 99; do 
-		echo -e "\n** sumaclust clustering id=$id..." 
-		otumap_file=$prefix.sumaclust.id$id.otumap 
-		otumap_acc_file=$prefix.sumaclust.accurate.id$id.otumap 
-		if [[ -f $otumap_file ]]; then 
+	id=97
+	echo -e "\n** sumaclust clustering id=$id..." 
+	otumap_file=$prefix.sumaclust.id$id.otumap 
+	otumap_acc_file=$prefix.sumaclust.accurate.id$id.otumap 
+	if [[ -f $otumap_file ]]; then 
+		echo "* Number of clusters..."
+		treatment=$(python3 $BIN/treat_otumap.py $otumap_file) 
+		total_clusters=$(echo $treatment | cut -f 1 -d " ") 
+		singletons=$(echo $treatment | cut -f 2 -d " ") 
+		pairs=$(echo $treatment | cut -f 3 -d " ") 
+		echo "* Compute matrix..." 
+		python3 $BIN/cluster2matrix.py $otumap_file $taxo 
+		compute_evaluation $prefix.sumaclust.id$id
+		echo -e "sumaclust\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$recall\t$precision\t$ari" >> $output_file
+	else 
+		echo "[WARNING] $otumap_file doesn't exists."
+	fi	
+	for tool in cdhit meshclust; do  
+		id=97
+		echo -e "\n** $tool clustering id=$id..." 
+		cd $indir/$tool 
+		clstr_file=$prefix.$tool.id$id.clstr 
+		if [[ -f $clstr_file ]]; then 
 			echo "* Number of clusters..."
-			treatment=$(python3 $BIN/treat_otumap.py $otumap_file) 
+			treatment=$(python3 $BIN/treat_clstr.py $clstr_file) 
 			total_clusters=$(echo $treatment | cut -f 1 -d " ") 
 			singletons=$(echo $treatment | cut -f 2 -d " ") 
 			pairs=$(echo $treatment | cut -f 3 -d " ") 
 			echo "* Compute matrix..." 
-			python3 $BIN/cluster2matrix.py $otumap_file $taxo 
-			compute_evaluation $prefix.sumaclust.id$id
-			echo -e "sumaclust\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$recall\t$precision\t$ari" >> $output_file
-		else 
-			echo "[WARNING] $otumap_file doesn't exists."
-		fi	
-		if [[ -f $otumap_acc_file ]]; then 
-			echo "* Number of clusters (accurate)..."
-			treatment=$(python3 $BIN/treat_otumap.py $otumap_acc_file) 
-			total_clusters=$(echo $treatment | cut -f 1 -d " ") 
-			singletons=$(echo $treatment | cut -f 2 -d " ") 
-			pairs=$(echo $treatment | cut -f 3 -d " ") 
-			echo "* Compute matrix (accurate)..." 
-			python3 $BIN/cluster2matrix.py $otumap_acc_file $taxo 
-			compute_evaluation $prefix.sumaclust.accurate.id$id
-			echo -e "sumaclust\t$prefix\taccurate\t$id\t$total_clusters\t$singletons\t$pairs\t$recall\t$precision\t$ari" >> $output_file
-		else 
-			echo "[WARNING] $otumap_acc_file doesn't exists."
-		fi	
-	done 
-	
-	for tool in cdhit meshclust; do  
-		for id in 97 98 99; do 
-			echo -e "\n** $tool clustering id=$id..." 
-			cd $indir/$tool 
-			clstr_file=$prefix.$tool.id$id.clstr 
-			clstr_acc_file=$prefix.$tool.accurate.id$id.clstr 
-			if [[ -f $clstr_file ]]; then 
-				echo "* Number of clusters..."
-				treatment=$(python3 $BIN/treat_clstr.py $clstr_file) 
-				total_clusters=$(echo $treatment | cut -f 1 -d " ") 
-				singletons=$(echo $treatment | cut -f 2 -d " ") 
-				pairs=$(echo $treatment | cut -f 3 -d " ") 
-				echo "* Compute matrix..." 
-				python3 $BIN/cluster2matrix.py $clstr_file $taxo 
-				compute_evaluation $prefix.$tool.id$id
-				echo -e "$tool\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$recall\t$precision\t$ari" >> $output_file
-			else
-				echo "[WARNING] $clstr_file doesn't exists."  
-			fi 
-			if [[ -f $clstr_acc_file ]]; then 
-				echo "* Number of clusters (accurate)..."
-				treatment=$(python3 $BIN/treat_clstr.py $clstr_acc_file) 
-				total_clusters=$(echo $treatment | cut -f 1 -d " ") 
-				singletons=$(echo $treatment | cut -f 2 -d " ") 
-				pairs=$(echo $treatment | cut -f 3 -d " ") 
-				echo "* Compute matrix (accurate)..." 
-				python3 $BIN/cluster2matrix.py $clstr_acc_file $taxo 
-				compute_evaluation $prefix.$tool.accurate.id$id
-				echo -e "$tool\t$prefix\taccurate\t$id\t$total_clusters\t$singletons\t$pairs\t$recall\t$precision\t$ari" >> $output_file
-			else
-				echo "[WARNING] $clstr_acc_file doesn't exists."  
-			fi
-		done
-	done 	
+			python3 $BIN/cluster2matrix.py $clstr_file $taxo 
+			compute_evaluation $prefix.$tool.id$id
+			echo -e "$tool\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$recall\t$precision\t$ari" >>$output_file
+		else
+			echo "[WARNING] $clstr_file doesn't exists."  
+		fi 
+	done
 }
 
 if [[ $# -ne 3 ]]; then 
@@ -203,6 +139,6 @@ source $BIN/common_functions.sh
 args_gestion
 
 output_file=$indir/$prefix.eval.tsv
-echo -e "tool\tsample\talgo\tthreshold\ttotal_clusters\tsingletons\tpairs\trecall\tprecision\tARI" > $output_file 
+echo -e "tool\tsample\talgo\tthreshold/d\ttotal_clusters\tsingletons\tpairs\trecall\tprecision\tARI" > $output_file 
 
 cluster_eval
