@@ -39,7 +39,7 @@ Evaluation is focused on ARI because it reflects recall and precision at same ti
 <img src="../clusteringEval_EVAL/test_SCLUST/ari_boxplot.png" width="500">
 
 **Singletons percentage Sclust clustering of 10 samples, with id between 95 and 99 and quality between 0 and 1**
-<img src="../clusteringEval_EVAL/test_SCLUST/singletons.png" width="500">
+<img src="../clusteringEval_EVAL/test_SCLUST/singletons_boxplot.png" width="500">
 
 * Sclust performs better with 97% threshold, in accurate or default mode. It's the threshold with less variability and with best ARI values, for each quality parameters.
 * Sclust is sensible to inputs. Results shows variability, mostly in default mode with quality over 0. 
