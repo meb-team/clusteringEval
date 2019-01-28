@@ -103,6 +103,7 @@ def create_dic_clusters_otumap(otumap,dic_reads_strains,wsingletons):
 	for l in f : 
 		cluster_nb+=1 
 		for ref in l.rstrip().split("\t")[1:]: 
+			ref=ref.split(";")[0]
 			taxo_ref=dic_reads_strains[ref] 
 			list_taxo.add(taxo_ref) 
 			add_ref_to_cluster(dic,cluster_nb,ref,taxo_ref) 
@@ -177,7 +178,7 @@ if file_format=="uc":
 	list_taxo,dic_clusters=create_dic_clusters_uc(sys.argv[1],dic_reads_strains,True) 
 	list_taxo_nosing,dic_clusters_nosing=create_dic_clusters_uc(sys.argv[1],dic_reads_strains,False) 
 elif file_format=="fuzzyout": 
-	lixt_taxo,dic_clusters=create_dic_clusters_fuzzyout(sys.argv[1],dic_reads_strains,True) 
+	list_taxo,dic_clusters=create_dic_clusters_fuzzyout(sys.argv[1],dic_reads_strains,True) 
 	list_taxo_nosing,dic_clusters_nosing=create_dic_clusters_fuzzyout(sys.argv[1],dic_reads_strains,False)
 elif file_format=="otumap": 
 	list_taxo,dic_clusters=create_dic_clusters_otumap(sys.argv[1],dic_reads_strains,True)	
@@ -186,7 +187,5 @@ elif file_format=="clstr":
 	list_taxo,dic_clusters=create_dic_clusters_clstr(sys.argv[1],dic_reads_strains,True)	
 	list_taxo_nosing,dic_clusters_nosing=create_dic_clusters_clstr(sys.argv[1],dic_reads_strains,False)
 
-print(len(dic_clusters)) 
-print(len(dic_clusters_nosing)) 
 write_otumatrix(list_taxo,dic_clusters,sys.argv[1],".otumatrix") 	   
 write_otumatrix(list_taxo_nosing,dic_clusters_nosing,sys.argv[1],".nosingletons.otumatrix") 	 
