@@ -45,6 +45,11 @@ Evaluation is focused on ARI because it reflects recall and precision at same ti
 |Tool|Mean total clusters|Sd total clusters|Mean clusters > 1|Sd clusters > 1| 
 |------|--------------|-----------------|------------|-------------|
 | CD-HIT | 725.9 | 4.53 | 682.8 | 6.05 |
+| MESHCLUST | 508.5 | 97.75 | 472.3 | 105.37 |
+| SCLUST | 736.7 | 3.59 | 695.9 | 6.64 |
+| SUMACLUST | 749.9 | 9.57 | 704.8 | 9.89 |
+| SWARM | 1294 | 27.87 | 731.6 | 7.83 |
+| VSEARCH | 736.7 | 3.59 | 695 | 6.06 |
 
 **Total clusters, clusters size > 1 for Sample01**  
 
