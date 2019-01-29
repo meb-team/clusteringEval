@@ -53,10 +53,6 @@ Evaluation is focused on ARI because it reflects recall and precision at same ti
 
 **Total clusters, clusters size > 1 for Sample01**  
 
-|Test|Test|
-|---|---|
-|0|1|
-
 |Tool|Total clusters|Clusters size > 1| 
 |------|--------------|-----------------|
 |CD-HIT|720|680|
