@@ -40,7 +40,7 @@ Evaluation is focused on ARI because it reflects recall and precision at same ti
 **Singletons percentage for clustering of 10 samples, with id 97 (d=1 for Swarm, weak id = 95 and quality = 0)**
 <img src="../clusteringEval_EVAL/tools_comparison/singletons_boxplot.png" width="500">
 
-**Total_clusters, clusters size > 1 for all samples**
+**Total_clusters, clusters size > 1 for all samples**   
 |Tool|Mean total clusters|Sd total clusters|Mean clusters > 1|Sd clusters >1| 
 |------|--------------|-----------------|
 |CD-HIT|725.9|4.53|682.8|6.05|
@@ -50,7 +50,7 @@ Evaluation is focused on ARI because it reflects recall and precision at same ti
 |SWARM|1294|27.87|731.6|7.83|
 |VSEARCH|736.7|3.59|695|6.06|
 
-**Total clusters, clusters size > 1 for Sample01** 
+**Total clusters, clusters size > 1 for Sample01**  
 |Tool|Total clusters|Clusters size > 1| 
 |------|--------------|-----------------|
 |CD-HIT|720|680|
