@@ -40,9 +40,8 @@ Evaluation is focused on ARI because it reflects recall and precision at same ti
 **Singletons percentage for clustering of 10 samples, with id 97 (d=1 for Swarm, weak id = 95 and quality = 0)**
 <img src="../clusteringEval_EVAL/tools_comparison/singletons_boxplot.png" width="500">
 
-* MeshClust has lower ARI than other tools. Swarm has the best ARI. Sclust has ARI slightly lower than Vsearch (median X vs median X). 
-* But Sclust produces the least singletons clusters, in proportion and singletons is something we want to avoid. 
-* SWARM has the best ARI because it has high precision but low recall (median). So strains are splitted between clusters.
+* MeshClust has lower ARI than other tools (median 0.82). Swarm has the best ARI (median 0.99). Sclust has ARI slightly lower than Vsearch (median 0.96 for sclust and median 0.97 for vsearch). 
+* But Sclust produces the least singletons clusters in proportion (median 5.6 %) and singletons is something we want to avoid. 
 * MeshClust similarity calculation with learning doesn't work good in this dataset. When we used just alignment (option --align), evaluation parameters are better and similar to other tools, but this option requires a lot of calculation time.
 
 
