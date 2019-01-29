@@ -44,6 +44,7 @@ Evaluation is focused on ARI because it reflects recall and precision at same ti
 
 |Tool|Mean total clusters|Sd total clusters|Mean clusters > 1|Sd clusters > 1| 
 |------|--------------|-----------------|------------|-------------|
+| CD-HIT | 725.9 | 4.53 | 682.8 | 6.05 |
 
 **Total clusters, clusters size > 1 for Sample01**  
 
