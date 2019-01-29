@@ -40,6 +40,28 @@ Evaluation is focused on ARI because it reflects recall and precision at same ti
 **Singletons percentage for clustering of 10 samples, with id 97 (d=1 for Swarm, weak id = 95 and quality = 0)**
 <img src="../clusteringEval_EVAL/tools_comparison/singletons_boxplot.png" width="500">
 
+**Total_clusters, clusters size > 1 for all samples**
+|Tool|Mean total clusters|Sd total clusters|Mean clusters > 1|Sd clusters >1| 
+|------|--------------|-----------------|
+|CD-HIT|725.9|4.53|682.8|6.05|
+|MESHCLUST|508.5|97.75|472.3|105.37|
+|SCLUST|736.7|3.59|695.9|6.64|
+|SUMACLUST|749.9|9.57|704.8|9.89|
+|SWARM|1294|27.87|731.6|7.83|
+|VSEARCH|736.7|3.59|695|6.06|
+
+**Total clusters, clusters size > 1 for Sample01** 
+|Tool|Total clusters|Clusters size > 1| 
+|------|--------------|-----------------|
+|CD-HIT|720|680|
+|MESHCLUST|610|572|
+|SCLUST|734|696|
+|SUMACLUST|725|685|
+|SWARM|1278|729|
+|VSEARCH|734|694|
+
+Other samples values can be found on nb_clusters.tsv 
+
 * MeshClust has lower ARI than other tools (median 0.82). Swarm has the best ARI (median 0.99). Sclust has ARI slightly lower than Vsearch (median 0.96 for sclust and median 0.97 for vsearch). 
 * But Sclust produces the least singletons clusters in proportion (median 5.6 %) and singletons is something we want to avoid. 
 * MeshClust similarity calculation with learning doesn't work good in this dataset. When we used just alignment (option --align), evaluation parameters are better and similar to other tools, but this option requires a lot of calculation time.
