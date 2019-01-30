@@ -11,8 +11,8 @@ All launch commands are given in clusteringEval_EVAL/tools_comparison/commands.s
 
 ### Data preparation 
 Sequencing simulation from FROGS contains chimeras reads, identified by the presence of two reference in fastq header. This chimera reads are removed with homemade script `exclude_chimeras.py`. 
-Then, reads are deduplicated with `vsearch`.  
-Taxonomy is treated with homemade script `frogs_taxo.py` which allows to better presentation of taxonomy present in fastq header.
+Then, reads are deduplicated with `vsearch` and taxonomy is treated with homemade script `frogs_taxo.py` which allows to better presentation of taxonomy present in fastq header.
+All preprocessing steps can be done by launching `preprocessing.sh`.
 
 ### Clustering  
 CD-HIT, Vsearch and MeshClust are launched with threshold id of 97%. Sclust is launched with id of 97, weak id of 95 and quality of 0, paramters determined as best previously. Swarm is launch with default parameters (d=1) as advised in its publication. Tools are launched for the 10 samples. 
@@ -30,6 +30,8 @@ Precision, recall and ARI definitions and computation are the same used in vsear
 Homemade script `clusteringEval_eval.sh` launchs all evaluation parameters calculation from previous clusterings.  
 
 ## Results 
+
+Preprocessing stats are given in [clusteringEval_EVAL/tools_comparison/all_samples-1000sp-Powerlaw.preprocessing_stats.tsv](../clusteringEval_EVAL/tools_comparison/all_samples-1000sp-Powerlaw.preprocessing_stats.tsv)
 
 All graphics and raw results are in clusteringEval_EVAL/tools_comparison. Graphics are obtained with R script `clusteringEval_graphs.R` (.pdf for graphics and .tsv for raw results). 
 Evaluation is focused on ARI because it reflects recall and precision at same time. 
@@ -59,8 +61,8 @@ Detailed evaluation values for each sample can be found on [clusteringEval_EVAL/
 
 * MeshClust has lower ARI than other tools (median 0.82). Swarm has the best ARI (median 0.99). Sclust has ARI slightly lower than Vsearch (median 0.96 for sclust and median 0.97 for vsearch). 
 * But Sclust produces the least singletons clusters in proportion (median 5.6 %) and singletons is something we want to avoid. 
-* Sclust is also tool with most singletons with size >= 0.005% of reads, so it creates clusters with more sequences, and this clusters are almost as "correct" as vsearch. 
-* MeshClust similarity calculation with learning doesn't work good in this dataset. When we used just alignment (option --align), evaluation parameters are better and similar to other tools, but this option requires a lot of calculation time.
+* Sclust is also tool with most singletons with size >= 0.05% of reads, so it creates clusters with more sequences, and this clusters are almost as "correct" as vsearch. 
+* MeshClust similarity calculation with learning doesn't work good in this dataset. When we used just alignment (option --align), evaluation parameters are better and similar to other tools (for sample01 at id 97, ARI is 0.75 with default mode and 0.95 with align mode), but this option requires a lot of calculation time.
 
 
 
