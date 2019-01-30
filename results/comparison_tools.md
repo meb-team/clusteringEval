@@ -46,7 +46,7 @@ Evaluation is focused on ARI because it reflects recall and precision at same ti
 **Mean of total clusters, clusters with no singletons and clusters with size > 0.05% of reads for all samples**   
 
 |Tool| Mean total clusters | Mean clusters size > 1 | Mean clusters size > 0.05% of reads | 
-|------|--------------|-----------------|------------|-------------|
+|------|--------------|-----------------|------------|
 | CD-HIT | 725.9 |  682.8 | 255.9 |
 | MESHCLUST | 508.5 | 472.3 | 196.2 |
 | SCLUST | 736.7 | 695.9 | 263.9 |
