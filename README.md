@@ -16,12 +16,12 @@ You must have clustering tools installed and present in your $PATH.
 * [VSEARCH](https://github.com/torognes/vsearch). Alias : `vsearch`
 
 ### References 
-* Escudié, F., Auer, L., Bernard, M., Mariadassou, M., Cauquil, L., Vidal, K., ... & Pascal, G. (2017). *FROGS: find, rapidly, OTUs with galaxy solution.* Bioinformatics, 34(8), 1287-1294.
-* James, B. T., Luczak, B. B., & Girgis, H. Z. (2018). *MeShClust: an intelligent tool for clustering DNA sequences.* Nucleic acids research.
-* Li, W., & Godzik, A. (2006). *Cd-hit: a fast program for clustering and comparing large sets of protein or nucleotide sequences.* Bioinformatics, 22(13), 1658-1659.  
-* Mahé, F., Rognes, T., Quince, C., de Vargas, C., & Dunthorn, M. (2014). *Swarm: robust and fast clustering method for amplicon-based studies.* PeerJ, 2, e593.  
-* Rognes, T., Flouri, T., Nichols, B., Quince, C., & Mahé, F. (2016). *VSEARCH: a versatile open source tool for metagenomics.* PeerJ, 4, e2584.  
-* Zou, Q., Lin, G., Jiang, X., Liu, X., & Zeng, X. (2018). *Sequence clustering in bioinformatics: an empirical study*. Briefings in bioinformatics. 
+* Escudié, F., Auer, L., Bernard, M., Mariadassou, M., Cauquil, L., Vidal, K., ... & Pascal, G. (2017). **FROGS: find, rapidly, OTUs with galaxy solution.** Bioinformatics, 34(8), 1287-1294.
+* James, B. T., Luczak, B. B., & Girgis, H. Z. (2018). **MeShClust: an intelligent tool for clustering DNA sequences.** Nucleic acids research.
+* Li, W., & Godzik, A. (2006). **Cd-hit: a fast program for clustering and comparing large sets of protein or nucleotide sequences.** Bioinformatics, 22(13), 1658-1659.  
+* Mahé, F., Rognes, T., Quince, C., de Vargas, C., & Dunthorn, M. (2014). **Swarm: robust and fast clustering method for amplicon-based studies.** PeerJ, 2, e593.  
+* Rognes, T., Flouri, T., Nichols, B., Quince, C., & Mahé, F. (2016). **VSEARCH: a versatile open source tool for metagenomics.** PeerJ, 4, e2584.  
+* Zou, Q., Lin, G., Jiang, X., Liu, X., & Zeng, X. (2018). **Sequence clustering in bioinformatics: an empirical study**. Briefings in bioinformatics. 
 
 
 
