@@ -36,10 +36,10 @@ All graphics and raw results are in [clusteringEval_RESULTS/test_SCLUST](cluster
 Evaluation is focused on ARI because it reflects recall and precision at same time. 
 
 **ARI for Sclust clustering of 10 samples, with id between 95 and 99 and quality between 0 and 1**
-<img src="../clusteringEval_EVAL/test_SCLUST/ari_boxplot.png" width="500">
+<img src="../clusteringEval_RESULTS/test_SCLUST/ari_boxplot.png" width="500">
 
 **Singletons percentage Sclust clustering of 10 samples, with id between 95 and 99 and quality between 0 and 1**
-<img src="../clusteringEval_EVAL/test_SCLUST/singletons_boxplot.png" width="500">
+<img src="../clusteringEval_RESULTS/test_SCLUST/singletons_boxplot.png" width="500">
 
 Detailed values for all samples and parameters are given in [clusteringEval_RESULTS/test_SCLUST/testSclust.eval.tsv](../clusteringEval_RESULTS/test_SCLUST/testSclust.eval.tsv)
 

@@ -37,13 +37,13 @@ All graphics and raw results are in [clusteringEval_RESULTS/tools_comparison](..
 Evaluation is focused on ARI because it reflects recall and precision at same time. 
 
 **ARI for clustering of 10 samples, with id 97 (d=1 for Swarm, weak id = 95 and quality = 0)**
-<img src="../clusteringEval_EVAL/tools_comparison/ari_boxplot.png" width="500">
+<img src="../clusteringEval_RESULTS/tools_comparison/ari_boxplot.png" width="500">
 
 **Singletons percentage for clustering of 10 samples, with id 97 (d=1 for Swarm, weak id = 95 and quality = 0)**
-<img src="../clusteringEval_EVAL/tools_comparison/singletons_boxplot.png" width="500">
+<img src="../clusteringEval_RESULTS/tools_comparison/singletons_boxplot.png" width="500">
 
 **Number of clusters with size >= 0.05 of reads for all samples**
-<img src="../clusteringEval_EVAL/tools_comparison/clusters_005_boxplot.png" width="500">
+<img src="../clusteringEval_RESULTS/tools_comparison/clusters_005_boxplot.png" width="500">
 
 **Mean of total clusters, clusters with no singletons and clusters with size > 0.05% of reads for all samples**   
 
