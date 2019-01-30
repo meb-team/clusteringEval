@@ -1,3 +1,4 @@
+Sample	Raw reads	After chimeras removal	After dereplication	Number of strains
 sample01-1000sp-Powerlaw	100000	79820	24037	962
 sample02-1000sp-Powerlaw	100000	79945	24081	966
 sample03-1000sp-Powerlaw	100000	80087	24183	962
