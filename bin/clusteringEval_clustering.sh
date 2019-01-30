@@ -89,7 +89,7 @@ id=97
 perc_id=$(echo $id | awk '{print $1/100}') 
 echo "* Cluster $input with cd-hit at id $id..."
 if [[ ! -f $dir/$prefix.cdhit.id$id.clstr ]]; then 
-	cd-hit-est -i $input -o $dir/$prefix.cdhit.id$id -c $perc_id -M 0 -T $THREADS
+	/usr/bin/time -f "Memory %M\nTime %U" -o $dir/$prefix.cdhit.id$id.time.txt cd-hit-est -i $input -o $dir/$prefix.cdhit.id$id -c $perc_id -M 0 -T $THREADS
 else 
 	echo "Results already exists" 
 fi 	
@@ -101,7 +101,7 @@ id=97
 perc_id=$(echo $id | awk '{print $1/100}') 
 echo "* Cluster $input with meshclust at id $id..."
 if [[ ! -f $dir/$prefix.meshclust.id$id.clstr ]]; then 
-	meshclust $input --id $perc_id --threads $THREADS --output $dir/$prefix.meshclust.id$id.clstr  
+	/usr/bin/time -f "Memory %M\nTime %U" -o $dir/$prefix.meshclust.id$id.time.txt meshclust $input --id $perc_id --threads $THREADS --output $dir/$prefix.meshclust.id$id.clstr  
 else 
 	echo "Results already exists" 
 fi 		
@@ -117,7 +117,7 @@ perc_id=$(echo $id | awk '{print $1/100}')
 perc_wid=$(echo $wid | awk '{print $1/100}') 
 echo "* Cluster $input with sclust at id $id, weak id $wid and quality $qual..."
 if [[ ! -f $dir/$prefix.sclust.id$id.wid$wid.qual$qual.fuzzyout ]]; then 
-	sclust --cluster_fuzzy $input --id $perc_id --weak_id $perc_wid --quality $qual --threads $THREADS --fuzzyout $dir/$prefix.sclust.id$id.wid$wid.qual$qual.fuzzyout 
+	/usr/bin/time -f "Memory %M\nTime %U" -o $dir/$prefix.sclust.id$id.wid$wid.qual$qual.time.txt sclust --cluster_fuzzy $input --id $perc_id --weak_id $perc_wid --quality $qual --threads $THREADS --fuzzyout $dir/$prefix.sclust.id$id.wid$wid.qual$qual.fuzzyout 
 	mv RepartitionClust.txt $dir/$prefix.sclust.id$id.wid$wid.qual$qual.repartitionClust.txt 
 else 
 	echo "Results already exists" 
@@ -133,7 +133,7 @@ id=97
 perc_id=$(echo $id | awk '{print $1/100}') 
 echo "* Cluster $input with sumaclust at id $id..."
 if [[ ! -f $dir/$prefix.sumaclust.id$id.otumap ]]; then 
-	sumaclust -t $perc_id -p $THREADS -O $dir/$prefix.sumaclust.id$id.otumap -F $dir/$prefix.sumaclust.id$id.fasta $input
+	/usr/bin/time -f "Memory %M\nTime %U" -o $dir/$prefix.sumaclust.id$id.time.txt sumaclust -t $perc_id -p $THREADS -O $dir/$prefix.sumaclust.id$id.otumap -F $dir/$prefix.sumaclust.id$id.fasta $input
 else 
 	echo "Results already exists." 
 fi 	
@@ -144,7 +144,7 @@ dir=$outdir/swarm
 mkdir -p $dir 
 echo "* Cluster $input with swarm with d=$d..." 
 if [[ ! -f $dir/$prefix.swarm.uc ]]; then 
-	swarm $input -t $THREADS -u $dir/$prefix.swarm.uc -z > $dir/$prefix.swarm.otumap 
+	/usr/bin/time -f "Memory %M\nTime %U" -o $dir/$prefix.swarm.time.txt swarm $input -t $THREADS -u $dir/$prefix.swarm.uc -z > $dir/$prefix.swarm.otumap 
 else 
 	echo "Results already exists." 
 fi
@@ -156,7 +156,7 @@ id=97
 perc_id=$(echo $id | awk '{print $1/100}') 
 echo "* Cluster $input with vsearch at id $id..."
 if [[ ! -f $dir/$prefix.vsearch.id$id.uc ]]; then 
-	vsearch --cluster_fast $input --id $perc_id --threads $THREADS --uc $dir/$prefix.vsearch.id$id.uc 
+	/usr/bin/time -f "Memory %M\nTime %U" -o $dir/$prefix.vsearch.id$id.time.txt vsearch --cluster_fast $input --id $perc_id --threads $THREADS --uc $dir/$prefix.vsearch.id$id.uc 
 else 
 	echo "Results already exists." 
 fi 
