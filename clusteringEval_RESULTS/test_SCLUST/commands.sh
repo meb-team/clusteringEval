@@ -24,7 +24,7 @@ bash bin/combined_files.sh clusteringEval_TEST_SCLUST/sclust_exact/*1000sp*.tsv>
 bash bin/combined_files.sh clusteringEval_TEST_SCLUST/sclust/all_samples-1000sp-Powerlaw.noChimeras.derep.eval.tsv clusteringEval_TEST_SCLUST/sclust/all_samples-1000sp-Powerlaw.noChimeras.derep.exact_eval.tsv > testSclust.eval.tsv
 
 #3. Graphical representation 
-
+mkdir -p clusteringEval_RESULTS 
 Rscript bin/clusteringEval_graphs.R
 
 
