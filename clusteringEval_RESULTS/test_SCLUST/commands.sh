@@ -29,6 +29,7 @@ bash bin/combined_files.sh clusteringEval_TEST_SCLUST/sclust/all_samples-1000sp-
 
 #3. Graphical representation 
 mkdir -p clusteringEval_RESULTS 
+mkdir -p clusteringEval_RESULTS/test_SCLUST
 Rscript bin/clusteringEval_graphs.R
 
 

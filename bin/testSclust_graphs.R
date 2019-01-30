@@ -25,46 +25,46 @@ precision_boxplot=ggplot(f,aes(x=threshold.d,y=precision,fill=quality))+geom_box
 singletons_boxplot=ggplot(f,aes(x=threshold.d,y=p_singletons,fill=quality))+geom_boxplot()+facet_wrap(~algo,ncol=1)+labs(fill="Quality",x="Clustering threshold (%)",y="Singletons (%)")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),legend.title=element_text(size=16),legend.text=element_text(size=14),strip.text.x=element_text(size=16))
 
 
-pdf("clusteringEval_EVAL/test_SCLUST/ari_all.pdf",width=12)
+pdf("clusteringEval_RESULTS/test_SCLUST/ari_all.pdf",width=12)
 ari_all 
 dev.off() 
 
-pdf("clusteringEval_EVAL/test_SCLUST/recall_all.pdf",width=12)
+pdf("clusteringEval_RESULTS/test_SCLUST/recall_all.pdf",width=12)
 recall_all 
 dev.off()
 
-pdf("clusteringEval_EVAL/test_SCLUST/precision_all.pdf",width=12)
+pdf("clusteringEval_RESULTS/test_SCLUST/precision_all.pdf",width=12)
 precision_all 
 dev.off()
 
-pdf("clusteringEval_EVAL/test_SCLUST/singletons_all.pdf",width=12)
+pdf("clusteringEval_RESULTS/test_SCLUST/singletons_all.pdf",width=12)
 singletons_all 
 dev.off()
 
-pdf("clusteringEval_EVAL/test_SCLUST/ari_boxplot.pdf",height=10)
+pdf("clusteringEval_RESULTS/test_SCLUST/ari_boxplot.pdf",height=10)
 ari_boxplot 
 dev.off() 
 
-png("clusteringEval_EVAL/test_SCLUST/ari_boxplot.png",width=800,height=800)
+png("clusteringEval_RESULTS/test_SCLUST/ari_boxplot.png",width=800,height=800)
 ari_boxplot
 dev.off() 
 
-pdf("clusteringEval_EVAL/test_SCLUST/recall_boxplot.pdf")
+pdf("clusteringEval_RESULTS/test_SCLUST/recall_boxplot.pdf")
 recall_boxplot 
 dev.off()
 
-pdf("clusteringEval_EVAL/test_SCLUST/precision_boxplot.pdf")
+pdf("clusteringEval_RESULTS/test_SCLUST/precision_boxplot.pdf")
 precision_boxplot 
 dev.off()
 
-pdf("clusteringEval_EVAL/test_SCLUST/singletons_boxplot.pdf")
+pdf("clusteringEval_RESULTS/test_SCLUST/singletons_boxplot.pdf")
 singletons_boxplot 
 dev.off()
 
-png("clusteringEval_EVAL/test_SCLUST/singletons_boxplot.png",width=800,height=800)
+png("clusteringEval_RESULTS/test_SCLUST/singletons_boxplot.png",width=800,height=800)
 singletons_boxplot
 dev.off() 
 
-save.image(file="clusteringEval_EVAL/test_SCLUST/test_SCLUST.Rdata") 
+save.image(file="clusteringEval_RESULTS/test_SCLUST/test_SCLUST.Rdata") 
 
 

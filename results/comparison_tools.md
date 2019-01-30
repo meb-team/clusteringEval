@@ -7,7 +7,7 @@ Sclust is compared with 5 others clustering tools : CD-HIT, SWARM, VSEARCH, MESH
 To compare tools, data for FROGS's evaluation are used (http://frogs.toulouse.inra.fr/). Synthethic data with powerlaw distribution and 1000 strains are used (http://frogs.toulouse.inra.fr/data_to_test_frogs/assessment_datasets/datasets_silva/1000sp/dataset_1/V4V4/powerlaw/). It's 16S sequencing sequencing simulation (V4 region). Different samples contains same strains but abundance levels varies (for example in sample 1 you will have strain1 in very high abundance and strain2 in low abundance and it will be the opposite in sample 2.). Dataset_1 is selected arbitrarily.
 
 ## Methods 
-All launch commands are given in clusteringEval_EVAL/tools_comparison/commands.sh 
+All launch commands are given in [clusteringEval_RESULTS/tools_comparison/commands.sh](../clusteringEval_RESULTS/tools_comparison/commands.sh) 
 
 ### Data preparation 
 Sequencing simulation from FROGS contains chimeras reads, identified by the presence of two reference in fastq header. This chimera reads are removed with homemade script `exclude_chimeras.py`. 
@@ -31,9 +31,9 @@ Homemade script `clusteringEval_eval.sh` launchs all evaluation parameters calcu
 
 ## Results 
 
-Preprocessing stats are given in [clusteringEval_EVAL/tools_comparison/all_samples-1000sp-Powerlaw.preprocessing_stats.tsv](../clusteringEval_EVAL/tools_comparison/all_samples-1000sp-Powerlaw.preprocessing_stats.tsv)
+Preprocessing stats are given in [clusteringEval_RESULTS/tools_comparison/all_samples-1000sp-Powerlaw.preprocessing_stats.tsv](../clusteringEval_RESULTS/tools_comparison/all_samples-1000sp-Powerlaw.preprocessing_stats.tsv)
 
-All graphics and raw results are in clusteringEval_EVAL/tools_comparison. Graphics are obtained with R script `clusteringEval_graphs.R` (.pdf for graphics and .tsv for raw results). 
+All graphics and raw results are in [clusteringEval_RESULTS/tools_comparison](../clusteringEval_RESULTS/tools_comparison). Graphics are obtained with R script `clusteringEval_graphs.R` (.pdf for graphics and .tsv for raw results). 
 Evaluation is focused on ARI because it reflects recall and precision at same time. 
 
 **ARI for clustering of 10 samples, with id 97 (d=1 for Swarm, weak id = 95 and quality = 0)**
@@ -57,7 +57,7 @@ Evaluation is focused on ARI because it reflects recall and precision at same ti
 | VSEARCH | 736.7 | 695 | 262.2 |
 
 
-Detailed evaluation values for each sample can be found on [clusteringEval_EVAL/tools_comparison/tools_comparison_eval.tsv](../clusteringEval_EVAL/tools_comparison/tools_comparison_eval.tsv)  
+Detailed evaluation values for each sample can be found on [clusteringEval_RESULTS/tools_comparison/tools_comparison_eval.tsv](../clusteringEval_RESULTS/tools_comparison/tools_comparison_eval.tsv)  
 
 * MeshClust has lower ARI than other tools (median 0.82). Swarm has the best ARI (median 0.99). Sclust has ARI slightly lower than Vsearch (median 0.96 for sclust and median 0.97 for vsearch). 
 * But Sclust produces the least singletons clusters in proportion (median 5.6 %) and singletons is something we want to avoid. 
