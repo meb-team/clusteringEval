@@ -45,6 +45,9 @@ Evaluation is focused on ARI because it reflects recall and precision at same ti
 **Number of clusters with size >= 0.05 of reads for all samples**
 <img src="../clusteringEval_RESULTS/tools_comparison/clusters_005_boxplot.png" width="500">
 
+**Execution time** 
+<img src="../clusteringEval_RESULTS/tools_comparison/time_boxplot.png" width="500">
+
 **Mean of total clusters, clusters with no singletons and clusters with size > 0.05% of reads for all samples**   
 
 |Tool| Mean total clusters | Mean clusters size > 1 | Mean clusters size > 0.05% of reads | 

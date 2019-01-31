@@ -10,19 +10,23 @@ new_f=data.frame(tool=f$tool,sample=f$sample,total_clusters=f$total_clusters,clu
 
 write.table(new_f,file="clusteringEval_RESULTS/tools_comparison/tools_comparison_eval.tsv",sep="\t",quote=FALSE,row.names=FALSE)
 
-ari_boxplot=ggplot(f,aes(x=tool,y=ARI,fill=tool))+geom_boxplot()+labs(fill="Tools",y="Adjusted Rand Index")+theme(axis.text.x=element_blank(),axis.title.x=element_blank(),axis.ticks.x=element_blank(),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),legend.title=element_text(size=16),legend.text=element_text(size=14),strip.text.x=element_text(size=16))
+ari_boxplot=ggplot(f,aes(x=tool,y=ARI,fill=tool))+geom_boxplot()+labs(x="Tools",y="Adjusted Rand Index")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16))+guides(fill=FALSE)
 
-precision_boxplot=ggplot(f,aes(x=tool,y=precision,fill=tool))+geom_boxplot()+labs(fill="Tools",y="Precision")+theme(axis.text.x=element_blank(),axis.title.x=element_blank(),axis.ticks.x=element_blank(),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),legend.title=element_text(size=16),legend.text=element_text(size=14),strip.text.x=element_text(size=16))
+precision_boxplot=ggplot(f,aes(x=tool,y=precision,fill=tool))+geom_boxplot()+labs(x="Tools",y="Precision")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16))+guides(fill=FALSE)
 
-recall_boxplot=ggplot(f,aes(x=tool,y=recall,fill=tool))+geom_boxplot()+labs(fill="Tools",y="Recall")+theme(axis.text.x=element_blank(),axis.title.x=element_blank(),axis.ticks.x=element_blank(),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),legend.title=element_text(size=16),legend.text=element_text(size=14),strip.text.x=element_text(size=16)) 
+recall_boxplot=ggplot(f,aes(x=tool,y=recall,fill=tool))+geom_boxplot()+labs(x="Tools",y="Recall")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16))+guides(fill=FALSE)
 
-total_clusters_boxplot=ggplot(f,aes(x=tool,y=total_clusters,fill=tool))+geom_boxplot()+labs(fill="Tools",y="Number of clusters")+theme(axis.text.x=element_blank(),axis.title.x=element_blank(),axis.ticks.x=element_blank(),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),legend.title=element_text(size=16),legend.text=element_text(size=14),strip.text.x=element_text(size=16))
+total_clusters_boxplot=ggplot(f,aes(x=tool,y=total_clusters,fill=tool))+geom_boxplot()+labs(x="Tools",y="Number of clusters")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16))+guides(fill=FALSE)
 
-singletons_boxplot=ggplot(f,aes(x=tool,y=p_singletons,fill=tool))+geom_boxplot()+labs(fill="Tools",y="Singletons (%)",linetype="Algo")+theme(axis.text.x=element_blank(),axis.title.x=element_blank(),axis.ticks.x=element_blank(),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),legend.title=element_text(size=16),legend.text=element_text(size=14),strip.text.x=element_text(size=16))
+singletons_boxplot=ggplot(f,aes(x=tool,y=p_singletons,fill=tool))+geom_boxplot()+labs(x="Tools",y="Singletons (%)")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16))+guides(fill=FALSE)
 
-clusters_threshold_boxplot=ggplot(f,aes(x=tool,y=clusters_._0.05.reads,fill=tool))+geom_boxplot()+labs(fill="Tools",y="Number of clusters with size >= 0.05% of reads")+theme(axis.text.x=element_blank(),axis.title.x=element_blank(),axis.ticks.x=element_blank(),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),legend.title=element_text(size=16),legend.text=element_text(size=14),strip.text.x=element_text(size=16))
+clusters_threshold_boxplot=ggplot(f,aes(x=tool,y=clusters_._0.05.reads,fill=tool))+geom_boxplot()+labs(x="Tools",y="Number of clusters with size >= 0.05% of reads")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16))+guides(fill=FALSE)
 
-clusters_no_singletons_boxplot=ggplot(f,aes(x=tool,y=clusters_no_singletons,fill=tool))+geom_boxplot()+labs(fill="Tools",y="Number of clusters with size > 1")+theme(axis.text.x=element_blank(),axis.title.x=element_blank(),axis.ticks.x=element_blank(),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),legend.title=element_text(size=16),legend.text=element_text(size=14),strip.text.x=element_text(size=16))
+clusters_no_singletons_boxplot=ggplot(f,aes(x=tool,y=clusters_no_singletons,fill=tool))+geom_boxplot()+labs(x="Tools",y="Number of clusters with size > 1")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16))+guides(fill=FALSE)
+
+time_boxplot=ggplot(f,aes(x=tool,y=Time.s.,fill=tool))+geom_boxplot()+labs(x="Tools",y="Time (s)")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16))+guides(fill=FALSE)
+
+memory_boxplot=ggplot(f,aes(x=tool,y=Memory.kb./1000,fill=tool))+geom_boxplot()+labs(x="Tools",y="Memory (Mb)")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16))+guides(fill=FALSE)
 
 pdf("clusteringEval_RESULTS/tools_comparison/ari_boxplot.pdf")
 ari_boxplot
@@ -63,3 +67,16 @@ dev.off()
 png("clusteringEval_RESULTS/tools_comparison/clusters_005_boxplot.png")
 clusters_threshold_boxplot
 dev.off() 
+
+pdf("clusteringEval_RESULTS/tools_comparison/time_boxplot.pdf") 
+time_boxplot
+dev.off() 
+
+png("clusteringEval_RESULTS/tools_comparison/time_boxplot.png")
+time_boxplot
+dev.off() 
+
+pdf("clusteringEval_RESULTS/tools_comparison/memory_boxplot.pdf") 
+memory_boxplot
+dev.off() 
+

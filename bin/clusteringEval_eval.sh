@@ -33,16 +33,20 @@ function cluster_eval(){
 	cd $indir/swarm 
 	echo -e "\n** swarm clustering..." 
 	uc_file=$prefix.swarm.uc
+	time_file=$prefix.swarm.time.txt
 	if [[ -f $uc_file ]]; then 
 		echo "* Number of clusters..."
 		total_clusters=$(awk '{if ($1 == "C") print}' $uc_file | wc -l) 
 		singletons=$(awk '{if ($1 == "C") print}' $uc_file | awk '{if ($3 == 1) print}' | wc -l)
 		pairs=$(awk '{if ($1 == "C") print}' $uc_file | awk '{if ($3 == 2) print}' | wc -l)
 		clusters005=$(awk '{if ($1 == "C")print}' $uc_file | awk '{if ($3 >= '$clusters_size_threshold') print}' | wc -l) 
+		echo "* Time & Memory..." 
+		memory=$(grep "Memory" $time_file | cut -f 2 -d " ")
+		time=$(grep "Time" $time_file | cut -f 2 -d " ")
 		echo "* Compute matrix..." 
 		python3 $BIN/cluster2matrix.py $uc_file $taxo 
 		compute_evaluation $prefix.swarm
-		echo -e "swarm\t$prefix\tdefault\t1\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari" >> $output_file 
+		echo -e "swarm\t$prefix\tdefault\t1\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory" >> $output_file 
 	else 
 		echo "[WARNING] $uc_file doesn't exists."
 	fi 		
@@ -51,16 +55,20 @@ function cluster_eval(){
 	id=97
 	echo -e "\n** vsearch clustering id=$id..."
 	uc_file=$prefix.vsearch.id$id.uc 
+	time_file=$prefix.vsearch.id$id.time.txt
 	if [[ -f $uc_file ]]; then 
 		echo "* Number of clusters..." 
 		total_clusters=$(awk '{if ($1 == "C") print}' $uc_file | wc -l) 
 		singletons=$(awk '{if ($1 == "C") print}' $uc_file | awk '{if ($3 == 1) print}' | wc -l)
 		pairs=$(awk '{if ($1 == "C") print}' $uc_file | awk '{if ($3 == 2) print}' | wc -l)
 		clusters005=$(awk '{if ($1 == "C")print}' $uc_file | awk '{if ($3 >= '$clusters_size_threshold') print}' | wc -l) 
+		echo "* Time & Memory..." 
+		memory=$(grep "Memory" $time_file | cut -f 2 -d " ")
+		time=$(grep "Time" $time_file | cut -f 2 -d " ")
 		echo "* Compute matrix..." 
 		python3 $BIN/cluster2matrix.py $uc_file $taxo 
 		compute_evaluation $prefix.vsearch.id$id 
-		echo -e "vsearch\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari" >> $output_file 
+		echo -e "vsearch\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory" >> $output_file 
 	else 
 		echo "[WARNING] $uc_file doesn't exists."
 	fi 
@@ -71,16 +79,20 @@ function cluster_eval(){
 	qual=0
 	echo -e "\n** sclust clustering id=$id, weak id=$wid, qual=$qual ..." 
 	fuzzyout_file=$prefix.sclust.id$id.wid$wid.qual$qual.fuzzyout 
+	time_file=$prefix.sclust.id$id.wid$wid.qual$qual.time.txt
 	if [[ -f $fuzzyout_file ]]; then 
 		echo "* Number of clusters..."
 		total_clusters=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort -u | wc -l)
 		singletons=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort | uniq -c | awk '{if ($1==1) print}' | wc -l)
 		pairs=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort | uniq -c | awk '{if ($1==2) print}' | wc -l)
 		clusters005=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort | uniq -c | awk '{if ($1>='$clusters_size_threshold') print}' | wc -l)
+		echo "* Time & Memory..." 
+		memory=$(grep "Memory" $time_file | cut -f 2 -d " ")
+		time=$(grep "Time" $time_file | cut -f 2 -d " ")
 		echo "* Compute matrix..." 
 		python3 $BIN/cluster2matrix.py $fuzzyout_file $taxo 
 		compute_evaluation $prefix.sclust.id$id.wid$wid.qual$qual
-		echo -e "sclust\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari" >> $output_file
+		echo -e "sclust\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory" >> $output_file
 	else 
 		echo "[WARNING] $fuzzyout_file doesn't exists/"
 	fi 	 
@@ -90,6 +102,7 @@ function cluster_eval(){
 	echo -e "\n** sumaclust clustering id=$id..." 
 	otumap_file=$prefix.sumaclust.id$id.otumap 
 	otumap_acc_file=$prefix.sumaclust.accurate.id$id.otumap 
+	time_file=$prefix.sumaclust.id$id.time.txt 
 	if [[ -f $otumap_file ]]; then 
 		echo "* Number of clusters..."
 		treatment=$(python3 $BIN/treat_otumap.py $otumap_file $clusters_size_threshold) 
@@ -97,10 +110,13 @@ function cluster_eval(){
 		singletons=$(echo $treatment | cut -f 2 -d " ") 
 		pairs=$(echo $treatment | cut -f 3 -d " ") 
 		clusters005=$(echo $treatment | cut -f 4 -d " ") 
+		echo "* Time & Memory..." 
+		memory=$(grep "Memory" $time_file | cut -f 2 -d " ")
+		time=$(grep "Time" $time_file | cut -f 2 -d " ")
 		echo "* Compute matrix..." 
 		python3 $BIN/cluster2matrix.py $otumap_file $taxo 
 		compute_evaluation $prefix.sumaclust.id$id
-		echo -e "sumaclust\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari" >> $output_file
+		echo -e "sumaclust\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory" >> $output_file
 	else 
 		echo "[WARNING] $otumap_file doesn't exists."
 	fi	
@@ -109,6 +125,7 @@ function cluster_eval(){
 		echo -e "\n** $tool clustering id=$id..." 
 		cd $indir/$tool 
 		clstr_file=$prefix.$tool.id$id.clstr 
+		time_file=$prefix.$tool.id$id.time.txt
 		if [[ -f $clstr_file ]]; then 
 			echo "* Number of clusters..."
 			treatment=$(python3 $BIN/treat_clstr.py $clstr_file $clusters_size_threshold) 
@@ -116,10 +133,13 @@ function cluster_eval(){
 			singletons=$(echo $treatment | cut -f 2 -d " ") 
 			pairs=$(echo $treatment | cut -f 3 -d " ") 
 			clusters005=$(echo $treatment | cut -f 4 -d " ") 
+			echo "* Time & Memory..." 
+			memory=$(grep "Memory" $time_file | cut -f 2 -d " ")
+			time=$(grep "Time" $time_file | cut -f 2 -d " ")
 			echo "* Compute matrix..." 
 			python3 $BIN/cluster2matrix.py $clstr_file $taxo 
 			compute_evaluation $prefix.$tool.id$id
-			echo -e "$tool\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari" >>$output_file
+			echo -e "$tool\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory" >>$output_file
 		else
 			echo "[WARNING] $clstr_file doesn't exists."  
 		fi 
@@ -144,7 +164,7 @@ source $BIN/common_functions.sh
 args_gestion
 
 output_file=$indir/$prefix.eval.tsv
-echo -e "tool\tsample\talgo\tthreshold/d\ttotal_clusters\tsingletons\tpairs\tclusters_>_0.05%reads\trecall\tprecision\tARI" > $output_file 
+echo -e "tool\tsample\talgo\tthreshold/d\ttotal_clusters\tsingletons\tpairs\tclusters_>_0.05%reads\trecall\tprecision\tARI\tTime(s)\tMemory(kb)" > $output_file 
 nb_reads=$(($(wc -l $taxo | cut -f 1 -d " ") - 1)) 
 clusters_size_threshold=$(echo $nb_reads | awk '{printf("%.0f",($1*0.05)/100)}') 
 cluster_eval

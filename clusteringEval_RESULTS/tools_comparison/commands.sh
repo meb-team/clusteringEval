@@ -25,7 +25,7 @@ done
 for i in 01 02 03 04 05 06 07 08 09 10; do 
 	bash bin/clusteringEval_eval.sh clusteringEval_TOOL_COMPARISON sample$i\-1000sp-Powerlaw.noChimeras.derep clusteringEval_DATA/sample$i\-1000sp-Powerlaw.noChimeras.derep.taxo.tsv 
 done 
-bash bin/combined_files.sh clusteringEval_TOOL_COMPARISON/*-1000sp-*.tsv > clusteringEval_TOOL_COMPARISON/all_samples-1000sp-Powerlaw.noChimeras.derep.eval.tsv
+bash bin/combined_files.sh clusteringEval_TOOL_COMPARISON/sample*-1000sp-*.tsv > clusteringEval_TOOL_COMPARISON/all_samples-1000sp-Powerlaw.noChimeras.derep.eval.tsv
 
 #4. Graphical représentation 
 mkdir -p clusteringEval_RESULTS
