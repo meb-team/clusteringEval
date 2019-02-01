@@ -47,3 +47,5 @@ ggsave(file="clusteringEval_RESULTS/tools_comparison/number_clusters.svg",number
 time_memory=grid.arrange(time_boxplot,memory_boxplot,ncol=1)
 ggsave(file="clusteringEval_RESULTS/tools_comparison/time_memory.svg",plot=time_memory,height=8) 
 
+save.image(file="clusteringEval_RESULTS/tools_comparison/tools_comparison.Rdata") 
+
