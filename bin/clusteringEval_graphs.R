@@ -45,5 +45,5 @@ ggsave(file="clusteringEval_RESULTS/tools_comparison/precision_recall.svg",plot=
 ggsave(file="clusteringEval_RESULTS/tools_comparison/singletons_boxplot.svg",plot=singletons_boxplot,width=8) 
 ggsave(file="clusteringEval_RESULTS/tools_comparison/number_clusters.svg",number_clusters_boxplot,height=8) 
 time_memory=grid.arrange(time_boxplot,memory_boxplot,ncol=1)
-ggsave(file="clusteringEval_RESULTS/tools_comparison/time_memory.svg",plot=time_memory,height=8) 
+ggsave(file="clusteringEval_RESULTS/tools_comparison/time_memory.svg",plot=time_memory,height=8)
 
