@@ -42,4 +42,4 @@ Precision, recall and ARI definitions and computation are the same used in vsear
 
 #### SCLUST vs other tools 
 
-<<img src="../clusteringEval_RESULTS/tools_comparison/ari_boxplot.svg" width="500">
+<img src="clusteringEval_RESULTS/tools_comparison/ari_boxplot.svg" width="500">
