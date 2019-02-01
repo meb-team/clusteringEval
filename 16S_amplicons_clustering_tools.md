@@ -4,13 +4,13 @@
 
 ### Data used for evaluation 
 
-To test SCLUST, data for FROGS's evaluation are used (http://frogs.toulouse.inra.fr/). Synthethic data with powerlaw distribution and 1000 strains are used (http://frogs.toulouse.inra.fr/data_to_test_frogs/assessment_datasets/datasets_silva/1000sp/dataset_1/V4V4/powerlaw/). It's 16S sequencing sequencing simulation (V4 region). Powerlaw distribution is more realistic with few strain with high abundance and other strains with low abundance. Dataset_1 is selected arbitrarily. Dataset contains 10 samples with same strains but different abundance levels. (for example in sample 1 you will have strain1 in very high abundance and strain2 in low abundance and it will be the opposite in sample 2.). 20 most abundant strains with reads count for each sample is given in [Supplementary Figure 1]()
+To test SCLUST, data for FROGS's evaluation are used (http://frogs.toulouse.inra.fr/). Synthethic data with powerlaw distribution and 1000 strains are used (http://frogs.toulouse.inra.fr/data_to_test_frogs/assessment_datasets/datasets_silva/1000sp/dataset_1/V4V4/powerlaw/). It's 16S sequencing sequencing simulation (V4 region). Powerlaw distribution is more realistic with few strain with high abundance and other strains with low abundance. Dataset_1 is selected arbitrarily. Dataset contains 10 samples with same strains but different abundance levels. (for example in sample 1 you will have strain1 in very high abundance and strain2 in low abundance and it will be the opposite in sample 2.). 20 most abundant strains with reads count for each sample is given in [Supplementary Figures 1](clusteringEval_RESULTS/abundance_samples.pdf)
 
 Sequencing simulation from FROGS contains chimeras reads, identified by the presence of two reference in fastq header. This chimera reads are removed with homemade script `exclude_chimeras.py`. 
 Then, reads are deduplicated with `vsearch`.  
 Taxonomy is treated with homemade script `frogs_taxo.py` which allows to better presentation of taxonomy present in fastq header.
 
-Preprocessing stats are in [Supplementary Table 1](clusteringEval_RESULTS/tools_comparison/all_samples-1000sp-Powerlaw.preprocessing_stats.tsv)
+Preprocessing stats are in [Supplementary Table 1](clusteringEval_RESULTS/all_samples-1000sp-Powerlaw.preprocessing_stats.tsv)
 
 ### Clustering 
 
@@ -42,6 +42,16 @@ Precision, recall and ARI definitions and computation are the same used in vsear
 
 #### SCLUST test 
 
+<img src="clusteringEval_RESULTS/test_SCLUST/ari_boxplot.svg" width="500">
+
+<img src="clusteringEval_RESULTS/test_SCLUST/singletons_boxplot.svg" width="500">
+
+Recall and precision are given in [Supplementary Figure X](clusteringEval_RESULTS/test_SCLUST/recall_precision_boxplot.svg)
+
+Detailed values for all samples and parameters are given in [Supplementary Table 2](clusteringEval_RESULTS/test_SCLUST/testSclust.eval.tsv)
+
+Figures with all samples separated are given in [Supplementary Figure X (ARI)](clusteringEval_RESULTS/test_SCLUSt/ari_all.svg), [Supplementary Figure X (Recall/Precision)](clusteringEval_RESULTS/test_SCLUSt/recall_precision_all.svg) and [Supplementary Figure X (Singletons)](clusteringEval_RESULTS/test_SCLUSt/singletons_all.svg)
+
 #### SCLUST vs other tools 
 
 <img src="clusteringEval_RESULTS/tools_comparison/ari_boxplot.svg" width="500">
@@ -60,5 +70,7 @@ Recall and precision are in [Supplementary Figure 2](clusteringEval_RESULTS/tool
 | VSEARCH | 736.7 | 695 | 262.2 |
 
 Figures of number clusters distribution are in [Supplementary Figure 3](clusteringEval_RESULTS/tools_comparison/number_clusters.svg) 
+
+Detailed values for all samples and tools are given in [Supplementary Table 3](clusteringEval_RESULTS/tools_comparison/tools_comparison_eval.tsv)
 
 <img src="clusteringEval_RESULTS/tools_comparison/time_memory.svg" width="500">
