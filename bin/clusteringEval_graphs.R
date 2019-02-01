@@ -36,6 +36,8 @@ png("clusteringEval_RESULTS/tools_comparison/ari_boxplot.png")
 ari_boxplot
 dev.off() 
 
+ggsave(file="clusteringEval_RESULTS/tools_comparison/ari_boxplot.svg",plot=ari_boxplot)
+
 pdf("clusteringEval_RESULTS/tools_comparison/precision_boxplot.pdf")
 precision_boxplot
 dev.off()
