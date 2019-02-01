@@ -50,7 +50,7 @@ Recall and precision are given in [Supplementary Figure X](clusteringEval_RESULT
 
 Detailed values for all samples and parameters are given in [Supplementary Table 2](clusteringEval_RESULTS/test_SCLUST/testSclust.eval.tsv)
 
-Figures with all samples separated are given in [Supplementary Figure X (ARI)](clusteringEval_RESULTS/test_SCLUSt/ari_all.svg), [Supplementary Figure X (Recall/Precision)](clusteringEval_RESULTS/test_SCLUSt/recall_precision_all.svg) and [Supplementary Figure X (Singletons)](clusteringEval_RESULTS/test_SCLUSt/singletons_all.svg)
+Figures with all samples separated are given in [Supplementary Figure X (ARI)](clusteringEval_RESULTS/test_SCLUST/ari_all.svg), [Supplementary Figure X (Recall/Precision)](clusteringEval_RESULTS/test_SCLUST/recall_precision_all.svg) and [Supplementary Figure X (Singletons)](clusteringEval_RESULTS/test_SCLUST/singletons_all.svg)
 
 #### SCLUST vs other tools 
 
