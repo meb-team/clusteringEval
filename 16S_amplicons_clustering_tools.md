@@ -1,10 +1,10 @@
 # Comparison of 16S amplicons clustering tools
 
-## Material and methods 
+## Material and methods
 
 ### Data used for evaluation 
 
-To test Sclust, data for FROGS's evaluation are used (http://frogs.toulouse.inra.fr/). Synthethic data with powerlaw distribution and 1000 strains are used (http://frogs.toulouse.inra.fr/data_to_test_frogs/assessment_datasets/datasets_silva/1000sp/dataset_1/V4V4/powerlaw/). It's 16S sequencing sequencing simulation (V4 region). Powerlaw distribution is more realistic with few strain with high abundance and other strains with low abundance. Dataset_1 is selected arbitrarily. Dataset contains 10 samples with same strains but different abundance levels. (for example in sample 1 you will have strain1 in very high abundance and strain2 in low abundance and it will be the opposite in sample 2.). 20 most abundant strains with reads count for each sample is given in [Supplementary Figure 1]()
+To test SCLUST, data for FROGS's evaluation are used (http://frogs.toulouse.inra.fr/). Synthethic data with powerlaw distribution and 1000 strains are used (http://frogs.toulouse.inra.fr/data_to_test_frogs/assessment_datasets/datasets_silva/1000sp/dataset_1/V4V4/powerlaw/). It's 16S sequencing sequencing simulation (V4 region). Powerlaw distribution is more realistic with few strain with high abundance and other strains with low abundance. Dataset_1 is selected arbitrarily. Dataset contains 10 samples with same strains but different abundance levels. (for example in sample 1 you will have strain1 in very high abundance and strain2 in low abundance and it will be the opposite in sample 2.). 20 most abundant strains with reads count for each sample is given in [Supplementary Figure 1]()
 
 Sequencing simulation from FROGS contains chimeras reads, identified by the presence of two reference in fastq header. This chimera reads are removed with homemade script `exclude_chimeras.py`. 
 Then, reads are deduplicated with `vsearch`.  
@@ -48,7 +48,7 @@ Precision, recall and ARI definitions and computation are the same used in vsear
 
 Recall and precision are in [Supplementary Figure 2](clusteringEval_RESULTS/tools_comparison/precision_recall.svg)
 
-<img src="clusteringEval_RESULTS/tools_comparison/ari_boxplot.svg" width="500">
+<img src="clusteringEval_RESULTS/tools_comparison/singletons_boxplot.svg" width="500">
 
 |Tool| Mean total clusters | Mean clusters size > 1 | Mean clusters size > 0.05% of reads | 
 |------|--------------|-----------------|------------|
@@ -61,4 +61,4 @@ Recall and precision are in [Supplementary Figure 2](clusteringEval_RESULTS/tool
 
 Figures of number clusters distribution are in [Supplementary Figure 3](clusteringEval_RESULTS/tools_comparison/number_clusters.svg) 
 
-<img src="clusteringEval_RESULTS/tools_comparison/time_memory.svg",width="500">
+<img src="clusteringEval_RESULTS/tools_comparison/time_memory.svg" width="500">
