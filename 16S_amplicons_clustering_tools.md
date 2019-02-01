@@ -33,7 +33,11 @@ Evaluation is made according to 5 criterias :
 * Recall : represents the ability of tool to reconstruct clusters with all reads from 1 strain (avoid over-splitting) 
 * ARI (Adjusted Rand Index) : summarize precision and recall, by taking acount the random chance to group 2 reads from same strains in same cluster. 
 Swarm paper definition : *"adjusted Rand index, which summarizes both precision and recall as the proportion of pairs of amplicons that are placed in the same OTU and are from the same species, but adjusting for the expected proportions through random chance"* 
-* Singletons percentage : represents the rate of singletons clusters among all clusters. 
+* Clusters count 
+	* Total clusters : number of all clusters created by tools. 
+	* Singletons percentage : number of singletons clusters among all clusters
+	* Clusters with size > 1 : number of clusters after discard singletons. 
+	* Clusters with size > 0.05% of reads : number of clusters containing at least 0.05% of all reads.  
 * Time and Memory : Time is user time to compute clustering and memory max memory used. 
 
 Precision, recall and ARI definitions and computation are the same used in vsearch and swarm paper. 
