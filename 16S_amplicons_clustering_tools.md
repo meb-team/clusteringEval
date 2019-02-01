@@ -48,7 +48,7 @@ Precision, recall and ARI definitions and computation are the same used in vsear
 
 Recall and precision are in [Supplementary Figure 2](clusteringEval_RESULTS/tools_comparison/precision_recall.svg)
 
-<img src="clusteringEval_RESULTS/tools_comparison/singletons_boxplot.svg",width="500"> 
+<img src="clusteringEval_RESULTS/tools_comparison/ari_boxplot.svg" width="500">
 
 |Tool| Mean total clusters | Mean clusters size > 1 | Mean clusters size > 0.05% of reads | 
 |------|--------------|-----------------|------------|
