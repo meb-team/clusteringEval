@@ -47,15 +47,16 @@ Precision, recall and ARI definitions and computation are the same used in vsear
 #### SCLUST test 
 
 <img src="clusteringEval_RESULTS/test_SCLUST/ari_boxplot.svg" width="500">
-Figure 1 : Distribution of Adjusted Random Index for each tools 
+Figure 1 : Distribution of Adjusted Random Index for each SCLUST parameters. Adjusted Rand Index is calculated as presented [here](https://en.wikipedia.org/wiki/Rand_index#Adjusted_Rand_index)  
 
 <img src="clusteringEval_RESULTS/test_SCLUST/singletons_boxplot.svg" width="500">
+Figure 2 : Distribution of singletons percentage in created clusters for each SCLUST parameters. 
 
-Recall and precision are given in [Supplementary Figure X](clusteringEval_RESULTS/test_SCLUST/recall_precision_boxplot.svg)
+Recall and precision are given in [Supplementary Figure 2](clusteringEval_RESULTS/test_SCLUST/recall_precision_boxplot.svg)
 
 Detailed values for all samples and parameters are given in [Supplementary Table 2](clusteringEval_RESULTS/test_SCLUST/testSclust.eval.tsv)
 
-Figures with all samples separated are given in [Supplementary Figure X (ARI)](clusteringEval_RESULTS/test_SCLUST/ari_all.svg), [Supplementary Figure X (Recall/Precision)](clusteringEval_RESULTS/test_SCLUST/recall_precision_all.svg) and [Supplementary Figure X (Singletons)](clusteringEval_RESULTS/test_SCLUST/singletons_all.svg)
+Figures with all samples separated are given in [Supplementary Figure 3 (ARI)](clusteringEval_RESULTS/test_SCLUST/ari_all.svg), [Supplementary Figure 4 (Recall/Precision)](clusteringEval_RESULTS/test_SCLUST/recall_precision_all.svg) and [Supplementary Figure 5 (Singletons)](clusteringEval_RESULTS/test_SCLUST/singletons_all.svg)
 
 * Sclust performs better with 97% threshold, in accurate or default mode. It's the threshold with less variability and with best ARI values, for each quality parameters.
 * Sclust is sensible to inputs. Results shows variability, mostly in default mode with quality over 0. 
@@ -68,10 +69,12 @@ Figures with all samples separated are given in [Supplementary Figure X (ARI)](c
 #### SCLUST vs other tools 
 
 <img src="clusteringEval_RESULTS/tools_comparison/ari_boxplot.svg" width="500">
+Figure 3 : Distribution of Adjusted Random Index for each tools. Threshold identity is 97% (and default d=1 for SWARM). 
 
-Recall and precision are in [Supplementary Figure 2](clusteringEval_RESULTS/tools_comparison/precision_recall.svg)
+Recall and precision are in [Supplementary Figure 6](clusteringEval_RESULTS/tools_comparison/precision_recall.svg)
 
 <img src="clusteringEval_RESULTS/tools_comparison/singletons_boxplot.svg" width="500">
+Figure 4 : Distribution of singletons percentage for each tools. Threshold identity is 97% (and default d=1 for SWARM) 
 
 |Tool| Mean total clusters | Mean clusters size > 1 | Mean clusters size > 0.05% of reads | 
 |------|--------------|-----------------|------------|
@@ -81,12 +84,14 @@ Recall and precision are in [Supplementary Figure 2](clusteringEval_RESULTS/tool
 | SUMACLUST | 749.9 | 704.8 | 257.6 |
 | SWARM | 1293.9 | 731.6 | 257.7 |
 | VSEARCH | 736.7 | 695 | 262.2 |
+Table 1 : Means of clusters counts for each tools. 
 
-Figures of number clusters distribution are in [Supplementary Figure 3](clusteringEval_RESULTS/tools_comparison/number_clusters.svg) 
+Figures of number clusters distribution are in [Supplementary Figure 7](clusteringEval_RESULTS/tools_comparison/number_clusters.svg) 
 
 Detailed values for all samples and tools are given in [Supplementary Table 3](clusteringEval_RESULTS/tools_comparison/tools_comparison_eval.tsv)
 
 <img src="clusteringEval_RESULTS/tools_comparison/time_memory.svg" width="500">
+Figure 5 : Distribution of time and max memory usage for clustering computation for each tool. 
 
 * MeshClust has lower ARI than other tools (median 0.82). Swarm has the best ARI (median 0.99). Sclust has ARI slightly lower than Vsearch (median 0.96 for sclust and median 0.97 for vsearch). 
 * But Sclust produces the least singletons clusters in proportion (median 5.6 %) and singletons is something we want to avoid. 
