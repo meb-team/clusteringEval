@@ -47,6 +47,7 @@ Precision, recall and ARI definitions and computation are the same used in vsear
 #### SCLUST test 
 
 <img src="clusteringEval_RESULTS/test_SCLUST/ari_boxplot.svg" width="500">
+Figure 1 : Distribution of Adjusted Random Index for each tools 
 
 <img src="clusteringEval_RESULTS/test_SCLUST/singletons_boxplot.svg" width="500">
 
@@ -55,6 +56,14 @@ Recall and precision are given in [Supplementary Figure X](clusteringEval_RESULT
 Detailed values for all samples and parameters are given in [Supplementary Table 2](clusteringEval_RESULTS/test_SCLUST/testSclust.eval.tsv)
 
 Figures with all samples separated are given in [Supplementary Figure X (ARI)](clusteringEval_RESULTS/test_SCLUST/ari_all.svg), [Supplementary Figure X (Recall/Precision)](clusteringEval_RESULTS/test_SCLUST/recall_precision_all.svg) and [Supplementary Figure X (Singletons)](clusteringEval_RESULTS/test_SCLUST/singletons_all.svg)
+
+* Sclust performs better with 97% threshold, in accurate or default mode. It's the threshold with less variability and with best ARI values, for each quality parameters.
+* Sclust is sensible to inputs. Results shows variability, mostly in default mode with quality over 0. 
+* In default mode, quality 0 leads always to better ARI. With quality 0, results looks alike for default or accurate mode. For other qualities, pattern changes with less high ARI and more variability. 
+* Singletons percentage rises for 99% threshold (median of 23%), which is an expected pattern. More the threshold is high, more the clusters will be split. However, singletons percentage very slightly increases from 95 to 97 % threshold (median 4% to 5% for quality 0) 
+* Accurate mode increases execution time by X%. 
+
+**Conclusion** : As accurate mode is much slower than default, we chooses to keep default mode with quality 0 and threshold 97 for evaluation against other tools. 
 
 #### SCLUST vs other tools 
 
@@ -78,3 +87,9 @@ Figures of number clusters distribution are in [Supplementary Figure 3](clusteri
 Detailed values for all samples and tools are given in [Supplementary Table 3](clusteringEval_RESULTS/tools_comparison/tools_comparison_eval.tsv)
 
 <img src="clusteringEval_RESULTS/tools_comparison/time_memory.svg" width="500">
+
+* MeshClust has lower ARI than other tools (median 0.82). Swarm has the best ARI (median 0.99). Sclust has ARI slightly lower than Vsearch (median 0.96 for sclust and median 0.97 for vsearch). 
+* But Sclust produces the least singletons clusters in proportion (median 5.6 %) and singletons is something we want to avoid. 
+* Sclust is also tool with most singletons with size >= 0.05% of reads, so it creates clusters with more sequences, and this clusters are almost as "correct" as vsearch. 
+* MeshClust similarity calculation with learning doesn't work good in this dataset. When we used just alignment (option --align), evaluation parameters are better and similar to other tools (for sample01 at id 97, ARI is 0.75 with default mode and 0.95 with align mode), but this option requires a lot of calculation time.
+* Sclust execution time is longer than vsearch (increase of 38.11% in mean) but slower than Meshclust. 

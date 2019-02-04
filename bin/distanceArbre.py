@@ -52,6 +52,7 @@ def get_dic_clusters(cluster_file,file_format):
 		for l in f: 
 			l_reads=l.rstrip().split("\t")[1:]
 			for read in l_reads : 
+				read=read.split(";")[0]
 				dic[read]=str(i) 
 			i+=1 
 		f.close() 

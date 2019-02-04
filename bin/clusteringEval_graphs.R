@@ -8,7 +8,7 @@ f$clusters_no_singletons=f$total_clusters - f$singletons
 levels(f$sample)=c("Sample01","Sample02","Sample03","Sample04","Sample05","Sample06","Sample07","Sample08","Sample09","Sample10")
 levels(f$tool)=c("CDHIT","MESHCLUST","SCLUST","SUMACLUST","SWARM","VSEARCH")
 
-new_f=data.frame(tool=f$tool,sample=f$sample,total_clusters=f$total_clusters,clusters_no_singletons=f$clusters_no_singletons,clusters005=f$clusters_._0.05.reads,recall=f$recall,precision=f$precision,ARI=f$ARI)
+new_f=data.frame(Tool=f$tool,Sample=f$sample,Total_clusters=f$total_clusters,Clusters_no_singletons=f$clusters_no_singletons,Clusters005=f$clusters_._0.05.reads,Recall=f$recall,Precision=f$precision,ARI=f$ARI,Time=f$time,Memory=f$memory)
 
 f_recall=data.frame(tool=f$tool,sample=f$sample,value=f$recall,type="Recall")
 f_precision=data.frame(tool=f$tool,sample=f$sample,value=f$precision,type="Precision")
