@@ -62,7 +62,7 @@ Figures with all samples separated are given in [Supplementary Figure 3 (ARI)](c
 * Sclust is sensible to inputs. Results shows variability, mostly in default mode with quality over 0. 
 * In default mode, quality 0 leads always to better ARI. With quality 0, results looks alike for default or accurate mode. For other qualities, pattern changes with less high ARI and more variability. 
 * Singletons percentage rises for 99% threshold (median of 23%), which is an expected pattern. More the threshold is high, more the clusters will be split. However, singletons percentage very slightly increases from 95 to 97 % threshold (median 4% to 5% for quality 0) 
-* Accurate mode increases execution time by X%. 
+* Accurate mode increases execution time. For sample01 with id 97 and quality 0, execution time is 37.20s with default mode and 882.79 s with accurate mode.
 
 **Conclusion** : As accurate mode is much slower than default, we chooses to keep default mode with quality 0 and threshold 97 for evaluation against other tools. 
 
