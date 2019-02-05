@@ -2,7 +2,7 @@ import sys
 import os 
 
 def usage(): 
-	print("usage : python3 cluster2matrix.py <INPUT : cluster> <INPUT : reads .taxo file>")
+	print("usage : python3 cluster2matrix.py <INPUT : cluster> <INPUT : reads .taxo file> <threshold 0.05% reads>")
 	print("--") 
 	print("This script takes clustering file to format it into otu matrix. Format accepted for clustering file are .uc, .fuzzyout, .otumap and .clstr.")
 	print(".uc are .uc format given by vsearch, usearch or swarm.")
@@ -42,7 +42,7 @@ def get_reads_strain(reads_taxo):
 	f.close() 
 	return dic 
 	
-def create_dic_clusters_uc(uc,dic_reads_strains,wsingletons): 
+def create_dic_clusters_uc(uc,dic_reads_strains): 
 	list_taxo=set() 
 	dic={}
 	uc=open(uc,"r") 
@@ -68,7 +68,7 @@ def create_dic_clusters_uc(uc,dic_reads_strains,wsingletons):
 				else: 
 					dic[cluster_nb][taxo_hit]=[hit]
 		#OTU size = 1  
-		elif l.startswith("C") and l.split("\t")[2]=="1" and wsingletons==True: 
+		elif l.startswith("C") and l.split("\t")[2]=="1": 
 			l_split=l.rstrip().split("\t")
 			cluster_nb=l_split[1]
 			seed=l_split[8].split(";")[0]
@@ -78,7 +78,7 @@ def create_dic_clusters_uc(uc,dic_reads_strains,wsingletons):
 	uc.close() 
 	return list_taxo,dic
 	
-def create_dic_clusters_fuzzyout(fuzzyout,dic_reads_strains,wsingletons): 
+def create_dic_clusters_fuzzyout(fuzzyout,dic_reads_strains): 
 	list_taxo=set() 
 	dic={}
 	f=open(fuzzyout,"r") 
@@ -89,13 +89,10 @@ def create_dic_clusters_fuzzyout(fuzzyout,dic_reads_strains,wsingletons):
 		taxo_ref=dic_reads_strains[ref] 
 		list_taxo.add(taxo_ref) 
 		add_ref_to_cluster(dic,cluster_nb,ref,taxo_ref) 	 
-	f.close()  
-	if not wsingletons: 
-		dic=delete_singletons(dic)	
-	f.close()		  
+	f.close()  	  
 	return list_taxo, dic	
 	
-def create_dic_clusters_otumap(otumap,dic_reads_strains,wsingletons): 
+def create_dic_clusters_otumap(otumap,dic_reads_strains): 
 	list_taxo=set() 
 	dic={}
 	cluster_nb=0
@@ -106,13 +103,11 @@ def create_dic_clusters_otumap(otumap,dic_reads_strains,wsingletons):
 			ref=ref.split(";")[0]
 			taxo_ref=dic_reads_strains[ref] 
 			list_taxo.add(taxo_ref) 
-			add_ref_to_cluster(dic,cluster_nb,ref,taxo_ref) 
-	if not wsingletons:
-		dic=delete_singletons(dic)		
+			add_ref_to_cluster(dic,cluster_nb,ref,taxo_ref) 	
 	f.close() 	
 	return list_taxo,dic
 	
-def create_dic_clusters_clstr(clstr,dic_reads_strains,wsingletons): 
+def create_dic_clusters_clstr(clstr,dic_reads_strains): 
 	list_taxo=set()
 	dic={}
 	clstr=open(clstr,"r") 
@@ -123,9 +118,7 @@ def create_dic_clusters_clstr(clstr,dic_reads_strains,wsingletons):
 			ref=l.rstrip().split("...")[0].split(", ")[1].split(";")[0].lstrip(">") 
 			taxo_ref=dic_reads_strains[ref]
 			list_taxo.add(taxo_ref) 
-			add_ref_to_cluster(dic,cluster_nb,ref,taxo_ref) 
-	if not wsingletons: 
-		dic=delete_singletons(dic) 		    
+			add_ref_to_cluster(dic,cluster_nb,ref,taxo_ref)     
 	clstr.close() 		
 	return list_taxo,dic 
 	
@@ -154,7 +147,7 @@ def write_otumatrix(list_taxo,dic_clusters,input_file,suffix):
 	o=open(output_file,"w") 
 	o.write("OTUvsTaxa\t"+"\t".join(list_taxo)+"\n") 
 	for i in dic_clusters: 
-		o.write(str(int(i)+1)) 
+		o.write(str(int(i))) 
 		for taxa in list_taxo: 
 			try : 
 				nb_seq=len(dic_clusters[i][taxa])
@@ -162,30 +155,53 @@ def write_otumatrix(list_taxo,dic_clusters,input_file,suffix):
 				nb_seq=0
 			o.write("\t"+str(nb_seq))
 		o.write("\n") 	 			 			
-	o.close()			
+	o.close()		
 	
-if len(sys.argv)!=3: 
+def write_otumatrix_threshold(dic_clusters,input_file,suffix,threshold):
+	output_file=".".join(input_file.split(".")[:-1])+suffix
+	list_taxo=set()
+	new_dic={}
+	for i in dic_clusters : 
+		total_seq=sum([len(dic_clusters[i][taxo]) for taxo in dic_clusters[i]])
+		if total_seq > threshold :
+			new_dic[i]=dic_clusters[i]
+			for taxo in dic_clusters[i] : 
+				list_taxo.add(taxo)
+	o=open(output_file,"w") 				
+	o.write("OTUvsTaxa\t"+"\t".join(list_taxo)+"\n")
+	for i in new_dic : 
+		o.write(str(int(i)))
+		for taxa in list_taxo : 
+			try : 
+				nb_seq=len(dic_clusters[i][taxa]) 
+			except KeyError : 
+				nb_seq=0 
+			o.write("\t"+str(nb_seq))
+		o.write("\n")	
+	o.close() 				 		 
+				
+if len(sys.argv)!=4: 
 	usage() 
 	exit() 
-	
-check_arguments(sys.argv[1:])	
+
+
+check_arguments(sys.argv[1:3])	
 
 dic_reads_strains=get_reads_strain(sys.argv[2]) 
 
 file_format=get_file_format(sys.argv[1])
 
+threshold_005=int(sys.argv[3])+1
+
 if file_format=="uc": 
-	list_taxo,dic_clusters=create_dic_clusters_uc(sys.argv[1],dic_reads_strains,True) 
-	list_taxo_nosing,dic_clusters_nosing=create_dic_clusters_uc(sys.argv[1],dic_reads_strains,False) 
+	list_taxo,dic_clusters=create_dic_clusters_uc(sys.argv[1],dic_reads_strains) 
 elif file_format=="fuzzyout": 
-	list_taxo,dic_clusters=create_dic_clusters_fuzzyout(sys.argv[1],dic_reads_strains,True) 
-	list_taxo_nosing,dic_clusters_nosing=create_dic_clusters_fuzzyout(sys.argv[1],dic_reads_strains,False)
+	list_taxo,dic_clusters=create_dic_clusters_fuzzyout(sys.argv[1],dic_reads_strains) 
 elif file_format=="otumap": 
-	list_taxo,dic_clusters=create_dic_clusters_otumap(sys.argv[1],dic_reads_strains,True)	
-	list_taxo_nosing,dic_clusters_nosing=create_dic_clusters_otumap(sys.argv[1],dic_reads_strains,False)
+	list_taxo,dic_clusters=create_dic_clusters_otumap(sys.argv[1],dic_reads_strains)	
 elif file_format=="clstr": 
-	list_taxo,dic_clusters=create_dic_clusters_clstr(sys.argv[1],dic_reads_strains,True)	
-	list_taxo_nosing,dic_clusters_nosing=create_dic_clusters_clstr(sys.argv[1],dic_reads_strains,False)
+	list_taxo,dic_clusters=create_dic_clusters_clstr(sys.argv[1],dic_reads_strains)	
 
 write_otumatrix(list_taxo,dic_clusters,sys.argv[1],".otumatrix") 	   
-write_otumatrix(list_taxo_nosing,dic_clusters_nosing,sys.argv[1],".nosingletons.otumatrix") 	 
+write_otumatrix_threshold(dic_clusters,sys.argv[1],".nosingletons.otumatrix",1) 
+write_otumatrix_threshold(dic_clusters,sys.argv[1],".005reads.otumatrix",threshold_005) 
