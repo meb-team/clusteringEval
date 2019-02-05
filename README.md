@@ -24,7 +24,7 @@ mkdir -p clusteringEval_DATA
 
 wget http://frogs.toulouse.inra.fr/data_to_test_frogs/assessment_datasets/datasets_silva/1000sp/dataset_1/V4V4/powerlaw/dataset.tar.gz -O clusteringEval_DATA/dataset.tar.gz 
 
-tar -xvf clusteringEval_DATA/dataset.tar.gz  
+tar -xvf clusteringEval_DATA/dataset.tar.gz -C clusteringEval_DATA
 ```
 
 #### Delete chimeras, dereplicate and handle taxonomy 
