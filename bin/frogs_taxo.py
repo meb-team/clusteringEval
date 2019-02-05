@@ -26,7 +26,7 @@ dic_abundance={}
 
 tax_output=open(sys.argv[4],"w") 
 
-tax_output.write("Read\tAbundance\tKingdom\tPhylum\tClass\tOrder\tFamily\tGenus\tSpecies/strain\n") 	
+tax_output.write("Read\tAbundance\tRoot\tKingdom\tPhylum\tClass\tOrder\tFamily\tGenus\tSpecies/strain\n") 	
 for record in SeqIO.parse(sys.argv[2],"fasta"): 
 	ref=record.id.split(";")[0]
 	abundance=record.id.split(";")[1].split("=")[1]
