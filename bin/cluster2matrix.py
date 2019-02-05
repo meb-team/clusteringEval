@@ -192,7 +192,7 @@ dic_reads_strains=get_reads_strain(sys.argv[2])
 
 file_format=get_file_format(sys.argv[1])
 
-threshold_005=int(sys.argv[3])+1
+threshold_005=int(sys.argv[3])-1
 
 if file_format=="uc": 
 	list_taxo,dic_clusters=create_dic_clusters_uc(sys.argv[1],dic_reads_strains) 

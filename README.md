@@ -77,6 +77,7 @@ for i in 01 02 03 04 05 06 07 08 09 10; do
 done 
 bash bin/combined_files.sh clusteringEval_TOOL_COMPARISON/sample*-1000sp-Powerlaw.noChimeras.derep.eval.tsv > clusteringEval_TOOL_COMPARISON/all_samples-1000sp-Powerlaw.noChimeras.derep.eval.tsv
 bash bin/combined_files.sh clusteringEval_TOOL_COMPARISON/sample*-1000sp-Powerlaw.noChimeras.derep.nosingle.eval.tsv > clusteringEval_TOOL_COMPARISON/all_samples-1000sp-Powerlaw.noChimeras.derep.nosingle.eval.tsv
+bash bin/combined_files.sh clusteringEval_TOOL_COMPARISON/sample*-1000sp-Powerlaw.noChimeras.derep.005reads.eval.tsv > clusteringEval_TOOL_COMPARISON/all_samples-1000sp-Powerlaw.noChimeras.derep.005reads.eval.tsv
 ```
 
 ### TOOL COMPARISON : Graphical représentation 

@@ -49,6 +49,12 @@ function cluster_eval(){
 		total_clusters=$(awk '{if ($1 == "C") print}' $uc_file | awk '{if ($3 > 1) print}' | wc -l)
 		compute_evaluation $prefix.swarm.nosingletons.otumatrix 
 		echo -e "swarm\t$prefix\tdefault\t1\t$total_clusters\t$recall\t$precision\t$ari" >> $output_file_nosingle
+		
+		echo "* Compute clusters >= 0.05% of reads..." 
+		total_clusters=$clusters005
+		compute_evaluation $prefix.swarm.005reads.otumatrix 
+		echo -e "swarm\t$prefix\tdefault\t1\t$total_clusters\t$recall\t$precision\t$ari" >> $output_file_005reads
+		
 	else 
 		echo "[WARNING] $uc_file doesn't exists."
 	fi 		
@@ -76,6 +82,11 @@ function cluster_eval(){
 		total_clusters=$(awk '{if ($1 == "C") print}' $uc_file | awk '{if ($3 > 1) print}' | wc -l)
 		compute_evaluation $prefix.vsearch.id$id.nosingletons.otumatrix 
 		echo -e "vsearch\t$prefix\tdefault\t$id\t$total_clusters\t$recall\t$precision\t$ari" >> $output_file_nosingle
+		
+		echo "* Compute clusters >= 0.05% of reads..." 
+		total_clusters=$clusters005
+		compute_evaluation $prefix.vsearch.id$id.005reads.otumatrix 
+		echo -e "vsearch\t$prefix\tdefault\t$id\t$total_clusters\t$recall\t$precision\t$ari" >> $output_file_005reads
 		
 	else 
 		echo "[WARNING] $uc_file doesn't exists."
@@ -107,6 +118,11 @@ function cluster_eval(){
 		compute_evaluation $prefix.sclust.id$id.wid$wid.qual$qual.nosingletons.otumatrix 
 		echo -e "sclust\t$prefix\tdefault\t$id\t$total_clusters\t$recall\t$precision\t$ari" >> $output_file_nosingle
 		
+		echo "* Compute clusters >= 0.05% of reads..." 
+		total_clusters=$clusters005
+		compute_evaluation $prefix.sclust.id$id.wid$wid.qual$qual.005reads.otumatrix 
+		echo -e "sclust\t$prefix\tdefault\t$id\t$total_clusters\t$recall\t$precision\t$ari" >> $output_file_005reads
+		
 	else 
 		echo "[WARNING] $fuzzyout_file doesn't exists/"
 	fi 	 
@@ -136,6 +152,11 @@ function cluster_eval(){
 		total_cluster=$(($total_clusters - $singletons)) 
 		compute_evaluation $prefix.sumaclust.id$id.nosingletons.otumatrix 
 		echo -e "sumaclust\t$prefix\tdefault\t$id\t$total_clusters\t$recall\t$precision\t$ari" >> $output_file_nosingle
+		
+		echo "* Compute clusters >= 0.05% of reads..." 
+		total_clusters=$clusters005
+		compute_evaluation $prefix.sumaclust.id$id.005reads.otumatrix 
+		echo -e "sumaclust\t$prefix\tdefault\t$id\t$total_clusters\t$recall\t$precision\t$ari" >> $output_file_005reads
 		
 	else 
 		echo "[WARNING] $otumap_file doesn't exists."
@@ -167,6 +188,11 @@ function cluster_eval(){
 			compute_evaluation $prefix.$tool.id$id.nosingletons.otumatrix 
 			echo -e "$tool\t$prefix\tdefault\t$id\t$total_clusters\t$recall\t$precision\t$ari" >> $output_file_nosingle
 			
+			echo "* Compute clusters >= 0.05% of reads..." 
+			total_clusters=$clusters005
+			compute_evaluation $prefix.$tool.id$id.005reads.otumatrix 
+			echo -e "$tool\t$prefix\tdefault\t$id\t$total_clusters\t$recall\t$precision\t$ari" >> $output_file_005reads
+			
 		else
 			echo "[WARNING] $clstr_file doesn't exists."  
 		fi 
@@ -192,8 +218,10 @@ args_gestion
 
 output_file=$indir/$prefix.eval.tsv
 output_file_nosingle=$indir/$prefix.nosingle.eval.tsv 
+output_file_005reads=$indir/$prefix.005reads.eval.tsv 
 echo -e "tool\tsample\talgo\tthreshold/d\ttotal_clusters\tsingletons\tpairs\tclusters_>_0.05%reads\trecall\tprecision\tARI\tTime(s)\tMemory(kb)" > $output_file 
 echo -e "tool\tsample\talgo\tthreshold/d\tnumber_clusters\trecall\tprecision\tARI" > $output_file_nosingle 
+echo -e "tool\tsample\talgo\tthreshold/d\tnumber_clusters\trecall\tprecision\tARI" > $output_file_005reads
 nb_reads=$(($(wc -l $taxo | cut -f 1 -d " ") - 1)) 
 clusters_size_threshold=$(echo $nb_reads | awk '{printf("%.0f",($1*0.05)/100)}') 
 cluster_eval
