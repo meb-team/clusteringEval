@@ -17,20 +17,12 @@ function args_gestion(){
 }
 
 function compute_evaluation(){
-	matrix_prefix=$1
-	for m in otumatrix; do
-		matrix_file=$matrix_prefix.$m
-		echo "* Recall, precision and ARI for $m..."
-		evaluation_param=$($BIN/CValidate.pl --cfile $matrix_file)
-		recall=$(echo $evaluation_param | cut -f 1 -d ",") 
-		precision=$(echo $evaluation_param | cut -f 2 -d ",") 
-		ari=$(echo $evaluation_param | cut -f 5 -d ",") 
-	done  	
-	distance_file=$matrix_prefix.distances.nosingle.tsv 
-	mean_max=$(tail -n +2 $distance_file | awk -F "\t" '{ total += $2 } END { print total/NR }')
-	mean_mean=$(tail -n +2 $distance_file | awk -F "\t" '{ total += $3 } END { print total/NR }')
-	
-	
+	matrix_file=$1
+	echo "* Recall, precision and ARI for $matrix_file..."
+	evaluation_param=$($BIN/CValidate.pl --cfile $matrix_file)
+	recall=$(echo $evaluation_param | cut -f 1 -d ",") 
+	precision=$(echo $evaluation_param | cut -f 2 -d ",") 
+	ari=$(echo $evaluation_param | cut -f 5 -d ",")   	
 }	
 
 function cluster_eval(){
@@ -49,12 +41,14 @@ function cluster_eval(){
 		memory=$(grep "Memory" $time_file | cut -f 2 -d " ")
 		time=$(grep "Time" $time_file | cut -f 2 -d " ")
 		echo "* Compute matrix..." 
-		python3 $BIN/cluster2matrix.py $uc_file $taxo 
-		echo "* Compute distance..." 
-		python3 $BIN/distanceArbre.py $uc_file $taxo > $prefix.swarm.distances.tsv 
-		grep -v "singleton" $prefix.swarm.distances.tsv  > $prefix.swarm.distances.nosingle.tsv 
-		compute_evaluation $prefix.swarm
-		echo -e "swarm\t$prefix\tdefault\t1\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory\t$mean_mean\t$mean_max" >> $output_file 
+		python3 $BIN/cluster2matrix.py $uc_file $taxo $clusters_size_threshold
+		compute_evaluation $prefix.swarm.otumatrix 
+		echo -e "swarm\t$prefix\tdefault\t1\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory" >> $output_file
+		
+		echo "* Compute no singletons..." 
+		total_clusters=$(awk '{if ($1 == "C") print}' $uc_file | awk '{if ($3 > 1) print}' | wc -l)
+		compute_evaluation $prefix.swarm.nosingletons.otumatrix 
+		echo -e "swarm\t$prefix\tdefault\t1\t$total_clusters\t$recall\t$precision\t$ari" >> $output_file_nosingle
 	else 
 		echo "[WARNING] $uc_file doesn't exists."
 	fi 		
@@ -74,12 +68,15 @@ function cluster_eval(){
 		memory=$(grep "Memory" $time_file | cut -f 2 -d " ")
 		time=$(grep "Time" $time_file | cut -f 2 -d " ")
 		echo "* Compute matrix..." 
-		python3 $BIN/cluster2matrix.py $uc_file $taxo 
-		echo "* Compute distance..." 
-		python3 $BIN/distanceArbre.py $uc_file $taxo > $prefix.vsearch.id$id.distances.tsv 
-		grep -v "singleton" $prefix.vsearch.id$id.distances.tsv > $prefix.vsearch.id$id.distances.nosingle.tsv
-		compute_evaluation $prefix.vsearch.id$id 
-		echo -e "vsearch\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory\t$mean_mean\t$mean_max" >> $output_file 
+		python3 $BIN/cluster2matrix.py $uc_file $taxo $clusters_size_threshold
+		compute_evaluation $prefix.vsearch.id$id.otumatrix
+		echo -e "vsearch\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory" >> $output_file 
+		
+		echo "* Compute no singletons..." 
+		total_clusters=$(awk '{if ($1 == "C") print}' $uc_file | awk '{if ($3 > 1) print}' | wc -l)
+		compute_evaluation $prefix.vsearch.id$id.nosingletons.otumatrix 
+		echo -e "vsearch\t$prefix\tdefault\t$id\t$total_clusters\t$recall\t$precision\t$ari" >> $output_file_nosingle
+		
 	else 
 		echo "[WARNING] $uc_file doesn't exists."
 	fi 
@@ -101,12 +98,15 @@ function cluster_eval(){
 		memory=$(grep "Memory" $time_file | cut -f 2 -d " ")
 		time=$(grep "Time" $time_file | cut -f 2 -d " ")
 		echo "* Compute matrix..." 
-		python3 $BIN/cluster2matrix.py $fuzzyout_file $taxo 
-		echo "* Compute distance..." 
-		python3 $BIN/distanceArbre.py $fuzzyout_file $taxo > $prefix.sclust.id$id.wid$wid.qual$qual.distances.tsv 
-		grep -v "singleton" $prefix.sclust.id$id.wid$wid.qual$qual.distances.tsv  > $prefix.sclust.id$id.wid$wid.qual$qual.distances.nosingle.tsv 
-		compute_evaluation $prefix.sclust.id$id.wid$wid.qual$qual
-		echo -e "sclust\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory\t$mean_mean\t$mean_max" >> $output_file
+		python3 $BIN/cluster2matrix.py $fuzzyout_file $taxo $clusters_size_threshold
+		compute_evaluation $prefix.sclust.id$id.wid$wid.qual$qual.otumatrix
+		echo -e "sclust\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory" >> $output_file
+		
+		echo "* Compute no singletons..." 
+		total_clusters=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort | uniq -c | awk '{if ($1>1) print}' | wc -l)
+		compute_evaluation $prefix.sclust.id$id.wid$wid.qual$qual.nosingletons.otumatrix 
+		echo -e "sclust\t$prefix\tdefault\t$id\t$total_clusters\t$recall\t$precision\t$ari" >> $output_file_nosingle
+		
 	else 
 		echo "[WARNING] $fuzzyout_file doesn't exists/"
 	fi 	 
@@ -128,15 +128,19 @@ function cluster_eval(){
 		memory=$(grep "Memory" $time_file | cut -f 2 -d " ")
 		time=$(grep "Time" $time_file | cut -f 2 -d " ")
 		echo "* Compute matrix..." 
-		python3 $BIN/cluster2matrix.py $otumap_file $taxo 
-		echo "* Compute distance..." 
-		python3 $BIN/distanceArbre.py $otumap_file $taxo > $prefix.sumaclust.id$id.distances.tsv 
-		grep -v "singleton" $prefix.sumaclust.id$id.distances.tsv > $prefix.sumaclust.id$id.distances.nosingle.tsv 
-		compute_evaluation $prefix.sumaclust.id$id
-		echo -e "sumaclust\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory\t$mean_mean\t$mean_max" >> $output_file
+		python3 $BIN/cluster2matrix.py $otumap_file $taxo $clusters_size_threshold
+		compute_evaluation $prefix.sumaclust.id$id.otumatrix
+		echo -e "sumaclust\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory" >> $output_file
+		
+		echo "* Compute no singletons..." 
+		total_cluster=$(($total_clusters - $singletons)) 
+		compute_evaluation $prefix.sumaclust.id$id.nosingletons.otumatrix 
+		echo -e "sumaclust\t$prefix\tdefault\t$id\t$total_clusters\t$recall\t$precision\t$ari" >> $output_file_nosingle
+		
 	else 
 		echo "[WARNING] $otumap_file doesn't exists."
 	fi	
+	
 	for tool in cdhit meshclust; do  
 		id=97
 		echo -e "\n** $tool clustering id=$id..." 
@@ -154,12 +158,15 @@ function cluster_eval(){
 			memory=$(grep "Memory" $time_file | cut -f 2 -d " ")
 			time=$(grep "Time" $time_file | cut -f 2 -d " ")
 			echo "* Compute matrix..." 
-			python3 $BIN/cluster2matrix.py $clstr_file $taxo 
-			echo "* Compute distance..." 
-			python3 $BIN/distanceArbre.py $clstr_file $taxo > $prefix.$tool.id$id.distances.tsv 
-			grep -v "singleton" $prefix.$tool.id$id.distances.tsv > $prefix.$tool.id$id.distances.nosingle.tsv 
-			compute_evaluation $prefix.$tool.id$id
-			echo -e "$tool\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory\t$mean_mean\t$mean_max" >>$output_file
+			python3 $BIN/cluster2matrix.py $clstr_file $taxo $clusters_size_threshold
+			compute_evaluation $prefix.$tool.id$id.otumatrix
+			echo -e "$tool\t$prefix\tdefault\t$id\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory" >>$output_file
+			
+			echo "* Compute no singletons..." 
+			total_cluster=$(($total_clusters - $singletons)) 
+			compute_evaluation $prefix.$tool.id$id.nosingletons.otumatrix 
+			echo -e "$tool\t$prefix\tdefault\t$id\t$total_clusters\t$recall\t$precision\t$ari" >> $output_file_nosingle
+			
 		else
 			echo "[WARNING] $clstr_file doesn't exists."  
 		fi 
@@ -184,7 +191,9 @@ source $BIN/common_functions.sh
 args_gestion
 
 output_file=$indir/$prefix.eval.tsv
-echo -e "tool\tsample\talgo\tthreshold/d\ttotal_clusters\tsingletons\tpairs\tclusters_>_0.05%reads\trecall\tprecision\tARI\tTime(s)\tMemory(kb)\tMean mean distance\tMean max distance" > $output_file 
+output_file_nosingle=$indir/$prefix.nosingle.eval.tsv 
+echo -e "tool\tsample\talgo\tthreshold/d\ttotal_clusters\tsingletons\tpairs\tclusters_>_0.05%reads\trecall\tprecision\tARI\tTime(s)\tMemory(kb)" > $output_file 
+echo -e "tool\tsample\talgo\tthreshold/d\tnumber_clusters\trecall\tprecision\tARI" > $output_file_nosingle 
 nb_reads=$(($(wc -l $taxo | cut -f 1 -d " ") - 1)) 
 clusters_size_threshold=$(echo $nb_reads | awk '{printf("%.0f",($1*0.05)/100)}') 
 cluster_eval

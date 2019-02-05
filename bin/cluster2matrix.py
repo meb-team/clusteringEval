@@ -159,6 +159,7 @@ def write_otumatrix(list_taxo,dic_clusters,input_file,suffix):
 	
 def write_otumatrix_threshold(dic_clusters,input_file,suffix,threshold):
 	output_file=".".join(input_file.split(".")[:-1])+suffix
+	print(output_file)
 	list_taxo=set()
 	new_dic={}
 	for i in dic_clusters : 
