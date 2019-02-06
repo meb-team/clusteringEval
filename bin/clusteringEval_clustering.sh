@@ -1,7 +1,7 @@
 set -e 
 
 function usage(){ 
-	echo "usage : bash clusteringEval_clustering.sh <fastq|fasta file> <outdir>"  
+	echo "usage : bash clusteringEval_clustering.sh <fastq|fasta file> <outdir> <clustering identity>"  
 }
 
 function check_dependencies(){
@@ -63,13 +63,14 @@ function args_gestion(){
 	
 
 
-if [[ $# -ne 2 ]]; then 
+if [[ $# -ne 3 ]]; then 
 	usage 
 	exit 1 
 fi 
 
 input=$1
 outdir=$2
+id=$3
 BIN=$(echo $0 | rev | cut -f 2- -d "/" | rev)
 THREADS=6
 if [[ $BIN == $0 ]]; then 
@@ -84,8 +85,7 @@ prefix=$(echo $input | rev | cut -f 1 -d "/" | cut -f 2- -d "." | rev)
 
 echo -e "\n-- CD-HIT CLUSTERING --" 
 dir=$outdir/cdhit 
-mkdir -p $dir 
-id=97
+mkdir -p $dir
 perc_id=$(echo $id | awk '{print $1/100}') 
 echo "* Cluster $input with cd-hit at id $id..."
 if [[ ! -f $dir/$prefix.cdhit.id$id.clstr ]]; then 
@@ -97,7 +97,6 @@ fi
 echo -e "\n-- MESHCLUST CLUSTERING --" 
 dir=$outdir/meshclust 
 mkdir -p $dir 
-id=97
 perc_id=$(echo $id | awk '{print $1/100}') 
 echo "* Cluster $input with meshclust at id $id..."
 if [[ ! -f $dir/$prefix.meshclust.id$id.clstr ]]; then 
@@ -110,8 +109,7 @@ echo -e "\n-- SCLUST CLUSTERING --"
 dir=$outdir/sclust 
 mkdir -p $dir 
 
-id=97
-wid=95
+wid=$(($id - 2))
 qual=0
 perc_id=$(echo $id | awk '{print $1/100}') 
 perc_wid=$(echo $wid | awk '{print $1/100}') 
@@ -129,7 +127,6 @@ mkdir -p $dir
 echo "* Sumaclust formatting..." 
 sed "s/;size=/ count=/g" $input > $input.sumaclust 
 
-id=97
 perc_id=$(echo $id | awk '{print $1/100}') 
 echo "* Cluster $input with sumaclust at id $id..."
 if [[ ! -f $dir/$prefix.sumaclust.id$id.otumap ]]; then 
@@ -152,7 +149,6 @@ fi
 echo -e "\n-- VSEARCH CLUSTERING --" 
 dir=$outdir/vsearch 
 mkdir -p $dir 
-id=97
 perc_id=$(echo $id | awk '{print $1/100}') 
 echo "* Cluster $input with vsearch at id $id..."
 if [[ ! -f $dir/$prefix.vsearch.id$id.uc ]]; then 
