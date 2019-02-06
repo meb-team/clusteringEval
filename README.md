@@ -80,12 +80,13 @@ bash bin/combined_files.sh clusteringEval_TOOL_COMPARISON/sample*-1000sp-Powerla
 bash bin/combined_files.sh clusteringEval_TOOL_COMPARISON/sample*-1000sp-Powerlaw.noChimeras.derep.005reads.eval.tsv > clusteringEval_TOOL_COMPARISON/all_samples-1000sp-Powerlaw.noChimeras.derep.005reads.eval.tsv
 ```
 
-### TOOL COMPARISON : Graphical représentation 
+### TOOL COMPARISON : Graphical representation 
 
 ```
 mkdir -p clusteringEval_RESULTS
 mkdir -p clusteringEval_RESULTS/tools_comparison 
 Rscript bin/clusteringEval_graphs.R 
+Rscript bin/clusteringEval_graphs_type_clusters.R
 ```
 
 

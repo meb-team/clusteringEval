@@ -39,7 +39,7 @@ Swarm paper definition : *"adjusted Rand index, which summarizes both precision 
 	* Clusters with size > 1 : number of clusters after discard singletons. 
 	* Clusters with size > 0.05% of reads : number of clusters containing at least 0.05% of all reads.  
 * Time and Memory : Time is user time to compute clustering and memory max memory used. 
-* Distance : Distance is some kind of taxonomic distance computed. For each cluster, mean and max intra cluster distance are computed. Mean distance is the mean distance between all pairs of reads. Max distance is the highest pair distance in cluster. For one sample, global distance is the mean of all intra-clusters distance. Distance is defined like A. Bazin does in pre print paper : * 
+* Distance : Distance is some kind of taxonomic distance computed. For a pair of reads with known taxonomy, it's defined as length between closest common taxon in the tree and strain level. Distance will be 0 for same specie, 1 for same genus, 2 for same family and so on. 7 classical taxonomic ranks are considered : `Kingdom;Phylum;Class;Order;Family;Genus;Specie`. For each cluster, mean and max intra cluster distance are computed. Mean distance is the mean distance between all pairs of reads. Max distance is the highest pair distance in cluster. For one sample, global distance is the mean of all intra-clusters distance.  
 
 Precision, recall and ARI definitions and computation are the same used in vsearch and swarm paper. 
 
@@ -55,7 +55,7 @@ Precision, recall and ARI definitions and computation are the same used in vsear
 
 Recall and precision are given in [Supplementary Figure 2](clusteringEval_RESULTS/test_SCLUST/recall_precision_boxplot.svg)
 
-Detailed values for all samples and parameters are given in [Supplementary Table 2](clusteringEval_RESULTS/test_SCLUST/testSclust.eval.tsv)
+Detailed values for all samples and parameters are given in [Supplementary Table 2](clusteringEval_RESULTS/test_SCLUST/all_samples-1000sp-Powerlaw.noChimeras.derep.eval.tsv)
 
 Figures with all samples separated are given in [Supplementary Figure 3 (ARI)](clusteringEval_RESULTS/test_SCLUST/ari_all.svg), [Supplementary Figure 4 (Recall/Precision)](clusteringEval_RESULTS/test_SCLUST/recall_precision_all.svg) and [Supplementary Figure 5 (Singletons)](clusteringEval_RESULTS/test_SCLUST/singletons_all.svg)
 
@@ -96,6 +96,10 @@ Detailed values for all samples and tools are given in [Supplementary Table 3](c
 
 * MeshClust has lower ARI than other tools (median 0.82). Swarm has the best ARI (median 0.99). Sclust has ARI slightly lower than Vsearch (median 0.96 for sclust and median 0.97 for vsearch). 
 * But Sclust produces the least singletons clusters in proportion (median 5.6 %) and singletons is something we want to avoid. 
-* Sclust is also tool with most singletons with size >= 0.05% of reads, so it creates clusters with more sequences, and this clusters are almost as "correct" as vsearch. 
+* Sclust is also tool with highest number of clusters with size >= 0.05% of reads, so it creates clusters with more sequences, and this clusters are almost as "correct" as vsearch. 
 * MeshClust similarity calculation with learning doesn't work good in this dataset. When we used just alignment (option --align), evaluation parameters are better and similar to other tools (for sample01 at id 97, ARI is 0.75 with default mode and 0.95 with align mode), but this option requires a lot of calculation time.
 * Sclust execution time is longer than vsearch (increase of 38.11% in mean) but slower than Meshclust. 
+
+Then, parameters have been evaluated on 2 sub-selections of clusters : clusters with size > 1 and clusters with size >= 0.05%. For all tools, recall increases when small clusters are eliminated and precision decreases. The balance leads to ARI similary among selections. Taxonomic distances also increases. Increases and decreases are similar among tools, we don't have a tool "bad" with all clusters and "good" when we take only big clusters.  
+Raw data : [for clusters with size > 1](clusteringEval_RESULTS/tools_comparison/all_samples-1000sp-Powerlaw.noChimeras.derep.nosingle.eval.tsv),[for clusters with size >= 0.05% of reads](clusteringEval_RESULTS/tools_comparison/all_samples-1000sp-Powerlaw.noChimeras.derep.005reads.eval.tsv)  
+Graphical representation : [Number of clusters](clusteringEval_RESULTS/tools_comparison/number_clusters_selected_clusters_boxplot.svg),[ARI](clusteringEval_RESULTS/tools_comparison/ari_selected_clusters_boxplot.svg),[Recall](clusteringEval_RESULTS/tools_comparison/recall_selected_clusters_boxplot.svg),[Precision](clusteringEval_RESULTS/tools_comparison/precision_selected_clusters_boxplot.svg),[Distance](clusteringEval_RESULTS/tools_comparison/distance_selected_clusters_boxplot.svg)
