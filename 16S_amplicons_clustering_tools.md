@@ -23,7 +23,7 @@ Script `clusteringEval_testSclust.sh` allows to launch all clustering and evalua
 #### Compare SCLUST with other tools 
 
 SCLUST is compared with 5 others clustering tools : CD-HIT, SWARM, VSEARCH, MESHCLUST and SUMACLUST. 
-CD-HIT, VSEARCH and MESHCLUST are launched with threshold id of 97%. SCLUST is launched with id of 97, weak id of 95 and quality of 0, parameters determined as best (see Results section). SWARM is launched with default parameters (d=1) as advised in its publication. Tools are launched for the 10 samples. 
+CD-HIT, VSEARCH and MESHCLUST are launched with threshold id of 97%. SCLUST is launched with id of 97, weak id of 95 and quality of 0, parameters determined as best (see Results section). SWARM is launched with distance parameter d = 3. 
 Homemade script `clusteringEval_clustering.sh` launchs all clusterings with one fasta file in input and `clusteringEval_eval.sh` launchs evaluation parameters calculation for clusterings.
 
 ### Evaluation 
@@ -69,12 +69,12 @@ Figures with all samples separated are given in [Supplementary Figure 3 (ARI)](c
 
 #### SCLUST vs other tools 
 
-**Figure 3** : Distribution of Adjusted Random Index for each tools. Threshold identity is 97% (and default d=1 for SWARM). 
+**Figure 3** : Distribution of Adjusted Random Index for each tools. Threshold identity is 97% (and d=3 for SWARM). 
 <img src="clusteringEval_RESULTS/tools_comparison/ari_boxplot.svg" width="500">
 
 Recall and precision are in [Supplementary Figure 6](clusteringEval_RESULTS/tools_comparison/precision_recall.svg)
 
-**Figure 4** : Distribution of singletons percentage for each tools. Threshold identity is 97% (and default d=1 for SWARM) 
+**Figure 4** : Distribution of singletons percentage for each tools. Threshold identity is 97% (and d=3 for SWARM) 
 <img src="clusteringEval_RESULTS/tools_comparison/singletons_boxplot.svg" width="500">
 
 Figures of number clusters distribution are in [Supplementary Figure 7](clusteringEval_RESULTS/tools_comparison/number_clusters.svg) 

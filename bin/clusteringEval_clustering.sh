@@ -142,7 +142,7 @@ mkdir -p $dir
 d=$((100-$id)) 
 echo "* Cluster $input with swarm with d=$d..." 
 if [[ ! -f $dir/$prefix.swarm.d$d.uc ]]; then 
-	/usr/bin/time -f "Memory %M\nTime %U" -o $dir/$prefix.swarm.d$d.time.txt swarm $input -d $d -t $THREADS -u $dir/$prefix.swarm.uc -z > $dir/$prefix.swarm.d$d.otumap 
+	/usr/bin/time -f "Memory %M\nTime %U" -o $dir/$prefix.swarm.d$d.time.txt swarm $input -d $d -t $THREADS -u $dir/$prefix.swarm.d$d.uc -z > $dir/$prefix.swarm.d$d.otumap 
 else 
 	echo "Results already exists." 
 fi

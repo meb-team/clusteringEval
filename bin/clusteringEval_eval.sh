@@ -32,8 +32,9 @@ function cluster_eval(){
 	echo -e "\n-- COMPUTE EVALUATION --" 
 	cd $indir/swarm 
 	echo -e "\n** swarm clustering..." 
-	uc_file=$prefix.swarm.uc
-	time_file=$prefix.swarm.time.txt
+	d=3
+	uc_file=$prefix.swarm.d$d.uc
+	time_file=$prefix.swarm.d$d.time.txt
 	if [[ -f $uc_file ]]; then 
 		echo "* Number of clusters..."
 		total_clusters=$(awk '{if ($1 == "C") print}' $uc_file | wc -l) 
@@ -44,21 +45,21 @@ function cluster_eval(){
 		memory=$(grep "Memory" $time_file | cut -f 2 -d " ")
 		time=$(grep "Time" $time_file | cut -f 2 -d " ")
 		echo "* Compute matrix..." 
-		matrix=$prefix.swarm.otumatrix 
+		matrix=$prefix.swarm.d$d.otumatrix 
 		python3 $BIN/cluster2matrix.py $uc_file $taxo $clusters_size_threshold
 		python3 $BIN/matrix2distance.py $matrix $taxo > $matrix.distance
 		compute_evaluation $matrix 
 		echo -e "swarm\t$prefix\tdefault\t1\t$total_clusters\t$singletons\t$pairs\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory\t$mean_mean\t$mean_max" >> $output_file
 		
 		echo "* Compute no singletons..." 
-		matrix=$prefix.swarm.nosingletons.otumatrix
+		matrix=$prefix.swarm.d$d.nosingletons.otumatrix
 		total_clusters=$(awk '{if ($1 == "C") print}' $uc_file | awk '{if ($3 > 1) print}' | wc -l)
 		python3 $BIN/matrix2distance.py $matrix $taxo > $matrix.distance
 		compute_evaluation $matrix
-		echo -e "swarm\t$prefix\tdefault\t1\t$total_clusters\t$recall\t$precision\t$ari\t$mean_mean\t$mean_max" >> $output_file_nosingle
+		echo -e "swarm\t$prefix\tdefault\t$d\t$total_clusters\t$recall\t$precision\t$ari\t$mean_mean\t$mean_max" >> $output_file_nosingle
 		
 		echo "* Compute clusters >= 0.05% of reads..." 
-		matrix=$prefix.swarm.005reads.otumatrix
+		matrix=$prefix.swarm.d$d.005reads.otumatrix
 		total_clusters=$clusters005
 		python3 $BIN/matrix2distance.py $matrix $taxo > $matrix.distance
 		compute_evaluation $matrix

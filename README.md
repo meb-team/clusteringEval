@@ -65,7 +65,7 @@ Rscript bin/clusteringEval_graphs.R
 ```
 mkdir -p clusteringEval_TOOL_COMPARISON
 for i in 01 02 03 04 05 06 07 08 09 10; do 
-	bash bin/clusteringEval_clustering.sh clusteringEval_DATA/sample$i\-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON
+	bash bin/clusteringEval_clustering.sh clusteringEval_DATA/sample$i\-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON 97
 done 
 ```
 
