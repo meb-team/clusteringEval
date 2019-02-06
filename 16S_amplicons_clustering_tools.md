@@ -39,6 +39,7 @@ Swarm paper definition : *"adjusted Rand index, which summarizes both precision 
 	* Clusters with size > 1 : number of clusters after discard singletons. 
 	* Clusters with size > 0.05% of reads : number of clusters containing at least 0.05% of all reads.  
 * Time and Memory : Time is user time to compute clustering and memory max memory used. 
+* Distance : Distance is some kind of taxonomic distance computed. For each cluster, mean and max intra cluster distance are computed. Mean distance is the mean distance between all pairs of reads. Max distance is the highest pair distance in cluster. For one sample, global distance is the mean of all intra-clusters distance. Distance is defined like A. Bazin does in pre print paper : * 
 
 Precision, recall and ARI definitions and computation are the same used in vsearch and swarm paper. 
 
