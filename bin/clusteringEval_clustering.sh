@@ -72,7 +72,7 @@ input=$1
 outdir=$2
 id=$3
 BIN=$(echo $0 | rev | cut -f 2- -d "/" | rev)
-THREADS=6
+THREADS=10
 if [[ $BIN == $0 ]]; then 
 	BIN=. 
 fi 
@@ -139,9 +139,10 @@ rm $input.sumaclust
 echo -e "\n-- SWARM CLUSTERING --" 
 dir=$outdir/swarm 
 mkdir -p $dir 
+d=$((100-$id)) 
 echo "* Cluster $input with swarm with d=$d..." 
-if [[ ! -f $dir/$prefix.swarm.uc ]]; then 
-	/usr/bin/time -f "Memory %M\nTime %U" -o $dir/$prefix.swarm.time.txt swarm $input -t $THREADS -u $dir/$prefix.swarm.uc -z > $dir/$prefix.swarm.otumap 
+if [[ ! -f $dir/$prefix.swarm.d$d.uc ]]; then 
+	/usr/bin/time -f "Memory %M\nTime %U" -o $dir/$prefix.swarm.d$d.time.txt swarm $input -d $d -t $THREADS -u $dir/$prefix.swarm.uc -z > $dir/$prefix.swarm.d$d.otumap 
 else 
 	echo "Results already exists." 
 fi
