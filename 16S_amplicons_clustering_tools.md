@@ -77,16 +77,6 @@ Recall and precision are in [Supplementary Figure 6](clusteringEval_RESULTS/tool
 **Figure 4** : Distribution of singletons percentage for each tools. Threshold identity is 97% (and default d=1 for SWARM) 
 <img src="clusteringEval_RESULTS/tools_comparison/singletons_boxplot.svg" width="500">
 
-**Table 1** : Means of clusters counts for each tools. 
-|Tool| Mean total clusters | Mean clusters size > 1 | Mean clusters size > 0.05% of reads | 
-|------|--------------|-----------------|------------|
-| CD-HIT | 725.9 |  682.8 | 255.9 |
-| MESHCLUST | 508.5 | 472.3 | 196.2 |
-| SCLUST | 736.7 | 695.9 | 263.9 |
-| SUMACLUST | 749.9 | 704.8 | 257.6 |
-| SWARM | 1293.9 | 731.6 | 257.7 |
-| VSEARCH | 736.7 | 695 | 262.2 |
-
 Figures of number clusters distribution are in [Supplementary Figure 7](clusteringEval_RESULTS/tools_comparison/number_clusters.svg) 
 
 Detailed values for all samples and tools are given in [Supplementary Table 3](clusteringEval_RESULTS/tools_comparison/tools_comparison_eval.tsv)
