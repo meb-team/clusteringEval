@@ -69,12 +69,14 @@ for i in 01 02 03 04 05 06 07 08 09 10; do
 done 
 
 mkdir clusteringEval_TOOL_comparison 
-for tool in cdhit sclust sumaclust swarm vsearch; do 
+for tool in cdhit meshclust sclust sumaclust swarm vsearch; do 
 	mkdir clusteringEval_TOOL_comparison/$tool
 done 
-for tool in cdhit sclust sumaclust swarm vsearch; do 
+for tool in cdhit meshclust sclust sumaclust swarm vsearch; do 
 	mv clusteringEval_TOOL_comparison_s*/$tool/* clusteringEval_TOOL_COMPARISON/$tool
 done 
+
+rm clusteringEval_TOOL_COMPARISON_s*
 ```
 
 It's also possible to run it locally with : 
