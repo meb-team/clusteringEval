@@ -62,12 +62,35 @@ Rscript bin/clusteringEval_graphs.R
 
 ### TOOL COMPARISON : Clustering 
 
+To evaluate time and memory, tool comparison has been launched in hpc2 mesocentre. Script are in `/home/cehilper/clustering`. 
+```
+sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample02-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s02 97
+sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample03-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s03 97
+sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample04-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s04 97
+sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample05-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s05 97
+sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample06-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s06 97
+sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample07-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s07 97
+sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample08-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s08 97
+sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample09-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s09 97
+sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample10-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s10 97
+
+mkdir clusteringEval_TOOL_comparison 
+for tool in cdhit sclust sumaclust swarm vsearch; do 
+	mkdir clusteringEval_TOOL_comparison/$tool
+done 
+for tool in cdhit sclust sumaclust swarm vsearch; do 
+	mv clusteringEval_TOOL_comparison_s*/$tool/* clusteringEval_TOOL_COMPARISON/$tool
+done 
+```
+
+It's also possible to run it locally with : 
 ```
 mkdir -p clusteringEval_TOOL_COMPARISON
 for i in 01 02 03 04 05 06 07 08 09 10; do 
 	bash bin/clusteringEval_clustering.sh clusteringEval_DATA/sample$i\-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON 97
 done 
 ```
+
 
 ### TOOL COMPARISON : Clustering evaluation 
 
@@ -89,6 +112,29 @@ Rscript bin/clusteringEval_graphs.R
 Rscript bin/clusteringEval_graphs_type_clusters.R
 ```
 
+### LAKE DATA 
+
+Clustering has also been done on 16S pyrosequencing data from several lakes. All lakes are pooled in one sample. Data are already cleaned. 
+
+#### Preprocessing : dereplication 
+
+```
+vsearch --derep_fulllength FW_newname_30_06_2015.fasta --output clusteringEval_DATA/FW_newname_30_06_2015.derep.fasta --threads 8 --sizeout
+```
+
+#### Clustering 
+
+Clustering has been launched in hpc2 mesocentre, with one script per tool to launch clustering in same time. Scripts are in `/home/cehilper/clustering` 
+```
+for tool in cdhit sclust sumaclust swarm vsearch ; do 
+	sbatch clusteringEval_$tool.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/FW_newname_30_06_2015.derep.fasta clusteringEval_LAKE_DATA_$tool 97
+done	
+```
+
+It's also possible to run it locally with : 
+```
+	bash bin/clusteringEval_clustering.sh clusteringEval_DATA/FW_newname_30_06_2015.derep.fasta clusteringEval_LAKE_DATA 97
+```
 
 ### References 
 * Escudié, F., Auer, L., Bernard, M., Mariadassou, M., Cauquil, L., Vidal, K., ... & Pascal, G. (2017). **FROGS: find, rapidly, OTUs with galaxy solution.** Bioinformatics, 34(8), 1287-1294.
