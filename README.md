@@ -64,15 +64,9 @@ Rscript bin/clusteringEval_graphs.R
 
 To evaluate time and memory, tool comparison has been launched in hpc2 mesocentre. Script are in `/home/cehilper/clustering`. 
 ```
-sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample02-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s02 97
-sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample03-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s03 97
-sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample04-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s04 97
-sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample05-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s05 97
-sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample06-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s06 97
-sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample07-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s07 97
-sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample08-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s08 97
-sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample09-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s09 97
-sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample10-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s10 97
+for i in 01 02 03 04 05 06 07 08 09 10; do 
+	sbatch clusteringEval_clustering.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample$i\-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TOOL_COMPARISON_s$i 97
+done 
 
 mkdir clusteringEval_TOOL_comparison 
 for tool in cdhit sclust sumaclust swarm vsearch; do 
