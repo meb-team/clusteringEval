@@ -4,13 +4,17 @@
 
 ### Data used for evaluation 
 
+#### Synthetic data
+
 To test SCLUST, data for FROGS's evaluation are used (http://frogs.toulouse.inra.fr/). Synthethic data with powerlaw distribution and 1000 strains are used (http://frogs.toulouse.inra.fr/data_to_test_frogs/assessment_datasets/datasets_silva/1000sp/dataset_1/V4V4/powerlaw/). It's 16S sequencing sequencing simulation (V4 region). Powerlaw distribution is more realistic with few strain with high abundance and other strains with low abundance. Dataset_1 is selected arbitrarily. Dataset contains 10 samples with same strains but different abundance levels. (for example in sample 1 you will have strain1 in very high abundance and strain2 in low abundance and it will be the opposite in sample 2.). 20 most abundant strains with reads count for each sample is given in [Supplementary Figures 1](clusteringEval_RESULTS/abundance_samples.pdf)
 
 Sequencing simulation from FROGS contains chimeras reads, identified by the presence of two reference in fastq header. This chimera reads are removed with homemade script `exclude_chimeras.py`. 
 Then, reads are deduplicated with `vsearch`.  
 Taxonomy is treated with homemade script `frogs_taxo.py` which allows to better presentation of taxonomy present in fastq header.
 
-Preprocessing stats are in [Supplementary Table 1](clusteringEval_RESULTS/all_samples-1000sp-Powerlaw.preprocessing_stats.tsv)
+#### Real sequencing data 
+
+Real sequencing data used to test SCLUST are microeukaryotic 16S RNA pyrosequencing data from several lakes ([Debroas 2017](https://www.ncbi.nlm.nih.gov/pubmed/28334157)). All lakes are pooled together in one sample. Reads are already cleaned. This cleaned reads are deduplicated with `vsearch --derep_full_length`.  
 
 ### Clustering 
 
@@ -18,16 +22,22 @@ Preprocessing stats are in [Supplementary Table 1](clusteringEval_RESULTS/all_sa
 
 Sclust is launch for each sample (1 to 10), with id from 95 to 99 (steps of 1), weak id 2 below id (for example 97 for id 99 and 95 for id 97), and quality from 0 to 1 with steps of 0.25. 
 2 modes are tested : default mode, and accurate mode (much slower) with --maxrejects 0 and --maxaccepts 0 leading to comparisons with all database instead of just selected centroids. 
-Script `clusteringEval_testSclust.sh` allows to launch all clustering and evaluation for one sample. 
+Script `clusteringEval_testSclust.sh` allows to launch all clustering and evaluation for one sample.  
 
-#### Compare SCLUST with other tools 
+#### Compare SCLUST with other tools with synthetic data 
 
-SCLUST is compared with 5 others clustering tools : CD-HIT, SWARM, VSEARCH, MESHCLUST and SUMACLUST. 
-CD-HIT, VSEARCH and MESHCLUST are launched with threshold id of 97%. SCLUST is launched with id of 97, weak id of 95 and quality of 0, parameters determined as best (see Results section). SWARM is launched with distance parameter d = 3. 
-Homemade script `clusteringEval_clustering.sh` launchs all clusterings with one fasta file in input and `clusteringEval_eval.sh` launchs evaluation parameters calculation for clusterings.
+SCLUST is compared with 5 others clustering tools : CD-HIT, SWARM, VSEARCH, MESHCLUST and SUMACLUST. This tools are launched on synthetic data from FROGS. 
+CD-HIT, VSEARCH and MESHCLUST are launched with threshold id of 97%. SCLUST is launched with id of 97, weak id of 95 and quality of 0, parameters determined as best (see Results section). SWARM is launched with distance parameter d = 3. All clusterings are launched following each other for each sample on hpc2 mesocentre.   
+
+#### Compare SCLUST with other tools with real sequencing data 
+
+Lake data are clustered with the 6 clustering tools : CD-HIT, SCLUST, SWARM, VSEARCH, MESHCLUST and SUMACLUST. Clustering is launched for each tool on hpc2 mesocentre. Parameters are the same as for synthetic data : CLUST is launched with id of 97, weak id of 95 and quality of 0, parameters determined as best (see Results section). SWARM is launched with distance parameter d = 3.
 
 ### Evaluation 
 
+#### On synthetic data clustering 
+
+All evaluation is compute by homemade script `clusteringEval_eval.sh` 
 Evaluation is made according to 5 criterias :
 * Precision : represents the ability of tool to reconstruct clusters with only 1 strain inside (avoid over-grouping) 
 * Recall : represents the ability of tool to reconstruct clusters with all reads from 1 strain (avoid over-splitting) 
@@ -37,15 +47,25 @@ Swarm paper definition : *"adjusted Rand index, which summarizes both precision 
 	* Total clusters : number of all clusters created by tools. 
 	* Singletons percentage : number of singletons clusters among all clusters
 	* Clusters with size > 1 : number of clusters after discard singletons. 
-	* Clusters with size > 0.05% of reads : number of clusters containing at least 0.05% of all reads.  
+	* Clusters with size >= 0.05% of reads : number of clusters containing at least 0.05% of all reads.  
 * Time and Memory : Time is user time to compute clustering and memory max memory used. 
 * Distance : Distance is some kind of taxonomic distance computed. For a pair of reads with known taxonomy, it's defined as length between closest common taxon in the tree and strain level. Distance will be 0 for same specie, 1 for same genus, 2 for same family and so on. 7 classical taxonomic ranks are considered : `Kingdom;Phylum;Class;Order;Family;Genus;Specie`. For each cluster, mean and max intra cluster distance are computed. Mean distance is the mean distance between all pairs of reads. Max distance is the highest pair distance in cluster. For one sample, global distance is the mean of all intra-clusters distance.  
 
 Precision, recall and ARI definitions and computation are the same used in vsearch and swarm paper. 
 
+#### On real sequencing data clustering 
+
+On real sequencing data, we don't have taxonomy of reads so it's no possible to evaluate recall, precision, ARI or distance parameters. 
+We looked at clusters count, with total clusters, clusters with size > 1 and clusters with size > 0.05% of reads. Time and memory are also reported. 
+
 ## Results  
 
-#### SCLUST test 
+### Preprocessing 
+
+Preprocessing stats for FROGS synthetic data are in [Supplementary Table 1](clusteringEval_RESULTS/all_samples-1000sp-Powerlaw.preprocessing_stats.tsv). 
+For real sequencing lake data, we have 6 777 514 sequences before dereplication and 3 718 186 after. 
+
+### SCLUST test 
 
 **Figure 1** : Distribution of Adjusted Random Index for each SCLUST parameters. Adjusted Rand Index is calculated as presented [here](https://en.wikipedia.org/wiki/Rand_index#Adjusted_Rand_index)  
 <img src="clusteringEval_RESULTS/test_SCLUST/ari_boxplot.svg" width="500">
@@ -67,7 +87,7 @@ Figures with all samples separated are given in [Supplementary Figure 3 (ARI)](c
 
 **Conclusion** : As accurate mode is much slower than default, we chooses to keep default mode with quality 0 and threshold 97 for evaluation against other tools. 
 
-#### SCLUST vs other tools 
+### SCLUST vs other tools (synthetic data) 
 
 **Figure 3** : Distribution of Adjusted Random Index for each tools. Threshold identity is 97% (and d=3 for SWARM). 
 <img src="clusteringEval_RESULTS/tools_comparison/ari_boxplot.svg" width="500">
