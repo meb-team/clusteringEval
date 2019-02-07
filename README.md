@@ -133,7 +133,7 @@ done
 
 It's also possible to run it locally with : 
 ```
-	bash bin/clusteringEval_clustering.sh clusteringEval_DATA/FW_newname_30_06_2015.derep.fasta clusteringEval_LAKE_DATA 97
+bash bin/clusteringEval_clustering.sh clusteringEval_DATA/FW_newname_30_06_2015.derep.fasta clusteringEval_LAKE_DATA 97
 ```
 
 ### References 
