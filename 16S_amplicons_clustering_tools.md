@@ -93,3 +93,12 @@ Detailed values for all samples and tools are given in [Supplementary Table 3](c
 Then, parameters have been evaluated on 2 sub-selections of clusters : clusters with size > 1 and clusters with size >= 0.05%. For all tools, recall increases when small clusters are eliminated and precision decreases. The balance leads to ARI similary among selections. Taxonomic distances also increases. Increases and decreases are similar among tools, we don't have a tool "bad" with all clusters and "good" when we take only big clusters.  
 Raw data : [for clusters with size > 1](clusteringEval_RESULTS/tools_comparison/all_samples-1000sp-Powerlaw.noChimeras.derep.nosingle.eval.tsv),[for clusters with size >= 0.05% of reads](clusteringEval_RESULTS/tools_comparison/all_samples-1000sp-Powerlaw.noChimeras.derep.005reads.eval.tsv)  
 Graphical representation : [Number of clusters](clusteringEval_RESULTS/tools_comparison/number_clusters_selected_clusters_boxplot.svg),[ARI](clusteringEval_RESULTS/tools_comparison/ari_selected_clusters_boxplot.svg),[Recall](clusteringEval_RESULTS/tools_comparison/recall_selected_clusters_boxplot.svg),[Precision](clusteringEval_RESULTS/tools_comparison/precision_selected_clusters_boxplot.svg),[Distance](clusteringEval_RESULTS/tools_comparison/distance_selected_clusters_boxplot.svg)
+
+### References 
+* Debroas, D., Domaizon, I., Humbert, J. F., Jardillier, L., Lepère, C., Oudart, A., & Taïb, N. (2017). **Overview of freshwater microbial eukaryotes diversity: a first analysis of publicly available metabarcoding data.** FEMS microbiology ecology, 93(4), fix023
+* Escudié, F., Auer, L., Bernard, M., Mariadassou, M., Cauquil, L., Vidal, K., ... & Pascal, G. (2017). **FROGS: find, rapidly, OTUs with galaxy solution.** Bioinformatics, 34(8), 1287-1294.
+* James, B. T., Luczak, B. B., & Girgis, H. Z. (2018). **MeShClust: an intelligent tool for clustering DNA sequences.** Nucleic acids research.
+* Li, W., & Godzik, A. (2006). **Cd-hit: a fast program for clustering and comparing large sets of protein or nucleotide sequences.** Bioinformatics, 22(13), 1658-1659.  
+* Mahé, F., Rognes, T., Quince, C., de Vargas, C., & Dunthorn, M. (2014). **Swarm: robust and fast clustering method for amplicon-based studies.** PeerJ, 2, e593.  
+* Rognes, T., Flouri, T., Nichols, B., Quince, C., & Mahé, F. (2016). **VSEARCH: a versatile open source tool for metagenomics.** PeerJ, 4, e2584.  
+* Zou, Q., Lin, G., Jiang, X., Liu, X., & Zeng, X. (2018). **Sequence clustering in bioinformatics: an empirical study**. Briefings in bioinformatics. 
