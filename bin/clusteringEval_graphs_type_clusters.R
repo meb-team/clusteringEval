@@ -27,8 +27,23 @@ distance=ggplot(f,aes(x=tool,y=Mean.mean.distance,fill=type))+geom_boxplot()+lab
 number_clusters=ggplot(f,aes(x=tool,y=number_clusters,fill=type))+geom_boxplot()+labs(x="Tools",y="Number of clusters",fill="Selected clusters")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16),legend.title=element_text(size=16),legend.text=element_text(size=14))
 
 ggsave(file="clusteringEval_RESULTS/tools_comparison/ari_selected_clusters_boxplot.svg",plot=ari,width=11)
+pdf("clusteringEval_RESULTS/tools_comparison/ari_selected_clusters_boxplot.pdf",width=11)
+ari 
+dev.off() 
 ggsave(file="clusteringEval_RESULTS/tools_comparison/recall_selected_clusters_boxplot.svg",plot=recall,width=11)
+pdf("clusteringEval_RESULTS/tools_comparison/recall_selected_clusters_boxplot.pdf",width=11)
+recall
+dev.off() 
 ggsave(file="clusteringEval_RESULTS/tools_comparison/precision_selected_clusters_boxplot.svg",plot=precision,width=11)
+pdf("clusteringEval_RESULTS/tools_comparison/precision_selected_clusters_boxplot.pdf",width=11) 
+precision
+dev.off()
 ggsave(file="clusteringEval_RESULTS/tools_comparison/number_clusters_selected_clusters_boxplot.svg",plot=number_clusters,width=11)
+pdf("clusteringEval_RESULTS/tools_comparison/number_clusters_selected_clusters_boxplot.pdf",width=11)
+number_clusters
+dev.off()
 ggsave(file="clusteringEval_RESULTS/tools_comparison/distance_selected_clusters_boxplot.svg",plot=distance,width=11)
+pdf("clusteringEval_RESULTS/tools_comparison/distance_selected_clusters_boxplot.pdf",width=11)
+distance
+dev.off()
 save.image(file="clusteringEval_RESULTS/tools_comparison/tools_comparison_selected_clusters.Rdata") 
