@@ -37,12 +37,12 @@ memory_boxplot=ggplot(f,aes(x=tool,y=Memory.kb./1000,fill=tool))+geom_boxplot()+
 
 distance_boxplot=ggplot(f,aes(x=tool,y=Mean.mean.distance,fill=tool))+geom_boxplot()+labs(x="Tools",y="Mean global intra cluster distance")+theme(axis.text.x=element_text(size=14),plot.title=element_text(size=20),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16),plot.margin=unit(c(0.5,1,0.5,0.5),"cm"))+guides(fill=FALSE)
 
-ggsave(file="clusteringEval_RESULTS/tools_comparison/ari_boxplot.svg",plot=ari_boxplot,width=8)
-ggsave(file="clusteringEval_RESULTS/tools_comparison/precision_recall.svg",plot=recall_precision_boxplot)
-ggsave(file="clusteringEval_RESULTS/tools_comparison/singletons_boxplot.svg",plot=singletons_boxplot,width=8) 
+ggsave(file="clusteringEval_RESULTS/tools_comparison/ari_boxplot.svg",plot=ari_boxplot,width=8,height=12)
+ggsave(file="clusteringEval_RESULTS/tools_comparison/precision_recall.svg",plot=recall_precision_boxplot,width=12)
+ggsave(file="clusteringEval_RESULTS/tools_comparison/singletons_boxplot.svg",plot=singletons_boxplot,width=8,height=12) 
 ggsave(file="clusteringEval_RESULTS/tools_comparison/number_clusters.svg",number_clusters_boxplot,height=8) 
 time_memory=grid.arrange(time_boxplot,memory_boxplot,ncol=1)
 ggsave(file="clusteringEval_RESULTS/tools_comparison/time_memory.svg",plot=time_memory,height=8)
-ggsave(file="clusteringEval_RESULTS/tools_comparison/distance_boxplot.svg",plot=distance_boxplot,width=8)
+ggsave(file="clusteringEval_RESULTS/tools_comparison/distance_boxplot.svg",plot=distance_boxplot,width=8,height=12)
 save.image(file="clusteringEval_RESULTS/tools_comparison/tools_comparison.Rdata") 
 
