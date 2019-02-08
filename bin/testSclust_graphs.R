@@ -28,14 +28,30 @@ recall_precision_boxplot=ggplot(f_recall_precision,aes(x=threshold,y=value,fill=
 singletons_boxplot=ggplot(f,aes(x=threshold.d,y=p_singletons,fill=quality))+geom_boxplot()+facet_wrap(~algo,ncol=1)+labs(fill="Quality",x="Clustering threshold (%)",y="Singletons (%)")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),legend.title=element_text(size=16),legend.text=element_text(size=14),strip.text.x=element_text(size=16))
 
 ggsave(file="clusteringEval_RESULTS/test_SCLUST/ari_all.svg",plot=ari_all,width=12)
+pdf("clusteringEval_RESULTS/test_SCLUST/ari_all.pdf",width=12)
+ari_all
+dev.off()
 recall_precision_all=grid.arrange(recall_all,precision_all)
 ggsave(file="clusteringEval_RESULTS/test_SCLUST/recall_precision_all.svg",plot=recall_precision_all,width=12,height=12)
+pdf("clusteringEval_RESULTS/test_SCLUST/recall_precision_all.svg",width=12,height=12)
+recall_precision_all
+dev.off()
 ggsave(file="clusteringEval_RESULTS/test_SCLUST/singletons_all.svg",plot=singletons_all,width=12)
-
+pdf("clusteringEval_RESULTS/test_SCLUST/singletons_all.pdf",width=12)
+singletons_all
+dev.off()
 ggsave(file="clusteringEval_RESULTS/test_SCLUST/ari_boxplot.svg",plot=ari_boxplot,height=8)
+pdf("clusteringEval_RESULTS/test_SCLUST/ari_boxplot.pdf",height=8)
+ari_boxplot
+dev.off()
 ggsave(file="clusteringEval_RESULTS/test_SCLUST/recall_precision_boxplot.svg",plot=recall_precision_boxplot) 
+pdf("clusteringEval_RESULTS/test_SCLUST/recall_precision_boxplot.pdf")
+recall_precision_boxplot
+dev.off()
 ggsave(file="clusteringEval_RESULTS/test_SCLUST/singletons_boxplot.svg",plot=singletons_boxplot,height=8) 
-
+pdf("clusteringEval_RESULTS/test_SCLUST/singletons_boxplot.pdf",height=8)
+singletons_boxplot
+dev.off()
 save.image(file="clusteringEval_RESULTS/test_SCLUST/test_SCLUST.Rdata") 
 
 
