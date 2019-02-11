@@ -40,7 +40,7 @@ bash bin/combined_files.sh clusteringEval_DATA/sample*-1000sp-*.preprocessing_st
 
 ### TEST SCLUST : Clustering and evaluation 
 
-HPC2 running : 
+HPC2 clustering : 
 ```
 for i in 01 02 03 04 05 06 07 08 09 10; do 
 	sbatch clusteringEval_testSclust.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample$i\-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TEST_SCLUST_s$i
@@ -50,27 +50,23 @@ mkdir clusteringEval_TEST_SCLUST/sclust_exact
 for type in sclust sclust_exact; do
 	mv clusteringEval_TEST_SCLUST_s*/$type/* clusteringEval_TEST_SCLUST/$type 
 done	
+rm -r clusteringEval_TEST_SCLUST_s*
 ```
 
+Evaluation : 
 ```
 mkdir -p clusteringEval_TEST_SCLUST
 for i in 01 02 03 04 05 06 07 08 09 10; do 
-	bash bin/clusteringEval_testSclust.sh clusteringEval_DATA/sample$i\-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_DATA/sample$i\-1000sp-Powerlaw.noChimeras.derep.taxo.tsv clusteringEval_TEST_SCLUST
+	bash bin/clusteringEval_eval_testSclust.sh clusteringEval_TEST_SCLUST sample$i\-1000sp-Powerlaw.noChimeras.derep clusteringEval_DATA/sample$i\-1000sp-Powerlaw.noChimeras.derep.taxo.tsv
 done 
-
-bash bin/combined_files.sh clusteringEval_TEST_SCLUST/sclust/*1000sp*.tsv > clusteringEval_TEST_SCLUST/sclust/all_samples-1000sp-Powerlaw.noChimeras.derep.eval.tsv 
-
-bash bin/combined_files.sh clusteringEval_TEST_SCLUST/sclust_exact/*1000sp*.tsv> 
-clusteringEval_TEST_SCLUST/sclust/all_samples-1000sp-Powerlaw.noChimeras.derep.exact_eval.tsv 
-
-bash bin/combined_files.sh clusteringEval_TEST_SCLUST/sclust/all_samples-1000sp-Powerlaw.noChimeras.derep.eval.tsv clusteringEval_TEST_SCLUST/sclust/all_samples-1000sp-Powerlaw.noChimeras.derep.exact_eval.tsv > clusteringEval_TEST_SCLUST/testSclust.eval.tsv
+bash bin/combined_files.sh clusteringEval_TEST_SCLUST/sample*-1000sp-Powerlaw.noChimeras.derep.eval.tsv > clusteringEval_TEST_SCLUST/testSclust_all_samples-1000sp-Powerlaw.noChimeras.derep.eval.tsv
 ```
 
 ### TEST SCLUST : Graphical representation 
 ```
 mkdir -p clusteringEval_RESULTS 
 mkdir -p clusteringEval_RESULTS/test_SCLUST
-Rscript bin/clusteringEval_graphs.R
+Rscript bin/testSclust_graphs.R
 ```
 
 ### TOOL COMPARISON : Clustering 
