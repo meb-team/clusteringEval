@@ -27,7 +27,8 @@ wget http://frogs.toulouse.inra.fr/data_to_test_frogs/assessment_datasets/datase
 tar -xvf clusteringEval_DATA/dataset.tar.gz -C clusteringEval_DATA
 ```
 
-#### Delete chimeras, dereplicate and handle taxonomy 
+#### Delete chimeras, dereplicate and handle taxonomy
+
 ```
 for i in 01 02 03 04 05 06 07 08 09 10; do 
 	gunzip clusteringEval_DATA/sample$i\-1000sp-Powerlaw.fastq.gz 
@@ -38,6 +39,17 @@ bash bin/combined_files.sh clusteringEval_DATA/sample*-1000sp-*.preprocessing_st
 ```
 
 ### TEST SCLUST : Clustering and evaluation 
+
+HPC2 running : 
+```
+for i in 01 02 03 04 05 06 07 08 09 10; do 
+	sbatch clusteringEval_testSclust.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/sample$i\-1000sp-Powerlaw.noChimeras.derep.fasta clusteringEval_TEST_SCLUST_s$i
+mkdir clusteringEval_TEST_SCLUST 
+mkdir clusteringEval_TEST_SCLUST/sclust 
+mkdir clusteringEval_TEST_SCLUST/sclust_exact
+for type in sclust sclust_exact; do
+	mv clusteringEval_TEST_SCLUST_s*/$type/* clusteringEval_TEST_SCLUST/$type 
+```
 
 ```
 mkdir -p clusteringEval_TEST_SCLUST
