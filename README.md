@@ -49,6 +49,7 @@ mkdir clusteringEval_TEST_SCLUST/sclust
 mkdir clusteringEval_TEST_SCLUST/sclust_exact
 for type in sclust sclust_exact; do
 	mv clusteringEval_TEST_SCLUST_s*/$type/* clusteringEval_TEST_SCLUST/$type 
+done	
 ```
 
 ```
