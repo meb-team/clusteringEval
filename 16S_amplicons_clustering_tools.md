@@ -14,7 +14,7 @@ Taxonomy is treated with homemade script `frogs_taxo.py` which allows to better 
 
 #### Real sequencing data 
 
-Real sequencing data used to test SCLUST are microeukaryotic 16S RNA pyrosequencing data from several lakes ([Debroas 2017](https://www.ncbi.nlm.nih.gov/pubmed/28334157)). All lakes are pooled together in one sample. Reads are already cleaned. This cleaned reads are deduplicated with `vsearch --derep_full_length`.  
+Real sequencing data used to test SCLUST are microeukaryotic 16S RNA pyrosequencing data from 31 freshwater sites, mostly lakes. ([Debroas 2017](https://www.ncbi.nlm.nih.gov/pubmed/28334157)). Reads count for each sites are provided in [FW_newname_30_06_2015.counts](clusteringEval_RESULTS/FW_newname_30_06_2015.counts) All lakes are pooled together in one sample. Reads are already cleaned. This cleaned reads are deduplicated with `vsearch --derep_full_length`.  
 
 ### Clustering 
 

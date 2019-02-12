@@ -131,8 +131,8 @@ vsearch --derep_fulllength FW_newname_30_06_2015.fasta --output clusteringEval_D
 
 Clustering has been launched in hpc2 mesocentre, with one script per tool to launch clustering in same time. Scripts are in `/home/cehilper/clustering` 
 ```
-for tool in cdhit sclust sumaclust swarm vsearch ; do 
-	sbatch clusteringEval_$tool.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/FW_newname_30_06_2015.derep.fasta clusteringEval_LAKE_DATA_$tool 97
+for tool in cdhit meshclust sclust sumaclust swarm vsearch ; do 
+	sbatch clusteringEval_$tool.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/FW_newname_30_06_2015.derep.fasta clusteringEval_LAKE_DATA_$tool 95
 done	
 ```
 
