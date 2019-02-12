@@ -14,18 +14,18 @@ plot_percent_singletons=ggplot(f,aes(x=tool,y=p_singletons,fill=tool))+geom_col(
 
 plot_big_clusters=ggplot(f,aes(x=tool,y=clusters.size...0.005..of.reads,fill=tool))+geom_col()+labs(x="Tools",y="Number of clusters with size >= 0.005% of reads")+theme(axis.text.x=element_text(size=14),plot.title=element_text(size=20),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16))+guides(fill=FALSE)
 
-ggsave(file="clusteringEval_RESULTS/lake_data/number_clusters.svg",plot=plot_number_clusters)
-pdf("clusteringEval_RESULTS/lake_data/number_clusters.pdf")
+ggsave(file="clusteringEval_RESULTS/lake_data/number_clusters.svg",plot=plot_number_clusters,width=12)
+pdf("clusteringEval_RESULTS/lake_data/number_clusters.pdf",width=12)
 plot_number_clusters
 dev.off()
 
-ggsave(file="clusteringEval_RESULTS/lake_data/percent_singletons.svg",plot=plot_percent_singletons)
-pdf("clusteringEval_RESULTS/lake_data/percent_singletons.pdf")
+ggsave(file="clusteringEval_RESULTS/lake_data/percent_singletons.svg",plot=plot_percent_singletons,width=8)
+pdf("clusteringEval_RESULTS/lake_data/percent_singletons.pdf",width=8)
 plot_percent_singletons
 dev.off()
 
-ggsave(file="clusteringEval_RESULTS/lake_data/big_clusters.svg",plot=plot_big_clusters)
-pdf("clusteringEval_RESULTS/lake_data/big_clusters.pdf")
+ggsave(file="clusteringEval_RESULTS/lake_data/big_clusters.svg",plot=plot_big_clusters,width=8)
+pdf("clusteringEval_RESULTS/lake_data/big_clusters.pdf",width=8)
 plot_big_clusters
 dev.off()
 
