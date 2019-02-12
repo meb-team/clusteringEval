@@ -24,7 +24,6 @@ total_clusters_boxplot=ggplot(f,aes(x=tool,y=total_clusters,fill=tool))+geom_box
 
 singletons_boxplot=ggplot(f,aes(x=tool,y=p_singletons,fill=tool))+geom_boxplot()+labs(x="Tools",y="Singletons (%)")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16))+guides(fill=FALSE)
 
-
 clusters_threshold_boxplot=ggplot(f,aes(x=tool,y=clusters_._0.05.reads,fill=tool))+geom_boxplot()+labs(x="Tools",y="Number of clusters with size >= 0.05% of reads")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16))+guides(fill=FALSE)
 
 clusters_no_singletons_boxplot=ggplot(f,aes(x=tool,y=clusters_no_singletons,fill=tool))+geom_boxplot()+labs(x="Tools",y="Number of clusters with size > 1")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16))+guides(fill=FALSE)

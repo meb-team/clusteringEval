@@ -133,8 +133,15 @@ Clustering has been launched in hpc2 mesocentre, with one script per tool to lau
 ```
 for tool in cdhit meshclust sclust sumaclust swarm vsearch ; do 
 	sbatch clusteringEval_$tool.sh /databis/hilpert/clusteringEval/clusteringEval_DATA/FW_newname_30_06_2015.derep.fasta clusteringEval_LAKE_DATA_$tool 95
-done	
+done
+mkdir clusteringEval_LAKE_DATA	
+for tool in cdhit meshclust sumaclust swarm vsearch ; do 
+	cp clusteringEval_LAKE_DATA_$tool/$tool clusteringEval_LAKE_DATA
+done 	
 ```
+
+#### Evaluation 
+
 
 It's also possible to run it locally with : 
 ```

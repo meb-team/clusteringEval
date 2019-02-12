@@ -83,9 +83,9 @@ Figures with all samples separated are given in [Supplementary Figure 3 (ARI)](c
 * Sclust is sensible to inputs. Results shows variability, mostly in default mode with quality over 0. 
 * In default mode, quality 0 leads always to better ARI. With quality 0, results looks alike for default or accurate mode. For other qualities, pattern changes with less high ARI and more variability. 
 * Singletons percentage rises for 99% threshold (median of 23%), which is an expected pattern. More the threshold is high, more the clusters will be split. However, singletons percentage very slightly increases from 95 to 97 % threshold (median 4% to 5% for quality 0) 
-* Accurate mode increases execution time. For sample01 with id 97 and quality 0, execution time is 37.20s with default mode and 882.79 s with accurate mode.
+* Accurate mode increases execution time. In accurate mode, time is multiplied from 20 for threshold 95% to 32 for threshold 99%. 
 
-**Conclusion** : As accurate mode is much slower than default, we chooses to keep default mode with quality 0 and threshold 97 for evaluation against other tools. 
+**Conclusion** : We can't keep accurate mode due to computation time. It will not be scalable with more reads. For quality 0, clusters quality is almost the same with default and accurate mode, so we choose to keep default mode with quality 0 and threshold 97 for evaluation against other tools. 
 
 ### SCLUST vs other tools (synthetic data) 
 
@@ -113,6 +113,19 @@ Detailed values for all samples and tools are given in [Supplementary Table 3](c
 Then, parameters have been evaluated on 2 sub-selections of clusters : clusters with size > 1 and clusters with size >= 0.05%. For all tools, recall increases when small clusters are eliminated and precision decreases. The balance leads to ARI similary among selections. Taxonomic distances also increases. Increases and decreases are similar among tools, we don't have a tool "bad" with all clusters and "good" when we take only big clusters.  
 Raw data : [for clusters with size > 1](clusteringEval_RESULTS/tools_comparison/all_samples-1000sp-Powerlaw.noChimeras.derep.nosingle.eval.tsv),[for clusters with size >= 0.05% of reads](clusteringEval_RESULTS/tools_comparison/all_samples-1000sp-Powerlaw.noChimeras.derep.005reads.eval.tsv)  
 Graphical representation : [Number of clusters](clusteringEval_RESULTS/tools_comparison/number_clusters_selected_clusters_boxplot.svg),[ARI](clusteringEval_RESULTS/tools_comparison/ari_selected_clusters_boxplot.svg),[Recall](clusteringEval_RESULTS/tools_comparison/recall_selected_clusters_boxplot.svg),[Precision](clusteringEval_RESULTS/tools_comparison/precision_selected_clusters_boxplot.svg),[Distance](clusteringEval_RESULTS/tools_comparison/distance_selected_clusters_boxplot.svg)
+
+### SCLUST vs other tools (real sequencing data) 
+
+**Table 1** : Number of all clusters, clusters with size > 1 and clusters with size >= 0.005% of reads (185 reads for lakes data)
+
+|Tool|All clusters|Clusters with size > 1|Clusters with size >= 0.005% of reads|
+|----|------------|----------------------|-------------------------------------|
+|CD-HIT|176 303|43 648|1 800|
+|MESHCLUST|127 377|22 935|971
+|SCLUST||
+|SUMACLUST|344 037|239 595|1 755|
+|SWARM|714 943|1 239|1 246|
+|VSEARCH|298 944|2 328|2 334|
 
 ### References 
 * Debroas, D., Domaizon, I., Humbert, J. F., Jardillier, L., Lepère, C., Oudart, A., & Taïb, N. (2017). **Overview of freshwater microbial eukaryotes diversity: a first analysis of publicly available metabarcoding data.** FEMS microbiology ecology, 93(4), fix023
