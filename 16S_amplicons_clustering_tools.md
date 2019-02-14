@@ -114,7 +114,7 @@ Others graphs :
 * [Distance](clusteringEval_RESULTS/tools_comparison/distance_boxplot.svg) 
 
 * MeshClust has lower ARI than other tools (median 0.82). Swarm has the best ARI (median 0.99). Sclust has ARI slightly lower than Vsearch (median 0.96 for sclust and median 0.97 for vsearch). 
-* But Sclust produces the least singletons clusters in proportion (median 5.6 %) and singletons is something we want to avoid. 
+* If we discard MeshClust wich produce bad clusters, sclust produces the least singletons (40.8 in mean, vs 41.7 for vsearch or 54 for swarm) and singletons is something we want to avoid. 
 * Sclust is also tool with highest number of clusters with size >= 0.05% of reads, so it creates clusters with more sequences, and this clusters are almost as "correct" as vsearch. 
 * MeshClust similarity calculation with learning doesn't work good in this dataset. When we used just alignment (option --align), evaluation parameters are better and similar to other tools (for sample01 at id 97, ARI is 0.75 with default mode and 0.95 with align mode), but this option requires a lot of calculation time.
 * Sclust execution time is longer than vsearch (increase of 38.11% in mean) but slower than Meshclust. 
@@ -139,7 +139,7 @@ Graphical representations : [Number of clusters](clusteringEval_RESULTS/tools_co
 
 <img src="clusteringEval_RESULTS/lake_data/memory.svg" width="500">
 
-Others graphs : [Singletons percentage](clusteringEval_RESULTS/lake_data/percent_singletons.svg),[]
+Others graphs : [Singletons percentage](clusteringEval_RESULTS/lake_data/percent_singletons.svg)
 
 
 
