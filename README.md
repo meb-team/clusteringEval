@@ -2,9 +2,10 @@
 
 This repository regroups scripts to compare and evaluate SCLUST 16S RNA clustering tools against 5 others tools : CD-HIT, MESHCLUST, SUMACLUST, SWARM and VSEARCH. 
 
-Tools have been tested with [FROGS](http://frogs.toulouse.inra.fr/) synthetic data sets. 
-First, SCLUST has been launched with several parameters to estimate the best. Methods and results are in [results/test_sclust.md](results/test_sclust.md).  
-Then, SCLUST has been compared with others tools. Methods and results are in [results/tools_comparison.md](results/tools_comparison.md). 
+Tools have been tested with [FROGS](http://frogs.toulouse.inra.fr/) synthetic data sets and with lakes metagenomes sequencing. 
+First, SCLUST has been launched with several parameters to estimate the best. Then, SCLUST has been compared with others tools.
+
+Results report : [16S_amplicons_clustering_tools.md](16S_amplicons_clustering_tools.md) 
 
 ### Pre-requisites 
 You must have clustering tools installed and present in your $PATH. 
@@ -151,7 +152,7 @@ bash bin/clusteringEval_clustering.sh clusteringEval_DATA/FW_newname_30_06_2015.
 bash bin/clusteringEval_eval_real_clustering.sh clusteringEval_LAKE_DATA FW_newname_30_06_2015.derep 3718186
 ```
 
-### Graphical representation 
+#### Graphical representation 
 ```
 mkdir -p clusteringEval_RESULTS/lake_data
 Rscript bin/clusteringEval_graphs_real_sequencing.sh 
