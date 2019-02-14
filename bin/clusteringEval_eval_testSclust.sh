@@ -39,6 +39,7 @@ function cluster_eval(){
 			time_file=$prefix.sclust.id$id.wid$wid.qual$qual.time.txt
 			echo "* Number of clusters..."
 			total_clusters=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort -u | wc -l)
+			singletons=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort | uniq -c | awk '{if ($1==1) print}' | wc -l)
 			clusters1=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort | uniq -c | awk '{if ($1>1) print}' | wc -l)
 			clusters005=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort | uniq -c | awk '{if ($1>='$clusters_size_threshold') print}' | wc -l)
 			echo "* Time & Memory..." 
@@ -49,7 +50,7 @@ function cluster_eval(){
 			python3 $BIN/cluster2matrix.py $fuzzyout_file $taxo $clusters_size_threshold
 			python3 $BIN/matrix2distance.py $matrix $taxo > $matrix.distance
 			compute_evaluation $matrix
-			echo -e "sclust\t$prefix\tdefault\t$id\t$qual\t$total_clusters\t$clusters1\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory\t$mean_mean\t$mean_max" >> $output_file
+			echo -e "sclust\t$prefix\tdefault\t$id\t$qual\t$total_clusters\t$singletons\t$clusters1\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory\t$mean_mean\t$mean_max" >> $output_file
 		done 
 	done 
 	
@@ -62,6 +63,7 @@ function cluster_eval(){
 			time_file=$prefix.sclust.id$id.wid$wid.qual$qual.time.txt
 			echo "* Number of clusters..."
 			total_clusters=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort -u | wc -l)
+			singletons=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort | uniq -c | awk '{if ($1==1) print}' | wc -l)
 			clusters1=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort | uniq -c | awk '{if ($1>1) print}' | wc -l)
 			clusters005=$(cut -f 2 $fuzzyout_file | cut -f 1 -d " " | sort | uniq -c | awk '{if ($1>='$clusters_size_threshold') print}' | wc -l)
 			echo "* Time & Memory..." 
@@ -72,7 +74,7 @@ function cluster_eval(){
 			python3 $BIN/cluster2matrix.py $fuzzyout_file $taxo $clusters_size_threshold
 			python3 $BIN/matrix2distance.py $matrix $taxo > $matrix.distance
 			compute_evaluation $matrix
-			echo -e "sclust\t$prefix\taccurate\t$id\t$qual\t$total_clusters\t$clusters1\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory\t$mean_mean\t$mean_max" >> $output_file
+			echo -e "sclust\t$prefix\taccurate\t$id\t$qual\t$total_clusters\t$singletons\t$clusters1\t$clusters005\t$recall\t$precision\t$ari\t$time\t$memory\t$mean_mean\t$mean_max" >> $output_file
 		done 
 	done
 }
@@ -97,7 +99,7 @@ args_gestion
 output_file=$indir/$prefix.eval.tsv
 #output_file_nosingle=$indir/$prefix.nosingle.eval.tsv 
 #output_file_005reads=$indir/$prefix.005reads.eval.tsv 
-echo -e "tool\tsample\talgo\tthreshold/d\tquality\ttotal_clusters\tclusters size > 1\tclusters_>_0.05%reads\trecall\tprecision\tARI\tTime(s)\tMemory(kb)\tMean mean distance\tMean max distance" > $output_file 
+echo -e "tool\tsample\talgo\tthreshold/d\tquality\ttotal_clusters\tsingletons\tclusters size > 1\tclusters_>_0.05%reads\trecall\tprecision\tARI\tTime(s)\tMemory(kb)\tMean mean distance\tMean max distance" > $output_file 
 nb_reads=$(($(wc -l $taxo | cut -f 1 -d " ") - 1)) 
 clusters_size_threshold=$(echo $nb_reads | awk '{printf("%.0f",($1*0.05)/100)}') 
 cluster_eval

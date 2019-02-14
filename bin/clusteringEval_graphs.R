@@ -24,6 +24,8 @@ total_clusters_boxplot=ggplot(f,aes(x=tool,y=total_clusters,fill=tool))+geom_box
 
 singletons_boxplot=ggplot(f,aes(x=tool,y=p_singletons,fill=tool))+geom_boxplot()+labs(x="Tools",y="Singletons (%)")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16))+guides(fill=FALSE)
 
+number_singletons_boxplot=ggplot(f,aes(x=tool,y=singletons,fill=tool))+geom_boxplot()+labs(x="Tools",y="Number of singletons")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16))+guides(fill=FALSE)
+
 clusters_threshold_boxplot=ggplot(f,aes(x=tool,y=clusters_._0.05.reads,fill=tool))+geom_boxplot()+labs(x="Tools",y="Number of clusters with size >= 0.05% of reads")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16))+guides(fill=FALSE)
 
 clusters_no_singletons_boxplot=ggplot(f,aes(x=tool,y=clusters_no_singletons,fill=tool))+geom_boxplot()+labs(x="Tools",y="Number of clusters with size > 1")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),strip.text.x=element_text(size=16))+guides(fill=FALSE)
@@ -60,10 +62,13 @@ dev.off()
 pdf("clusteringEval_RESULTS/tools_comparison/memory.pdf")
 memory_boxplot
 dev.off()
-
 ggsave(file="clusteringEval_RESULTS/tools_comparison/distance_boxplot.svg",plot=distance_boxplot,width=8,height=12)
 pdf("clusteringEval_RESULTS/tools_comparison/distance_boxplot.pdf",width=8,height=12)
 distance_boxplot
+dev.off()
+ggsave(file="clusteringEval_RESULTS/tools_comparison/number_singletons_boxplot.svg",plot=number_singletons_boxplot,width=8)
+pdf("clusteringEval_RESULTS/tools_comparison/number_singletons_boxplot.pdf",width=8,height=12)
+number_singletons_boxplot
 dev.off()
 save.image(file="clusteringEval_RESULTS/tools_comparison/tools_comparison.Rdata") 
 
