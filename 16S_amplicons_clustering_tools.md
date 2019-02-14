@@ -141,8 +141,6 @@ Graphical representations : [Number of clusters](clusteringEval_RESULTS/tools_co
 
 Others graphs : [Singletons percentage](clusteringEval_RESULTS/lake_data/percent_singletons.svg)
 
-
-
 ### References 
 * Debroas, D., Domaizon, I., Humbert, J. F., Jardillier, L., Lepère, C., Oudart, A., & Taïb, N. (2017). **Overview of freshwater microbial eukaryotes diversity: a first analysis of publicly available metabarcoding data.** FEMS microbiology ecology, 93(4), fix023
 * Escudié, F., Auer, L., Bernard, M., Mariadassou, M., Cauquil, L., Vidal, K., ... & Pascal, G. (2017). **FROGS: find, rapidly, OTUs with galaxy solution.** Bioinformatics, 34(8), 1287-1294.
