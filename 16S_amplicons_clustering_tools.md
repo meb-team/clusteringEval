@@ -69,19 +69,28 @@ For real sequencing lake data, we have 6 777 514 sequences before dereplication 
 
 ### SCLUST test 
 
-[Raw data]()
+[Raw data](clusteringEval_RESULTS/test_SCLUST/testSclust_all_samples-1000sp-Powerlaw.noChimeras.derep.eval.tsv)
 
 **Figure 1** : Distribution of Adjusted Random Index for each SCLUST parameters. Adjusted Rand Index is calculated as presented [here](https://en.wikipedia.org/wiki/Rand_index#Adjusted_Rand_index)  
 <img src="clusteringEval_RESULTS/test_SCLUST/ari_boxplot.svg" width="500">
 
-**Figure 2** : Distribution of singletons percentage in created clusters for each SCLUST parameters. 
-<img src="clusteringEval_RESULTS/test_SCLUST/singletons_boxplot.svg" width="500">
+**Figure 2** : Distribution of singletons number in created clusters for each SCLUST parameters. 
+<img src="clusteringEval_RESULTS/test_SCLUST/number_singletons_boxplot.svg" width="500">
 
-Recall and precision are given in [Supplementary Figure 2](clusteringEval_RESULTS/test_SCLUST/recall_precision_boxplot.svg)
+Other distribution graphs : 
+* [Recall and precision](clusteringEval_RESULTS/test_SCLUST/recall_precision_boxplot.svg)
+* [Memory](clusteringEval_RESULTS/test_SCLUST/memory_boxplot.svg)
+* [Time](clusteringEval_RESULTS/test_SCLUST/time_boxplot.svg) 
+* [Distance](clusteringEval_RESULTS/test_SCLUST/distance_boxplot.svg) 
+* [Singletons percentage](clusteringEval_RESULTS/test_SCLUST/singletons_boxplot.svg) 
+ 
+Graphs for all samples separately : 
+* [ARI](clusteringEval_RESULTS/test_SCLUST/ari_all.svg) 
+* [Recall and precision](clusteringEval_RESULTS/test_SCLUST/recall_precision_all.svg)
+* [Number of singletons](clusteringEval_RESULTS/test_SCLUST/number_singletons_all.svg) 
+* [Singletons percentage](clusteringEval_RESULTS/test_SCLUST/singletons_all.svg) 
+* [Distance](clusteringEval_RESULTS/test_SCLUST/distance_all.svg) 
 
-Detailed values for all samples and parameters are given in [Supplementary Table 2](clusteringEval_RESULTS/test_SCLUST/all_samples-1000sp-Powerlaw.noChimeras.derep.eval.tsv)
-
-Figures with all samples separated are given in [Supplementary Figure 3 (ARI)](clusteringEval_RESULTS/test_SCLUST/ari_all.svg), [Supplementary Figure 4 (Recall/Precision)](clusteringEval_RESULTS/test_SCLUST/recall_precision_all.svg) and [Supplementary Figure 5 (Singletons)](clusteringEval_RESULTS/test_SCLUST/singletons_all.svg)
 
 * Sclust performs better with 97% threshold, in accurate or default mode. It's the threshold with less variability and with best ARI values, for each quality parameters.
 * Sclust is sensible to inputs. Results shows variability, mostly in default mode with quality over 0. 

@@ -63,7 +63,7 @@ function cluster_eval(){
 		total_clusters=$clusters005
 		python3 $BIN/matrix2distance.py $matrix $taxo > $matrix.distance
 		compute_evaluation $matrix
-		echo -e "swarm\t$prefix\tdefault\t1\t$total_clusters\t$recall\t$precision\t$ari\t$mean_mean\t$mean_max" >> $output_file_005reads
+		echo -e "swarm\t$prefix\tdefault\t$d\t$total_clusters\t$recall\t$precision\t$ari\t$mean_mean\t$mean_max" >> $output_file_005reads
 		
 	else 
 		echo "[WARNING] $uc_file doesn't exists."

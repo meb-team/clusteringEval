@@ -19,6 +19,8 @@ precision_all=ggplot(f,aes(x=threshold.d,y=precision,color=quality,linetype=algo
 
 singletons_all=ggplot(f,aes(x=threshold.d,y=p_singletons,color=quality,linetype=algo))+geom_point()+geom_line()+facet_wrap(~sample,ncol=5)+labs(color="Quality",x="Clustering threshold (%)",y="Singletons (%)",linetype="Mode")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),legend.title=element_text(size=16),legend.text=element_text(size=14),strip.text.x=element_text(size=16))
 
+number_singletons_all=ggplot(f,aes(x=threshold.d,y=singletons,color=quality,linetype=algo))+geom_point()+geom_line()+facet_wrap(~sample,ncol=5)+labs(color="Quality",x="Clustering threshold (%)",y="Number of singletons",linetype="Mode")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),legend.title=element_text(size=16),legend.text=element_text(size=14),strip.text.x=element_text(size=16))
+
 distance_all=ggplot(f,aes(x=threshold.d,y=Mean.mean.distance,color=quality,linetype=algo))+geom_point()+geom_line()+facet_wrap(~sample,ncol=5)+labs(color="Quality",x="Clustering threshold (%)",y="Mean global intra cluster distance",linetype="Mode")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),legend.title=element_text(size=16),legend.text=element_text(size=14),strip.text.x=element_text(size=16))
 
 f$threshold.d=factor(f$threshold.d)
@@ -28,6 +30,8 @@ ari_boxplot=ggplot(f,aes(x=threshold.d,y=ARI,fill=quality))+geom_boxplot()+facet
 recall_precision_boxplot=ggplot(f_recall_precision,aes(x=threshold,y=value,fill=quality))+geom_boxplot()+facet_grid(algo~type)+labs(fill="Quality",x="Clustering threshold (%)",y="Value")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),legend.title=element_text(size=16),legend.text=element_text(size=14),strip.text.x=element_text(size=16),strip.text.y=element_text(size=16))
 
 singletons_boxplot=ggplot(f,aes(x=threshold.d,y=p_singletons,fill=quality))+geom_boxplot()+facet_wrap(~algo,ncol=1)+labs(fill="Quality",x="Clustering threshold (%)",y="Singletons (%)")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),legend.title=element_text(size=16),legend.text=element_text(size=14),strip.text.x=element_text(size=16))
+
+number_singletons_boxplot=ggplot(f,aes(x=threshold.d,y=singletons,fill=quality))+geom_boxplot()+facet_wrap(~algo,ncol=1)+labs(fill="Quality",x="Clustering threshold (%)",y="Number of singletons")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),legend.title=element_text(size=16),legend.text=element_text(size=14),strip.text.x=element_text(size=16))
 
 distance_boxplot=ggplot(f,aes(x=threshold.d,y=Mean.mean.distance,fill=quality))+geom_boxplot()+facet_wrap(~algo,ncol=1)+labs(fill="Quality",x="Clustering threshold (%)",y="Mean global intra cluster distance")+theme(axis.text.x=element_text(size=14),axis.title.x=element_text(size=16),axis.text.y=element_text(size=14),axis.title.y=element_text(size=16),legend.title=element_text(size=16),legend.text=element_text(size=14),strip.text.x=element_text(size=16))
 
@@ -51,6 +55,10 @@ ggsave(file="clusteringEval_RESULTS/test_SCLUST/singletons_all.svg",plot=singlet
 pdf("clusteringEval_RESULTS/test_SCLUST/singletons_all.pdf",width=12)
 singletons_all
 dev.off()
+ggsave(file="clusteringEval_RESULTS/test_SCLUST/number_singletons_all.svg",plot=number_singletons_all,width=12)
+pdf("clusteringEval_RESULTS/test_SCLUST/number_singletons_all.pdf",width=12)
+number_singletons_all
+dev.off()
 ggsave(file="clusteringEval_RESULTS/test_SCLUST/distance_all.svg",plot=distance_all,width=12)
 pdf("clusteringEval_RESULTS/test_SCLUST/distance_all.pdf",width=12)
 distance_all
@@ -66,6 +74,10 @@ dev.off()
 ggsave(file="clusteringEval_RESULTS/test_SCLUST/singletons_boxplot.svg",plot=singletons_boxplot,height=8) 
 pdf("clusteringEval_RESULTS/test_SCLUST/singletons_boxplot.pdf",height=8)
 singletons_boxplot
+dev.off()
+ggsave(file="clusteringEval_RESULTS/test_SCLUST/number_singletons_boxplot.svg",plot=number_singletons_boxplot,height=8) 
+pdf("clusteringEval_RESULTS/test_SCLUST/number_singletons_boxplot.pdf",height=8)
+number_singletons_boxplot
 dev.off()
 ggsave(file="clusteringEval_RESULTS/test_SCLUST/distance_boxplot.svg",plot=distance_boxplot,height=8) 
 pdf("clusteringEval_RESULTS/test_SCLUST/distance_boxplot.pdf",height=8)

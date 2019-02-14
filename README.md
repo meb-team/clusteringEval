@@ -140,12 +140,21 @@ for tool in cdhit meshclust sumaclust swarm vsearch ; do
 done 	
 ```
 
-#### Evaluation 
-
-
 It's also possible to run it locally with : 
 ```
-bash bin/clusteringEval_clustering.sh clusteringEval_DATA/FW_newname_30_06_2015.derep.fasta clusteringEval_LAKE_DATA 97
+bash bin/clusteringEval_clustering.sh clusteringEval_DATA/FW_newname_30_06_2015.derep.fasta clusteringEval_LAKE_DATA 95
+```
+
+#### Evaluation 
+
+```
+bash bin/clusteringEval_eval_real_clustering.sh clusteringEval_LAKE_DATA FW_newname_30_06_2015.derep 3718186
+```
+
+### Graphical representation 
+```
+mkdir -p clusteringEval_RESULTS/lake_data
+Rscript bin/clusteringEval_graphs_real_sequencing.sh 
 ```
 
 ### References 
