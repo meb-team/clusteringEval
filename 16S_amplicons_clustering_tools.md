@@ -129,7 +129,7 @@ Graphical representations : [Number of clusters](clusteringEval_RESULTS/tools_co
 
 **Figure 6** : Number of clusters with singletons 
 
-<img src="clusteringEval_RESULTS/lake_data/number_clusters.svg" width="800">
+<img src="clusteringEval_RESULTS/lake_data/number_clusters.svg" width="600">
 
 **Figure 7** : Number of clusters with size >= 0.005% of reads
 
