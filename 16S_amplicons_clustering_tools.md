@@ -32,6 +32,8 @@ CD-HIT, VSEARCH and MESHCLUST are launched with threshold id of 97%. SCLUST is l
 #### Compare SCLUST with other tools with real sequencing data 
 
 Lake data are clustered with the 6 clustering tools : CD-HIT, SCLUST, SWARM, VSEARCH, MESHCLUST and SUMACLUST. Clustering is launched for each tool on hpc2 mesocentre. Parameters are the same as for synthetic data : CLUST is launched with id of 97, weak id of 95 and quality of 0, parameters determined as best (see Results section). SWARM is launched with distance parameter d = 3.
+CD-HIT, SWARM, VSEARCH, MESHCLUST and SUMACLUST has been launched on hpc2 with 32 threads. 
+For SCLUST, there's an memory limit error with 32 threads on normal node (even for nodes with 250Gb RAM) and smp node. It works with 16 threads on smp node.  
 
 ### Evaluation 
 
@@ -56,7 +58,7 @@ Precision, recall and ARI definitions and computation are the same used in vsear
 #### On real sequencing data clustering 
 
 On real sequencing data, we don't have taxonomy of reads so it's no possible to evaluate recall, precision, ARI or distance parameters. 
-We looked at clusters count, with total clusters, clusters with size > 1 and clusters with size > 0.05% of reads. Time and memory are also reported. 
+We looked at clusters count, with total clusters, singletons and clusters with size >= 0.005% of reads (185 for lake data). Memory is alse reported. 
 
 ## Results  
 
@@ -66,6 +68,8 @@ Preprocessing stats for FROGS synthetic data are in [Supplementary Table 1](clus
 For real sequencing lake data, we have 6 777 514 sequences before dereplication and 3 718 186 after. 
 
 ### SCLUST test 
+
+[Raw data]()
 
 **Figure 1** : Distribution of Adjusted Random Index for each SCLUST parameters. Adjusted Rand Index is calculated as presented [here](https://en.wikipedia.org/wiki/Rand_index#Adjusted_Rand_index)  
 <img src="clusteringEval_RESULTS/test_SCLUST/ari_boxplot.svg" width="500">
@@ -89,20 +93,25 @@ Figures with all samples separated are given in [Supplementary Figure 3 (ARI)](c
 
 ### SCLUST vs other tools (synthetic data) 
 
+Raw data : 
+* [All clusters](clusteringEval_RESULTS/tools_comparison/all_samples-1000sp-Powerlaw.noChimeras.derep.eval.tsv)
+* [Clusters with size > 1](clusteringEval_RESULTS/tools_comparison/all_samples-1000sp-Powerlaw.noChimeras.derep.nosingle.eval.tsv)
+* [Clusters with size >= 0.05% of reads](clusteringEval_RESULTS/tools_comparison/all_samples-1000sp-Powerlaw.noChimeras.derep.005reads.eval.tsv)
+
 **Figure 3** : Distribution of Adjusted Random Index for each tools. Threshold identity is 97% (and d=3 for SWARM). 
 <img src="clusteringEval_RESULTS/tools_comparison/ari_boxplot.svg" width="500">
 
-Recall and precision are in [Supplementary Figure 6](clusteringEval_RESULTS/tools_comparison/precision_recall.svg)
-
-**Figure 4** : Distribution of singletons percentage for each tools. Threshold identity is 97% (and d=3 for SWARM) 
-<img src="clusteringEval_RESULTS/tools_comparison/singletons_boxplot.svg" width="500">
-
-Figures of number clusters distribution are in [Supplementary Figure 7](clusteringEval_RESULTS/tools_comparison/number_clusters.svg) 
-
-Detailed values for all samples and tools are given in [Supplementary Table 3](clusteringEval_RESULTS/tools_comparison/tools_comparison_eval.tsv)
+**Figure 4** : Distribution of singletons number for each tools. Threshold identity is 97% (and d=3 for SWARM) 
+<img src="clusteringEval_RESULTS/tools_comparison/number_singletons_boxplot.svg" width="500">
 
 **Figure 5** : Distribution of time and max memory usage for clustering computation for each tool. 
 <img src="clusteringEval_RESULTS/tools_comparison/time_memory.svg" width="500">
+
+Others graphs : 
+* [Recall and precision](clusteringEval_RESULTS/tools_comparison/precision_recall.svg)
+* [Number clusters](clusteringEval_RESULTS/tools_comparison/number_clusters.svg)
+* [Singletons percentage](clusteringEval_RESULTS/tools_comparison/singletons_boxplot.svg)
+* [Distance](clusteringEval_RESULTS/tools_comparison/distance_boxplot.svg) 
 
 * MeshClust has lower ARI than other tools (median 0.82). Swarm has the best ARI (median 0.99). Sclust has ARI slightly lower than Vsearch (median 0.96 for sclust and median 0.97 for vsearch). 
 * But Sclust produces the least singletons clusters in proportion (median 5.6 %) and singletons is something we want to avoid. 
@@ -111,21 +120,28 @@ Detailed values for all samples and tools are given in [Supplementary Table 3](c
 * Sclust execution time is longer than vsearch (increase of 38.11% in mean) but slower than Meshclust. 
 
 Then, parameters have been evaluated on 2 sub-selections of clusters : clusters with size > 1 and clusters with size >= 0.05%. For all tools, recall increases when small clusters are eliminated and precision decreases. The balance leads to ARI similary among selections. Taxonomic distances also increases. Increases and decreases are similar among tools, we don't have a tool "bad" with all clusters and "good" when we take only big clusters.  
-Raw data : [for clusters with size > 1](clusteringEval_RESULTS/tools_comparison/all_samples-1000sp-Powerlaw.noChimeras.derep.nosingle.eval.tsv),[for clusters with size >= 0.05% of reads](clusteringEval_RESULTS/tools_comparison/all_samples-1000sp-Powerlaw.noChimeras.derep.005reads.eval.tsv)  
-Graphical representation : [Number of clusters](clusteringEval_RESULTS/tools_comparison/number_clusters_selected_clusters_boxplot.svg),[ARI](clusteringEval_RESULTS/tools_comparison/ari_selected_clusters_boxplot.svg),[Recall](clusteringEval_RESULTS/tools_comparison/recall_selected_clusters_boxplot.svg),[Precision](clusteringEval_RESULTS/tools_comparison/precision_selected_clusters_boxplot.svg),[Distance](clusteringEval_RESULTS/tools_comparison/distance_selected_clusters_boxplot.svg)
+  
+Graphical representations : [Number of clusters](clusteringEval_RESULTS/tools_comparison/number_clusters_selected_clusters_boxplot.svg),[ARI](clusteringEval_RESULTS/tools_comparison/ari_selected_clusters_boxplot.svg),[Recall](clusteringEval_RESULTS/tools_comparison/recall_selected_clusters_boxplot.svg),[Precision](clusteringEval_RESULTS/tools_comparison/precision_selected_clusters_boxplot.svg),[Distance](clusteringEval_RESULTS/tools_comparison/distance_selected_clusters_boxplot.svg)
 
 ### SCLUST vs other tools (real sequencing data) 
 
-**Table 1** : Number of all clusters, clusters with size > 1 and clusters with size >= 0.005% of reads (185 reads for lakes data)
+[Raw data](clusteringEval_RESULTS/lake_data/FW_newname_30_06_2015.derep.eval.tsv)
 
-|Tool|All clusters|Clusters with size > 1|Clusters with size >= 0.005% of reads|
-|----|------------|----------------------|-------------------------------------|
-|CD-HIT|176 303|43 648|1 800|
-|MESHCLUST|127 377|22 935|971
-|SCLUST||
-|SUMACLUST|344 037|239 595|1 755|
-|SWARM|714 943|1 239|1 246|
-|VSEARCH|298 944|2 328|2 334|
+**Figure 6** : Number of clusters with singletons 
+
+<img src="clusteringEval_RESULTS/lake_data/number_clusters.svg" width="500">
+
+**Figure 7** : Number of clusters with size >= 0.005% of reads
+
+<img src="clusteringEval_RESULTS/lake_data/big_clusters.svg" width="500">
+
+**Figure 8** : Max memory used 
+
+<img src="clusteringEval_RESULTS/lake_data/memory.svg" width="500">
+
+Others graphs : [Singletons percentage](clusteringEval_RESULTS/lake_data/percent_singletons.svg),[]
+
+
 
 ### References 
 * Debroas, D., Domaizon, I., Humbert, J. F., Jardillier, L., Lepère, C., Oudart, A., & Taïb, N. (2017). **Overview of freshwater microbial eukaryotes diversity: a first analysis of publicly available metabarcoding data.** FEMS microbiology ecology, 93(4), fix023
